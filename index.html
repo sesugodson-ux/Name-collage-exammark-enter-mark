@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mark Entry Ledger — Bishop Heber College</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#F4F0E4;
@@ -13,7 +13,7 @@
     --line:#D9D0B8;
     --ink:#1F2D4A;
     --ink-soft:#4A5470;
-    --accent:#2563EB; /* Changed to Blue instead of Red */
+    --accent:#2563EB; 
     --gold:#A9832B;
     --green:#2F6F4E;
     --error:#B3261E;
@@ -117,7 +117,6 @@
     border-color:var(--accent);
   }
   
-  /* Buttons - Removed Red Hover */
   .btn{
     border:1px solid var(--ink);
     background:var(--ink);
@@ -182,32 +181,36 @@
     #setupGrid{grid-template-columns:repeat(2,1fr);}
   }
 
+  /* Grid Columns Definitions */
   .qgrid{
     display:grid;
     grid-template-columns:repeat(5,1fr);
     gap:10px;
   }
   .qgrid.cols10{grid-template-columns:repeat(10,1fr);}
+  /* New 4-column grid for Part C to remove empty space */
+  .qgrid.cols4{grid-template-columns:repeat(4,1fr);} 
   .qgrid.cols3{grid-template-columns:repeat(3,1fr);}
 
   .qcell{position:relative;}
   
-  /* Made Question Number Smaller */
+  /* Made Question Number Bolder and slightly larger */
   .qcell label{
     display:block;
     text-align:center;
-    font-size:10px; 
-    font-weight:500;
-    color:var(--muted);
-    margin-bottom:4px;
+    font-size:12px; 
+    font-weight:800; /* Bolder */
+    color:var(--ink); /* Darker instead of muted */
+    margin-bottom:6px;
     font-family:'Inter', sans-serif;
   }
   
-  /* Made Answer Bold and Larger */
+  /* Made Input Box Smaller Height, Text Large */
   .qcell input{
     width:100%;
     text-align:center;
-    padding:6px 4px;
+    padding:4px 2px; 
+    height:36px; /* Box is physically smaller */
     font-family:'IBM Plex Mono';
     font-weight:700;
     font-size:20px; 
@@ -219,7 +222,7 @@
   .qcell input:focus{
     outline:none;
     border-color:var(--accent);
-    box-shadow:0 0 0 3px rgba(37, 99, 235, 0.12); /* Blue shadow */
+    box-shadow:0 0 0 3px rgba(37, 99, 235, 0.12);
   }
   .qcell input.locked{
     background:var(--locked-bg);
@@ -247,11 +250,11 @@
     gap:6px;
   }
   .choice-pair .sub{
-    font-size:10px;
+    font-size:11px;
     color:var(--muted);
     text-align:center;
     display:block;
-    font-weight:500;
+    font-weight:600;
     font-family:'Inter', sans-serif;
   }
 
@@ -288,17 +291,16 @@
   }
   table.replica td.qhead {
     background: #F8F4E9;
-    font-size: 10px; /* Made smaller */
+    font-size: 10px;
     font-family: 'Inter';
     font-weight: 500;
     color: var(--muted);
   }
   
-  /* Removed Maroon Color from Live Preview Marks */
   table.replica td.val {
     font-family: 'IBM Plex Mono';
     font-weight: 700;
-    color: var(--ink); /* Black/Dark Blue instead of Red */
+    color: var(--ink);
     font-size: 16px;
   }
   table.replica td.total-col {
@@ -324,7 +326,6 @@
     margin-top:12px;
   }
   
-  /* Made Export button standard blue instead of gold */
   .btn-export {
     background: var(--ink);
     border-color: var(--ink);
@@ -359,6 +360,7 @@
 
 <div class="wrap">
 
+  <!-- SETUP CARD -->
   <div class="card" id="setupCard">
     <h2>Exam Setup <span class="tag" id="setupTag">EDIT ONCE</span></h2>
     <div id="setupForm">
@@ -376,6 +378,7 @@
     <div id="setupLockedRow" style="display:none;"></div>
   </div>
 
+  <!-- STUDENT SWITCH BAR -->
   <div class="card">
     <div id="studentBar">
       <div class="who">
@@ -388,6 +391,7 @@
   </div>
 
   <div class="split">
+    <!-- ENTRY -->
     <div>
       <div class="card">
         <h2>Part A &middot; MCQ <span class="tag">Q1–Q10 · max 1 each</span></h2>
@@ -401,7 +405,8 @@
 
       <div class="card">
         <h2>Part C — either / or <span class="tag">Q16–Q19 · max 5 each</span></h2>
-        <div class="qgrid" id="partC"></div>
+        <!-- Changed to cols4 so Q16-Q19 stretch perfectly without an empty 5th box -->
+        <div class="qgrid cols4" id="partC"></div>
       </div>
 
       <div class="card">
@@ -415,6 +420,7 @@
       </div>
     </div>
 
+    <!-- PREVIEW: EXACT REPLICA -->
     <div>
       <div class="card" id="previewCard">
         <h2>Marks Scored <span class="tag">Live Paper Replica</span></h2>
@@ -426,11 +432,13 @@
             </tr>
           </thead>
           <tbody>
+            <!-- Part A -->
             <tr>
               <td class="partlabel">Part A</td>
               <td colspan="5" style="text-align:center; font-weight:700; color:#4A5470; font-size:12px;">MCQ Marks 1–10</td>
               <td class="val total-col" id="sumA">0</td>
             </tr>
+            <!-- Part B -->
             <tr>
               <td class="partlabel row-no-bottom">Part B</td>
               <td class="qhead" style="width:11%;">11</td>
@@ -448,6 +456,7 @@
               <td class="val" id="pb14"></td>
               <td class="val" id="pb15"></td>
             </tr>
+            <!-- Part C -->
             <tr>
               <td class="partlabel row-no-bottom">Part C<br><span class="dim" style="font-size:10px;">(5 Marks)</span></td>
               <td class="qhead">16</td>
@@ -471,6 +480,7 @@
               <td class="val" id="pcb18"></td>
               <td class="val" id="pcb19"></td>
             </tr>
+            <!-- Part D -->
             <tr>
               <td class="partlabel row-no-bottom">Part D</td>
               <td class="qhead" colspan="2">20</td>
@@ -484,6 +494,7 @@
               <td class="val" id="pd21" colspan="2"></td>
               <td class="val" id="pd22"></td>
             </tr>
+            <!-- Grand Total -->
             <tr>
               <td colspan="5" style="border-bottom:none; border-left:none;"></td>
               <td class="partlabel" style="text-align:center;">Total</td>
@@ -588,7 +599,6 @@ const partCEl = document.getElementById('partC');
 CHOICE_QS.forEach(n=>{
   const wrap = document.createElement('div');
   wrap.className = 'qcell';
-  // Removed the (a / b) text from the main label to make it smaller
   wrap.innerHTML = `
     <label>Q${n}</label>
     <div class="choice-pair">
