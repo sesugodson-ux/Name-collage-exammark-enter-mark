@@ -723,14 +723,32 @@ function advanceFrom(id){
 }
 
 /* Attach listeners to every question input */
-ALL_Q_IDS.forEach(id=>{
+ALL_Q_IDS.forEach((id, index) => {
   const input = document.getElementById(id);
-  input.addEventListener('keydown', (e)=>{
+
+  // FIX 1: Auto-select text on focus
+  input.addEventListener('focus', function() {
+    this.select();
+  });
+
+  // FIX 2: Keyboard Navigation (Arrows & Enter)
+  input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter'){
       e.preventDefault();
       if (validate(id)) advanceFrom(id);
+    } 
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextId = ALL_Q_IDS[index + 1];
+      if (nextId) focusField(nextId);
+    } 
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevId = ALL_Q_IDS[index - 1];
+      if (prevId) focusField(prevId);
     }
   });
+
   input.addEventListener('input', ()=>{
     // live sanitize: digits only
     input.value = input.value.replace(/[^\d]/g,'');
@@ -746,6 +764,7 @@ ALL_Q_IDS.forEach(id=>{
       updatePreview();
     }
   });
+
   input.addEventListener('blur', ()=>{ validate(id); updatePreview(); });
 });
 
