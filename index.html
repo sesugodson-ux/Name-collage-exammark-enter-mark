@@ -274,51 +274,62 @@
     display:block;
   }
 
-  /* Live preview replica */
+  /* --- NEW EXACT REPLICA TABLE STYLES --- */
   #previewCard{position:sticky;top:16px;}
-  table.replica{
-    width:100%;
-    border-collapse:collapse;
-    font-size:13px;
+  table.replica {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #fff;
   }
-  table.replica th, table.replica td{
-    border:1px solid var(--ink);
-    padding:7px 6px;
-    text-align:center;
+  table.replica th, table.replica td {
+    border: 1px solid var(--ink);
+    text-align: center;
+    height: 32px;
+    vertical-align: middle;
   }
-  table.replica th{
-    background:#EDE7D6;
-    font-family:'Inter';
-    font-size:11px;
-    font-weight:700;
-    color:var(--ink-soft);
+  table.replica th {
+    background: #EDE7D6;
+    font-family: 'Inter';
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    padding: 6px;
   }
-  table.replica td.partlabel{
-    text-align:left;
-    font-weight:700;
-    font-family:'Source Serif 4',serif;
-    background:#F8F4E9;
-    font-size:12px;
+  table.replica td.partlabel {
+    text-align: left;
+    font-weight: 700;
+    font-family: 'Source Serif 4', serif;
+    background: #F8F4E9;
+    font-size: 12px;
+    padding: 4px 8px;
+    color: var(--ink);
   }
-  table.replica td.val{
-    font-family:'IBM Plex Mono';
-    font-weight:600;
-    color:var(--maroon-dark);
+  table.replica td.qhead {
+    background: #F8F4E9;
+    font-size: 11px;
+    font-family: 'Inter';
+    font-weight: 600;
+    color: var(--ink-soft);
   }
-  table.replica td.subtot{
-    font-family:'IBM Plex Mono';
-    font-weight:700;
-    background:#F8F4E9;
+  table.replica td.val {
+    font-family: 'IBM Plex Mono';
+    font-weight: 600;
+    color: var(--maroon-dark);
+    font-size: 15px;
   }
-  table.replica tr.grand td{
-    background:var(--ink);
-    color:#fff;
-    font-family:'IBM Plex Mono';
-    font-weight:700;
-    font-size:16px;
-    padding:10px;
+  table.replica td.total-col {
+    background: #F8F4E9;
+    color: var(--maroon-dark);
+    font-weight: 700;
+    font-size: 16px;
   }
-  table.replica td.dim{color:var(--muted);font-weight:400;}
+  table.replica .dim {
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .row-no-bottom { border-bottom: none !important; }
+  .row-no-top { border-top: none !important; }
 
   .navbtns{display:flex;gap:10px;justify-content:space-between;margin-top:16px;}
   .navbtns .btn{flex:1;text-align:center;}
@@ -417,39 +428,87 @@
       </div>
     </div>
 
-    <!-- PREVIEW -->
+    <!-- PREVIEW: EXACT REPLICA -->
     <div>
       <div class="card" id="previewCard">
-        <h2>Marks Scored <span class="tag">live preview</span></h2>
+        <h2>Marks Scored <span class="tag">Live Paper Replica</span></h2>
         <table class="replica">
-          <tr><th style="width:46%">Section</th><th>Detail</th><th style="width:20%">Total</th></tr>
-          <tr>
-            <td class="partlabel">Part A<br><span class="dim" style="font-weight:400;font-size:10px;">MCQ Marks 1–10</span></td>
-            <td class="dim" style="font-size:11px;">sum only</td>
-            <td class="val" id="sumA">0</td>
-          </tr>
-          <tr>
-            <td class="partlabel">Part B<br><span class="dim" style="font-weight:400;font-size:10px;">(2 marks each)</span></td>
-            <td class="val" id="detailB" style="font-size:11px;">0,0,0,0,0</td>
-            <td class="val" id="sumB">0</td>
-          </tr>
-          <tr>
-            <td class="partlabel" rowspan="2">Part C<br><span class="dim" style="font-weight:400;font-size:10px;">(5 marks each)</span></td>
-            <td class="val" id="detailCa" style="font-size:11px;">a) 0,0,0,0</td>
-            <td class="subtot" id="sumC" rowspan="2">0</td>
-          </tr>
-          <tr>
-            <td class="val" id="detailCb" style="font-size:11px;">b) 0,0,0,0</td>
-          </tr>
-          <tr>
-            <td class="partlabel">Part D<br><span class="dim" style="font-weight:400;font-size:10px;">(10 marks each)</span></td>
-            <td class="val" id="detailD" style="font-size:11px;">0,0,0</td>
-            <td class="val" id="sumD">0</td>
-          </tr>
-          <tr class="grand">
-            <td colspan="2">Grand Total</td>
-            <td id="grandTotal">0</td>
-          </tr>
+          <thead>
+            <tr>
+              <th colspan="6" style="text-align:center; font-size:12px;">Marks Scored</th>
+              <th style="width:16%;">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Part A -->
+            <tr>
+              <td class="partlabel">Part A</td>
+              <td colspan="5" style="text-align:center; font-weight:700; color:#4A5470; font-size:12px;">MCQ Marks 1–10</td>
+              <td class="val total-col" id="sumA">0</td>
+            </tr>
+            <!-- Part B -->
+            <tr>
+              <td class="partlabel row-no-bottom">Part B</td>
+              <td class="qhead" style="width:11%;">11</td>
+              <td class="qhead" style="width:11%;">12</td>
+              <td class="qhead" style="width:11%;">13</td>
+              <td class="qhead" style="width:11%;">14</td>
+              <td class="qhead" style="width:11%;">15</td>
+              <td rowspan="2" class="val total-col" id="sumB">0</td>
+            </tr>
+            <tr>
+              <td class="partlabel row-no-top dim" style="font-size:10px;">(2 Marks)</td>
+              <td class="val" id="pb11"></td>
+              <td class="val" id="pb12"></td>
+              <td class="val" id="pb13"></td>
+              <td class="val" id="pb14"></td>
+              <td class="val" id="pb15"></td>
+            </tr>
+            <!-- Part C -->
+            <tr>
+              <td class="partlabel row-no-bottom">Part C<br><span class="dim" style="font-size:10px;">(5 Marks)</span></td>
+              <td class="qhead">16</td>
+              <td class="qhead">17</td>
+              <td class="qhead">18</td>
+              <td class="qhead">19</td>
+              <td rowspan="3" style="background-color:#F8F4E9;"></td>
+              <td rowspan="3" class="val total-col" id="sumC">0</td>
+            </tr>
+            <tr>
+              <td class="partlabel row-no-bottom row-no-top" style="text-align:center; padding:4px;">a)</td>
+              <td class="val" id="pca16"></td>
+              <td class="val" id="pca17"></td>
+              <td class="val" id="pca18"></td>
+              <td class="val" id="pca19"></td>
+            </tr>
+            <tr>
+              <td class="partlabel row-no-top" style="text-align:center; padding:4px;">b)</td>
+              <td class="val" id="pcb16"></td>
+              <td class="val" id="pcb17"></td>
+              <td class="val" id="pcb18"></td>
+              <td class="val" id="pcb19"></td>
+            </tr>
+            <!-- Part D -->
+            <tr>
+              <td class="partlabel row-no-bottom">Part D</td>
+              <td class="qhead" colspan="2">20</td>
+              <td class="qhead" colspan="2">21</td>
+              <td class="qhead">22</td>
+              <td rowspan="2" class="val total-col" id="sumD">0</td>
+            </tr>
+            <tr>
+              <td class="partlabel row-no-top dim" style="font-size:10px;">(10 Marks)</td>
+              <td class="val" id="pd20" colspan="2"></td>
+              <td class="val" id="pd21" colspan="2"></td>
+              <td class="val" id="pd22"></td>
+            </tr>
+            <!-- Grand Total -->
+            <tr>
+              <td colspan="5" style="border-bottom:none; border-left:none;"></td>
+              <td class="partlabel" style="text-align:center;">Total</td>
+              <td class="val total-col" id="grandTotal" style="font-size:18px;">0</td>
+            </tr>
+          </tbody>
         </table>
         <div id="exportBar">
           <button class="btn gold" id="exportBtn">Export All as CSV</button>
@@ -633,7 +692,13 @@ function getVal(id){
 }
 function setVal(id, v){ document.getElementById(id).value = v; }
 
-/* Choice-pair fields (q16b etc.) share the error box drawn under the 'a' cell */
+/* Formats the value for the replica table. If input is disabled/locked, show nothing. */
+function fmtMark(id) {
+  const el = document.getElementById(id);
+  if (!el || el.disabled || el.classList.contains('locked')) return '';
+  return el.value === '' ? '' : el.value;
+}
+
 function errBoxIdFor(id){
   if (document.getElementById(id+'-err')) return id+'-err';
   const m = id.match(/^q(\d+)[ab]$/);
@@ -652,7 +717,6 @@ function clearError(id){
   if (box) box.textContent = '';
 }
 
-/* Validate a field against its max. Returns true if valid. */
 function validate(id){
   const input = document.getElementById(id);
   const max = parseInt(input.dataset.max, 10);
@@ -694,7 +758,7 @@ function advanceFrom(id){
       bInput.disabled = true;
       bInput.classList.add('locked');
       clearError(bId);
-      focusField(FOCUS_ORDER[idx+2]); // skip b, go to next question's a
+      focusField(FOCUS_ORDER[idx+2]); 
     } else {
       bInput.disabled = false;
       bInput.classList.remove('locked');
@@ -717,7 +781,6 @@ function advanceFrom(id){
     return;
   }
 
-  // simple field
   focusField(FOCUS_ORDER[idx+1]);
   updatePreview();
 }
@@ -726,12 +789,13 @@ function advanceFrom(id){
 ALL_Q_IDS.forEach((id, index) => {
   const input = document.getElementById(id);
 
-  // FIX 1: Auto-select text on focus
   input.addEventListener('focus', function() {
+    setTimeout(() => this.select(), 10);
+  });
+  input.addEventListener('click', function() {
     this.select();
   });
 
-  // FIX 2: Keyboard Navigation (Arrows & Enter)
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter'){
       e.preventDefault();
@@ -739,24 +803,36 @@ ALL_Q_IDS.forEach((id, index) => {
     } 
     else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault();
-      const nextId = ALL_Q_IDS[index + 1];
-      if (nextId) focusField(nextId);
+      let nextIdx = index + 1;
+      while (nextIdx < ALL_Q_IDS.length) {
+        let nextEl = document.getElementById(ALL_Q_IDS[nextIdx]);
+        if (nextEl && !nextEl.disabled) {
+          focusField(ALL_Q_IDS[nextIdx]);
+          break;
+        }
+        nextIdx++;
+      }
     } 
     else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
       e.preventDefault();
-      const prevId = ALL_Q_IDS[index - 1];
-      if (prevId) focusField(prevId);
+      let prevIdx = index - 1;
+      while (prevIdx >= 0) {
+        let prevEl = document.getElementById(ALL_Q_IDS[prevIdx]);
+        if (prevEl && !prevEl.disabled) {
+          focusField(ALL_Q_IDS[prevIdx]);
+          break;
+        }
+        prevIdx--;
+      }
     }
   });
 
   input.addEventListener('input', ()=>{
-    // live sanitize: digits only
     input.value = input.value.replace(/[^\d]/g,'');
     const max = parseInt(input.dataset.max,10);
     const maxLen = String(max).length;
     if (validate(id)){
       updatePreview();
-      // auto-advance once the value has reached full possible length for its max
       if (input.value.length >= maxLen && input.value !== ''){
         advanceFrom(id);
       }
@@ -769,29 +845,40 @@ ALL_Q_IDS.forEach((id, index) => {
 });
 
 /* ============================================================
-   LIVE PREVIEW
+   LIVE PREVIEW (EXACT REPLICA MAPPING)
    ============================================================ */
 function updatePreview(){
+  // Part A (Sum only)
   const a = SIMPLE_FIELDS.slice(0,10).map(f=>getVal(f.id));
   const sumA = a.reduce((x,y)=>x+y,0);
-  document.getElementById('sumA').textContent = sumA;
+  document.getElementById('sumA').textContent = String(sumA).padStart(2, '0');
 
-  const b = SIMPLE_FIELDS.slice(10,15).map(f=>getVal(f.id));
-  const sumB = b.reduce((x,y)=>x+y,0);
+  // Part B (Individual Grid)
+  const bIds = [11, 12, 13, 14, 15];
+  let sumB = 0;
+  bIds.forEach(n => {
+    document.getElementById('pb'+n).textContent = fmtMark('q'+n);
+    sumB += getVal('q'+n);
+  });
   document.getElementById('sumB').textContent = sumB;
-  document.getElementById('detailB').textContent = b.join(', ');
 
-  const cA = CHOICE_QS.map(n=>getVal('q'+n+'a'));
-  const cB = CHOICE_QS.map(n=>getVal('q'+n+'b'));
-  const sumC = cA.reduce((x,y)=>x+y,0) + cB.reduce((x,y)=>x+y,0);
+  // Part C (Either/Or Grid)
+  let sumC = 0;
+  CHOICE_QS.forEach(n => {
+    document.getElementById('pca'+n).textContent = fmtMark('q'+n+'a');
+    document.getElementById('pcb'+n).textContent = fmtMark('q'+n+'b');
+    sumC += getVal('q'+n+'a') + getVal('q'+n+'b');
+  });
   document.getElementById('sumC').textContent = sumC;
-  document.getElementById('detailCa').textContent = 'a) ' + cA.map(v=>v||'').map(v=>v===''?'–':v).join(', ');
-  document.getElementById('detailCb').textContent = 'b) ' + cB.map(v=>v||'').map(v=>v===''?'–':v).join(', ');
 
-  const d = PART_D_FIELDS.map(f=>getVal(f.id));
-  const sumD = d.reduce((x,y)=>x+y,0);
+  // Part D (Individual Grid)
+  const dIds = [20, 21, 22];
+  let sumD = 0;
+  dIds.forEach(n => {
+    document.getElementById('pd'+n).textContent = fmtMark('q'+n);
+    sumD += getVal('q'+n);
+  });
   document.getElementById('sumD').textContent = sumD;
-  document.getElementById('detailD').textContent = d.join(', ');
 
   const grand = sumA + sumB + sumC + sumD;
   document.getElementById('grandTotal').textContent = grand;
@@ -824,7 +911,6 @@ function loadStudent(index){
     ALL_Q_IDS.forEach(id=>{
       if (saved[id] !== undefined) setVal(id, saved[id]);
     });
-    // re-apply lock state for choice pairs
     CHOICE_QS.forEach(n=>{
       const aId='q'+n+'a', bId='q'+n+'b';
       const aVal = getVal(aId), bVal = getVal(bId);
@@ -857,7 +943,6 @@ function flashSaved(){
 }
 
 document.getElementById('nextBtn').addEventListener('click', ()=>{
-  // validate all fields before saving
   const invalid = ALL_Q_IDS.find(id=>!validate(id));
   if (invalid){ focusField(invalid); return; }
   saveCurrentStudent();
@@ -886,7 +971,7 @@ function toCsvValue(v){
 }
 
 document.getElementById('exportBtn').addEventListener('click', ()=>{
-  saveCurrentStudent(); // ensure current student's edits are captured
+  saveCurrentStudent();
   const header = ['RollNo','Name','Semester','PaperCode','Exam','Batch','Course',
     ...Array.from({length:22},(_,i)=>'Q'+(i+1)), 'Total'];
   const rows = [header];
