@@ -188,29 +188,26 @@
     gap:10px;
   }
   .qgrid.cols10{grid-template-columns:repeat(10,1fr);}
-  /* New 4-column grid for Part C to remove empty space */
   .qgrid.cols4{grid-template-columns:repeat(4,1fr);} 
   .qgrid.cols3{grid-template-columns:repeat(3,1fr);}
 
   .qcell{position:relative;}
   
-  /* Made Question Number Bolder and slightly larger */
   .qcell label{
     display:block;
     text-align:center;
     font-size:12px; 
-    font-weight:800; /* Bolder */
-    color:var(--ink); /* Darker instead of muted */
+    font-weight:800;
+    color:var(--ink);
     margin-bottom:6px;
     font-family:'Inter', sans-serif;
   }
   
-  /* Made Input Box Smaller Height, Text Large */
   .qcell input{
     width:100%;
     text-align:center;
     padding:4px 2px; 
-    height:36px; /* Box is physically smaller */
+    height:36px;
     font-family:'IBM Plex Mono';
     font-weight:700;
     font-size:20px; 
@@ -360,7 +357,6 @@
 
 <div class="wrap">
 
-  <!-- SETUP CARD -->
   <div class="card" id="setupCard">
     <h2>Exam Setup <span class="tag" id="setupTag">EDIT ONCE</span></h2>
     <div id="setupForm">
@@ -378,20 +374,18 @@
     <div id="setupLockedRow" style="display:none;"></div>
   </div>
 
-  <!-- STUDENT SWITCH BAR -->
   <div class="card">
     <div id="studentBar">
       <div class="who">
         <span class="roll" id="curRoll">—</span>
         <span class="name" id="curName">—</span>
       </div>
-      <div class="progress" id="progressNote">Student 1 of 74</div>
+      <div class="progress" id="progressNote">Student 1 of 64</div>
       <select id="studentSearch"></select>
     </div>
   </div>
 
   <div class="split">
-    <!-- ENTRY -->
     <div>
       <div class="card">
         <h2>Part A &middot; MCQ <span class="tag">Q1–Q10 · max 1 each</span></h2>
@@ -405,7 +399,6 @@
 
       <div class="card">
         <h2>Part C — either / or <span class="tag">Q16–Q19 · max 5 each</span></h2>
-        <!-- Changed to cols4 so Q16-Q19 stretch perfectly without an empty 5th box -->
         <div class="qgrid cols4" id="partC"></div>
       </div>
 
@@ -420,7 +413,6 @@
       </div>
     </div>
 
-    <!-- PREVIEW: EXACT REPLICA -->
     <div>
       <div class="card" id="previewCard">
         <h2>Marks Scored <span class="tag">Live Paper Replica</span></h2>
@@ -432,13 +424,11 @@
             </tr>
           </thead>
           <tbody>
-            <!-- Part A -->
             <tr>
               <td class="partlabel">Part A</td>
               <td colspan="5" style="text-align:center; font-weight:700; color:#4A5470; font-size:12px;">MCQ Marks 1–10</td>
               <td class="val total-col" id="sumA">0</td>
             </tr>
-            <!-- Part B -->
             <tr>
               <td class="partlabel row-no-bottom">Part B</td>
               <td class="qhead" style="width:11%;">11</td>
@@ -456,7 +446,6 @@
               <td class="val" id="pb14"></td>
               <td class="val" id="pb15"></td>
             </tr>
-            <!-- Part C -->
             <tr>
               <td class="partlabel row-no-bottom">Part C<br><span class="dim" style="font-size:10px;">(5 Marks)</span></td>
               <td class="qhead">16</td>
@@ -480,7 +469,6 @@
               <td class="val" id="pcb18"></td>
               <td class="val" id="pcb19"></td>
             </tr>
-            <!-- Part D -->
             <tr>
               <td class="partlabel row-no-bottom">Part D</td>
               <td class="qhead" colspan="2">20</td>
@@ -494,7 +482,6 @@
               <td class="val" id="pd21" colspan="2"></td>
               <td class="val" id="pd22"></td>
             </tr>
-            <!-- Grand Total -->
             <tr>
               <td colspan="5" style="border-bottom:none; border-left:none;"></td>
               <td class="partlabel" style="text-align:center;">Total</td>
@@ -514,20 +501,20 @@
 
 <script>
 /* ============================================================
-   STATIC DATA
+   STATIC DATA (UPDATED STUDENTS LIST)
    ============================================================ */
 const STUDENTS = [
-["255113401","AALAN ASHNUWA V"],["255113402","AATHAVAN A"],["255113403","ABDUL AZEEM N"],
+["255113401","AALAN ASHNUWA V"],["255113402","AATHAVAN A"],
 ["255113404","ABISHEK CS"],["255113405","ABISHEK SIRUS P"],["255113406","AHAJAS AHMED R"],
 ["255113407","AJAY D"],["255113408","AKASH M"],["255113409","AKASH R"],["255113410","ALEX S"],
 ["255113411","ALLENJOE"],["255113412","ANBARASU S"],["255113413","ANBUSELVAN K"],
 ["255113414","ARIHARAN B"],["255113415","ARJUNAN P"],["255113416","ARSUDEEN M"],
 ["255113417","ARUN KUMAR D"],["255113418","ARUNKUMAR P"],["255113419","ARUSH VINCENT"],
 ["255113420","ASLAM T"],["255113421","ASWIN S"],["255113422","AUGUSTIN A"],
-["255113424","BHARANIDHARAN R"],["255113425","BHARATHAN M"],["255113426","BHARATHRAJ P"],
+["255113425","BHARATHAN M"],["255113426","BHARATHRAJ P"],
 ["255113427","BHAVADAN S"],["255113428","BOOPATHI R"],["255113429","DEENAKUMAR RM"],
-["255113430","DEEPAK KUMAR G"],["255113431","DEEPAK M"],["255113432","DEEPAK RAJ B"],
-["255113433","DHAANESHWAR S"],["255113434","DHANUSH S"],["255113435","DHARUN SRIRAM RV"],
+["255113430","DEEPAK KUMAR G"],["255113432","DEEPAK RAJ B"],
+["255113434","DHANUSH S"],["255113435","DHARUN SRIRAM RV"],
 ["255113436","DHARUNKUMAR N"],["255113437","DHINESH M"],["255113438","DINESH S"],
 ["255113439","EBIN SAM S"],["255113440","EDWIN VASANTH V"],["255113441","GEOFFREY PAUL DANIEL P"],
 ["255113442","GODSON S"],["255113443","GOKILAN A"],["255113444","GOKUL GANESH S"],
@@ -535,9 +522,9 @@ const STUDENTS = [
 ["255113448","GURU MATHESH G"],["255113449","HAEMJEYANTAS"],["255113450","HAJANAVAS N"],
 ["255113451","HARI CHARAN S"],["255113452","HARI SANTHOSH B"],["255113453","HARIHARAN D"],
 ["255113454","HARIHARAN K"],["255113455","HARIHARAN KP"],["255113456","HARIHARAN P"],
-["255113457","HARIHARAN S"],["255113458","HARIHARAN S"],["255113459","HARIHARAN S"],
+["255113457","HARIHARAN S"],["255113458","HARIHARAN S"],
 ["255113460","HARIHARANT"],["255113461","HARIKRISHNAN S"],["255113462","HARISH K"],
-["255113463","HARISH M"],["255113464","HEMAVARSHAN S"],["255113465","HEMNATH R"],
+["255113463","HARISH M"],["255113464","HEMAVARSHAN S"],
 ["255113466","HUTSUN D"],["255113467","IBRAHIM JAMEEL K"],["255113468","IYAPPAN R"],
 ["255113469","IYYAPPAN M"],["255113470","JAGAN S"],["255113472","BOOPALAN G"],
 ["255113473","AKHILAN P"],["255113474","ABDUL LADEEF J"],["255113475","KAVIKRISHNA S"]
