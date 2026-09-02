@@ -861,6 +861,35 @@ ALL_Q_IDS.forEach((id, index) => {
       e.preventDefault();
       if (validate(id)) advanceFrom(id);
     } 
+    // BACKSPACE LOGIC ADDED HERE
+    else if (e.key === 'Backspace') {
+      if (input.value === '' || input.value === '0') {
+        e.preventDefault();
+        let prevIdx = index - 1;
+        while (prevIdx >= 0) {
+          let prevEl = document.getElementById(ALL_Q_IDS[prevIdx]);
+          if (prevEl && !prevEl.disabled) {
+            focusField(ALL_Q_IDS[prevIdx]);
+            prevEl.value = '0';
+            
+            // Unlock partner if it's an a/b question
+            if (/^q\d+[ab]$/.test(ALL_Q_IDS[prevIdx])) {
+              let partnerId = prevEl.dataset.partner;
+              let partnerEl = document.getElementById(partnerId);
+              if (partnerEl) {
+                partnerEl.disabled = false;
+                partnerEl.classList.remove('locked');
+              }
+            }
+            
+            clearError(ALL_Q_IDS[prevIdx]);
+            updatePreview(); 
+            break;
+          }
+          prevIdx--;
+        }
+      }
+    }
     else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault();
       updatePreview();
@@ -923,12 +952,10 @@ function checkPartD() {
    LIVE PREVIEW (EXACT REPLICA MAPPING)
    ============================================================ */
 function updatePreview(){
-  // Part A
   const a = SIMPLE_FIELDS.slice(0,10).map(f=>getVal(f.id));
   const sumA = a.reduce((x,y)=>x+y,0);
   document.getElementById('sumA').textContent = String(sumA).padStart(2, '0');
 
-  // Part B
   const bIds = [11, 12, 13, 14, 15];
   let sumB = 0;
   bIds.forEach(n => {
@@ -937,7 +964,6 @@ function updatePreview(){
   });
   document.getElementById('sumB').textContent = sumB;
 
-  // Part C
   let sumC = 0;
   CHOICE_QS.forEach(n => {
     document.getElementById('pca'+n).textContent = fmtMark('q'+n+'a');
@@ -949,7 +975,6 @@ function updatePreview(){
   // Re-evaluate Part D locks before getting values
   checkPartD();
 
-  // Part D
   const dIds = [20, 21, 22];
   let sumD = 0;
   dIds.forEach(n => {
