@@ -146,6 +146,17 @@
     align-items:baseline;
     gap:14px;
   }
+  .class-dropdown {
+    padding: 6px 12px;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--paper);
+    cursor: pointer;
+  }
   #studentBar .who .roll{
     font-family:'IBM Plex Mono';
     font-weight:600;
@@ -357,6 +368,7 @@
 
 <div class="wrap">
 
+  <!-- SETUP CARD -->
   <div class="card" id="setupCard">
     <h2>Exam Setup <span class="tag" id="setupTag">EDIT ONCE</span></h2>
     <div id="setupForm">
@@ -374,18 +386,24 @@
     <div id="setupLockedRow" style="display:none;"></div>
   </div>
 
+  <!-- STUDENT SWITCH BAR -->
   <div class="card">
     <div id="studentBar">
       <div class="who">
+        <select id="classSelector" class="class-dropdown">
+          <option value="2nd_Year">2nd Year BCA (D)</option>
+          <option value="3rd_Year">3rd Year BCA (D)</option>
+        </select>
         <span class="roll" id="curRoll">—</span>
         <span class="name" id="curName">—</span>
       </div>
-      <div class="progress" id="progressNote">Student 1 of 64</div>
+      <div class="progress" id="progressNote">Student 1</div>
       <select id="studentSearch"></select>
     </div>
   </div>
 
   <div class="split">
+    <!-- ENTRY -->
     <div>
       <div class="card">
         <h2>Part A &middot; MCQ <span class="tag">Q1–Q10 · max 1 each</span></h2>
@@ -413,6 +431,7 @@
       </div>
     </div>
 
+    <!-- PREVIEW: EXACT REPLICA -->
     <div>
       <div class="card" id="previewCard">
         <h2>Marks Scored <span class="tag">Live Paper Replica</span></h2>
@@ -424,11 +443,13 @@
             </tr>
           </thead>
           <tbody>
+            <!-- Part A -->
             <tr>
               <td class="partlabel">Part A</td>
               <td colspan="5" style="text-align:center; font-weight:700; color:#4A5470; font-size:12px;">MCQ Marks 1–10</td>
               <td class="val total-col" id="sumA">0</td>
             </tr>
+            <!-- Part B -->
             <tr>
               <td class="partlabel row-no-bottom">Part B</td>
               <td class="qhead" style="width:11%;">11</td>
@@ -446,6 +467,7 @@
               <td class="val" id="pb14"></td>
               <td class="val" id="pb15"></td>
             </tr>
+            <!-- Part C -->
             <tr>
               <td class="partlabel row-no-bottom">Part C<br><span class="dim" style="font-size:10px;">(5 Marks)</span></td>
               <td class="qhead">16</td>
@@ -469,6 +491,7 @@
               <td class="val" id="pcb18"></td>
               <td class="val" id="pcb19"></td>
             </tr>
+            <!-- Part D -->
             <tr>
               <td class="partlabel row-no-bottom">Part D</td>
               <td class="qhead" colspan="2">20</td>
@@ -482,6 +505,7 @@
               <td class="val" id="pd21" colspan="2"></td>
               <td class="val" id="pd22"></td>
             </tr>
+            <!-- Grand Total -->
             <tr>
               <td colspan="5" style="border-bottom:none; border-left:none;"></td>
               <td class="partlabel" style="text-align:center;">Total</td>
@@ -501,41 +525,70 @@
 
 <script>
 /* ============================================================
-   STATIC DATA (UPDATED STUDENTS LIST)
+   STATIC DATA (MULTIPLE CLASSES)
    ============================================================ */
-const STUDENTS = [
-["255113401","AALAN ASHNUWA V"],["255113402","AATHAVAN A"],
-["255113404","ABISHEK CS"],["255113405","ABISHEK SIRUS P"],["255113406","AHAJAS AHMED R"],
-["255113407","AJAY D"],["255113408","AKASH M"],["255113409","AKASH R"],["255113410","ALEX S"],
-["255113411","ALLENJOE"],["255113412","ANBARASU S"],["255113413","ANBUSELVAN K"],
-["255113414","ARIHARAN B"],["255113415","ARJUNAN P"],["255113416","ARSUDEEN M"],
-["255113417","ARUN KUMAR D"],["255113418","ARUNKUMAR P"],["255113419","ARUSH VINCENT"],
-["255113420","ASLAM T"],["255113421","ASWIN S"],["255113422","AUGUSTIN A"],
-["255113425","BHARATHAN M"],["255113426","BHARATHRAJ P"],
-["255113427","BHAVADAN S"],["255113428","BOOPATHI R"],["255113429","DEENAKUMAR RM"],
-["255113430","DEEPAK KUMAR G"],["255113432","DEEPAK RAJ B"],
-["255113434","DHANUSH S"],["255113435","DHARUN SRIRAM RV"],
-["255113436","DHARUNKUMAR N"],["255113437","DHINESH M"],["255113438","DINESH S"],
-["255113439","EBIN SAM S"],["255113440","EDWIN VASANTH V"],["255113441","GEOFFREY PAUL DANIEL P"],
-["255113442","GODSON S"],["255113443","GOKILAN A"],["255113444","GOKUL GANESH S"],
-["255113445","GOKULT"],["255113446","GOVARTHANAN S"],["255113447","GOWTHAM X"],
-["255113448","GURU MATHESH G"],["255113449","HAEMJEYANTAS"],["255113450","HAJANAVAS N"],
-["255113451","HARI CHARAN S"],["255113452","HARI SANTHOSH B"],["255113453","HARIHARAN D"],
-["255113454","HARIHARAN K"],["255113455","HARIHARAN KP"],["255113456","HARIHARAN P"],
-["255113457","HARIHARAN S"],["255113458","HARIHARAN S"],
-["255113460","HARIHARANT"],["255113461","HARIKRISHNAN S"],["255113462","HARISH K"],
-["255113463","HARISH M"],["255113464","HEMAVARSHAN S"],
-["255113466","HUTSUN D"],["255113467","IBRAHIM JAMEEL K"],["255113468","IYAPPAN R"],
-["255113469","IYYAPPAN M"],["255113470","JAGAN S"],["255113472","BOOPALAN G"],
-["255113473","AKHILAN P"]
-].map(([roll,name])=>({roll,name}));
+const CLASS_DATA = {
+  "2nd_Year": [
+    ["255113401","AALAN ASHNUWA V"],["255113402","AATHAVAN A"],
+    ["255113404","ABISHEK CS"],["255113405","ABISHEK SIRUS P"],["255113406","AHAJAS AHMED R"],
+    ["255113407","AJAY D"],["255113408","AKASH M"],["255113409","AKASH R"],["255113410","ALEX S"],
+    ["255113411","ALLENJOE"],["255113412","ANBARASU S"],["255113413","ANBUSELVAN K"],
+    ["255113414","ARIHARAN B"],["255113415","ARJUNAN P"],["255113416","ARSUDEEN M"],
+    ["255113417","ARUN KUMAR D"],["255113418","ARUNKUMAR P"],["255113419","ARUSH VINCENT"],
+    ["255113420","ASLAM T"],["255113421","ASWIN S"],["255113422","AUGUSTIN A"],
+    ["255113425","BHARATHAN M"],["255113426","BHARATHRAJ P"],
+    ["255113427","BHAVADAN S"],["255113428","BOOPATHI R"],["255113429","DEENAKUMAR RM"],
+    ["255113430","DEEPAK KUMAR G"],["255113432","DEEPAK RAJ B"],
+    ["255113434","DHANUSH S"],["255113435","DHARUN SRIRAM RV"],
+    ["255113436","DHARUNKUMAR N"],["255113437","DHINESH M"],["255113438","DINESH S"],
+    ["255113439","EBIN SAM S"],["255113440","EDWIN VASANTH V"],["255113441","GEOFFREY PAUL DANIEL P"],
+    ["255113442","GODSON S"],["255113443","GOKILAN A"],["255113444","GOKUL GANESH S"],
+    ["255113445","GOKULT"],["255113446","GOVARTHANAN S"],["255113447","GOWTHAM X"],
+    ["255113448","GURU MATHESH G"],["255113449","HAEMJEYANTAS"],["255113450","HAJANAVAS N"],
+    ["255113451","HARI CHARAN S"],["255113452","HARI SANTHOSH B"],["255113453","HARIHARAN D"],
+    ["255113454","HARIHARAN K"],["255113455","HARIHARAN KP"],["255113456","HARIHARAN P"],
+    ["255113457","HARIHARAN S"],["255113458","HARIHARAN S"],
+    ["255113460","HARIHARANT"],["255113461","HARIKRISHNAN S"],["255113462","HARISH K"],
+    ["255113463","HARISH M"],["255113464","HEMAVARSHAN S"],
+    ["255113466","HUTSUN D"],["255113467","IBRAHIM JAMEEL K"],["255113468","IYAPPAN R"],
+    ["255113469","IYYAPPAN M"],["255113470","JAGAN S"],["255113472","BOOPALAN G"],
+    ["255113473","AKHILAN P"]
+  ].map(([roll,name])=>({roll,name})),
+
+  "3rd_Year": [
+    ["215113212","AKASH S R"],["245113401","AAKASH G"],["245113402","AATHARSH S"],
+    ["245113403","ABISHEK K"],["245113404","AHAMED ZAMEER S"],["245113406","AKILAN A"],
+    ["245113407","AKSHAY GANESH A"],["245113408","ALLWIN ISSAC A"],["245113409","ARJUN T"],
+    ["245113410","ASHISH SUBASH A"],["245113411","ASHOK KUMAR A"],["245113412","ASICK JOE A"],
+    ["245113413","AZRAN ALI M"],["245113414","BALAJI L"],["245113415","BALAJI L"],
+    ["245113416","BALAMURUGAN"],["245113417","BALAVENKATESH P"],["245113419","BHUVAN S"],
+    ["245113420","BINNY SARON T"],["245113422","BUVANESHWAR P"],["245113423","CHANDRAMOHAN M"],
+    ["245113424","CHANDRU S"],["245113425","CHRISTHU DEVARAJ A"],["245113426","DANIEL RAJ A"],
+    ["245113427","DEEBHAN WESLY P"],["245113428","DEEPAK A"],["245113429","DEEPAK K"],
+    ["245113430","DEVADHARSHAN P"],["245113431","DEVAPRASANTH P"],["245113432","DHANUSH K"],
+    ["245113433","DHANUSH R"],["245113434","DHANUSH V"],["245113435","DHARANISVARAN S"],
+    ["245113436","DHARSHAN SS"],["245113437","DHARSHITH B"],["245113438","DHARUN RAJ R"],
+    ["245113439","DHARUN V"],["245113440","DHEENADHAYALAN M"],["245113441","DHIVAKAR S"],
+    ["245113442","DINESH A"],["245113443","DINESHKANNA T"],["245113444","DINESHKUMAR S I"],
+    ["245113446","EBINESH D"],["245113447","ELAYARAJA S"],["245113450","GODLIN REJO S C"],
+    ["245113451","GOKUL M"],["245113452","GOKULKRISHNA M"],["245113453","GOTHAIESWAR N"],
+    ["245113454","GOWTHAM R"],["245113455","GURUPRASATH K"],["245113456","GURUPRASATH M"],
+    ["245113459","KAVISURYA N"],["245113460","ABDUL MUQSITH A"]
+  ].map(([roll,name])=>({roll,name}))
+};
+
+let activeClassKey = localStorage.getItem('markLedger_activeClass') || "2nd_Year";
+let STUDENTS = CLASS_DATA[activeClassKey];
+
+const classSelector = document.getElementById('classSelector');
+classSelector.value = activeClassKey;
 
 // Question field definitions
 const SIMPLE_FIELDS = [
   ...Array.from({length:10},(_,i)=>({id:'q'+(i+1), max:1})),
   ...Array.from({length:5},(_,i)=>({id:'q'+(i+11), max:2})),
 ];
-const CHOICE_QS = [16,17,18,19]; // each has a/b, max 5
+const CHOICE_QS = [16,17,18,19]; 
 const PART_D_FIELDS = [20,21,22].map(n=>({id:'q'+n, max:10}));
 
 const FOCUS_ORDER = [
@@ -552,22 +605,19 @@ PART_D_FIELDS.forEach(f=>MAX_LOOKUP[f.id]=f.max);
 const ALL_Q_IDS = FOCUS_ORDER;
 
 /* ============================================================
-   STORAGE KEYS
+   STORAGE KEYS & STATE
    ============================================================ */
 const LS_CONFIG = 'markLedger_config';
 const LS_DATA   = 'markLedger_studentData';
 const LS_INDEX  = 'markLedger_currentIndex';
 
-/* ============================================================
-   STATE
-   ============================================================ */
 let config = JSON.parse(localStorage.getItem(LS_CONFIG) || 'null');
 let studentData = JSON.parse(localStorage.getItem(LS_DATA) || '{}');
 let currentIndex = parseInt(localStorage.getItem(LS_INDEX) || '0', 10);
 if (isNaN(currentIndex) || currentIndex < 0 || currentIndex >= STUDENTS.length) currentIndex = 0;
 
 /* ============================================================
-   BUILD STATIC DOM: question inputs
+   BUILD STATIC DOM
    ============================================================ */
 function buildSimpleCell(id, max){
   const div = document.createElement('div');
@@ -581,7 +631,6 @@ document.getElementById('partA').append(...SIMPLE_FIELDS.slice(0,10).map(f=>buil
 document.getElementById('partB').append(...SIMPLE_FIELDS.slice(10,15).map(f=>buildSimpleCell(f.id,f.max)));
 document.getElementById('partD').append(...PART_D_FIELDS.map(f=>buildSimpleCell(f.id,f.max)));
 
-// Part C — choice pairs
 const partCEl = document.getElementById('partC');
 CHOICE_QS.forEach(n=>{
   const wrap = document.createElement('div');
@@ -647,15 +696,30 @@ document.getElementById('saveSetupBtn').addEventListener('click', ()=>{
 renderSetup();
 
 /* ============================================================
-   STUDENT SELECT DROPDOWN
+   STUDENT SELECT & CLASS SWITCH
    ============================================================ */
 const studentSearch = document.getElementById('studentSearch');
-STUDENTS.forEach((s,i)=>{
-  const opt = document.createElement('option');
-  opt.value = i;
-  opt.textContent = `${s.roll} — ${s.name}`;
-  studentSearch.appendChild(opt);
+
+function populateStudentDropdown() {
+  studentSearch.innerHTML = '';
+  STUDENTS.forEach((s,i)=>{
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${s.roll} — ${s.name}`;
+    studentSearch.appendChild(opt);
+  });
+}
+
+classSelector.addEventListener('change', (e)=>{
+  saveCurrentStudent();
+  activeClassKey = e.target.value;
+  localStorage.setItem('markLedger_activeClass', activeClassKey);
+  STUDENTS = CLASS_DATA[activeClassKey];
+  currentIndex = 0;
+  populateStudentDropdown();
+  loadStudent(0);
 });
+
 studentSearch.addEventListener('change', ()=>{
   saveCurrentStudent();
   currentIndex = parseInt(studentSearch.value,10);
@@ -720,15 +784,12 @@ function focusField(id){
   if (el && !el.disabled){ el.focus(); el.select(); }
 }
 
-function isChoiceA(id){ return /^q\d+a$/.test(id); }
-function isChoiceB(id){ return /^q\d+b$/.test(id); }
-
 function advanceFrom(id){
   const idx = FOCUS_ORDER.indexOf(id);
   const input = document.getElementById(id);
   const val = getVal(id);
 
-  if (isChoiceA(id)){
+  if (/^q\d+a$/.test(id)){
     const bId = input.dataset.partner;
     const bInput = document.getElementById(bId);
     if (val > 0){
@@ -746,7 +807,7 @@ function advanceFrom(id){
     return;
   }
 
-  if (isChoiceB(id)){
+  if (/^q\d+b$/.test(id)){
     const aId = input.dataset.partner;
     const aInput = document.getElementById(aId);
     if (val > 0){
@@ -826,12 +887,10 @@ ALL_Q_IDS.forEach((id, index) => {
    LIVE PREVIEW (EXACT REPLICA MAPPING)
    ============================================================ */
 function updatePreview(){
-  // Part A
   const a = SIMPLE_FIELDS.slice(0,10).map(f=>getVal(f.id));
   const sumA = a.reduce((x,y)=>x+y,0);
   document.getElementById('sumA').textContent = String(sumA).padStart(2, '0');
 
-  // Part B
   const bIds = [11, 12, 13, 14, 15];
   let sumB = 0;
   bIds.forEach(n => {
@@ -840,7 +899,6 @@ function updatePreview(){
   });
   document.getElementById('sumB').textContent = sumB;
 
-  // Part C
   let sumC = 0;
   CHOICE_QS.forEach(n => {
     document.getElementById('pca'+n).textContent = fmtMark('q'+n+'a');
@@ -849,7 +907,6 @@ function updatePreview(){
   });
   document.getElementById('sumC').textContent = sumC;
 
-  // Part D
   const dIds = [20, 21, 22];
   let sumD = 0;
   dIds.forEach(n => {
@@ -940,7 +997,7 @@ document.getElementById('prevBtn').addEventListener('click', ()=>{
 });
 
 /* ============================================================
-   CSV EXPORT
+   CSV EXPORT (EXPORTS ONLY CURRENTLY SELECTED CLASS)
    ============================================================ */
 function toCsvValue(v){
   const s = String(v ?? '');
@@ -978,17 +1035,17 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  const fname = `marks_${(config?.paperCode||'export').replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.csv`;
+  const classNameForFile = activeClassKey.replace('_', '-');
+  const fname = `marks_${classNameForFile}_${(config?.paperCode||'export').replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.csv`;
   a.href = url; a.download = fname;
   document.body.appendChild(a); a.click(); a.remove();
   URL.revokeObjectURL(url);
 });
 
-
-
 /* ============================================================
    INIT
    ============================================================ */
+populateStudentDropdown();
 loadStudent(currentIndex);
 </script>
 </body>
