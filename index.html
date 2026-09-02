@@ -128,6 +128,10 @@
     cursor:pointer;
     font-family:'Inter';
   }
+  .btn:focus {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
   .btn:hover{background:#0F172A; border-color:#0F172A;}
   .btn.secondary{background:#fff;color:var(--ink);border-color:var(--line);}
   .btn.secondary:hover{border-color:var(--ink);}
@@ -421,7 +425,7 @@
       </div>
 
       <div class="card">
-        <h2>Part D <span class="tag">Q20–Q22 · max 10 each</span></h2>
+        <h2>Part D <span class="tag">Q20–Q22 · Any 2 · max 10 each</span></h2>
         <div class="qgrid cols3" id="partD"></div>
       </div>
 
@@ -777,11 +781,27 @@ function validate(id){
 }
 
 /* ============================================================
-   FOCUS ADVANCE LOGIC
+   FOCUS ADVANCE LOGIC (Auto Jump to Save Button added)
    ============================================================ */
 function focusField(id){
   const el = document.getElementById(id);
   if (el && !el.disabled){ el.focus(); el.select(); }
+}
+
+function jumpToNextAvailable(startIndex){
+  let found = false;
+  for (let i = startIndex; i < ALL_Q_IDS.length; i++) {
+    let el = document.getElementById(ALL_Q_IDS[i]);
+    if (el && !el.disabled) {
+      focusField(ALL_Q_IDS[i]);
+      found = true;
+      break;
+    }
+  }
+  if (!found) {
+    // Reached the end, jump to Save & Next Student button automatically
+    document.getElementById('nextBtn').focus();
+  }
 }
 
 function advanceFrom(id){
@@ -797,13 +817,14 @@ function advanceFrom(id){
       bInput.disabled = true;
       bInput.classList.add('locked');
       clearError(bId);
-      focusField(FOCUS_ORDER[idx+2]); 
+      updatePreview();
+      jumpToNextAvailable(idx + 2); 
     } else {
       bInput.disabled = false;
       bInput.classList.remove('locked');
+      updatePreview();
       focusField(bId);
     }
-    updatePreview();
     return;
   }
 
@@ -815,13 +836,13 @@ function advanceFrom(id){
       aInput.disabled = true;
       aInput.classList.add('locked');
     }
-    focusField(FOCUS_ORDER[idx+1]);
     updatePreview();
+    jumpToNextAvailable(idx + 1);
     return;
   }
 
-  focusField(FOCUS_ORDER[idx+1]);
   updatePreview();
+  jumpToNextAvailable(idx + 1);
 }
 
 /* Attach listeners to every question input */
@@ -842,18 +863,12 @@ ALL_Q_IDS.forEach((id, index) => {
     } 
     else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault();
-      let nextIdx = index + 1;
-      while (nextIdx < ALL_Q_IDS.length) {
-        let nextEl = document.getElementById(ALL_Q_IDS[nextIdx]);
-        if (nextEl && !nextEl.disabled) {
-          focusField(ALL_Q_IDS[nextIdx]);
-          break;
-        }
-        nextIdx++;
-      }
+      updatePreview();
+      jumpToNextAvailable(index + 1);
     } 
     else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
       e.preventDefault();
+      updatePreview();
       let prevIdx = index - 1;
       while (prevIdx >= 0) {
         let prevEl = document.getElementById(ALL_Q_IDS[prevIdx]);
@@ -884,13 +899,36 @@ ALL_Q_IDS.forEach((id, index) => {
 });
 
 /* ============================================================
+   PART D "ANY 2" LOCKING LOGIC
+   ============================================================ */
+function checkPartD() {
+  const dIds = ['q20', 'q21', 'q22'];
+  let attemptCount = dIds.filter(id => getVal(id) > 0).length;
+
+  dIds.forEach(id => {
+    let el = document.getElementById(id);
+    if (attemptCount >= 2) {
+      if (getVal(id) === 0) {
+        el.disabled = true;
+        el.classList.add('locked');
+      }
+    } else {
+      el.disabled = false;
+      el.classList.remove('locked');
+    }
+  });
+}
+
+/* ============================================================
    LIVE PREVIEW (EXACT REPLICA MAPPING)
    ============================================================ */
 function updatePreview(){
+  // Part A
   const a = SIMPLE_FIELDS.slice(0,10).map(f=>getVal(f.id));
   const sumA = a.reduce((x,y)=>x+y,0);
   document.getElementById('sumA').textContent = String(sumA).padStart(2, '0');
 
+  // Part B
   const bIds = [11, 12, 13, 14, 15];
   let sumB = 0;
   bIds.forEach(n => {
@@ -899,6 +937,7 @@ function updatePreview(){
   });
   document.getElementById('sumB').textContent = sumB;
 
+  // Part C
   let sumC = 0;
   CHOICE_QS.forEach(n => {
     document.getElementById('pca'+n).textContent = fmtMark('q'+n+'a');
@@ -907,6 +946,10 @@ function updatePreview(){
   });
   document.getElementById('sumC').textContent = sumC;
 
+  // Re-evaluate Part D locks before getting values
+  checkPartD();
+
+  // Part D
   const dIds = [20, 21, 22];
   let sumD = 0;
   dIds.forEach(n => {
