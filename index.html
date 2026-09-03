@@ -6,21 +6,24 @@
 <title>Mark Entry Ledger — Bishop Heber College</title>
 <style>
   :root {
-    /* Apple iOS Theme Colors */
-    --bg-body: #F2F2F7;
+    /* Custom User Palette + iOS Theme */
+    --bg-body: #F4F7F7; /* Very subtle tint */
     --bg-card: #FFFFFF;
     --bg-input: #F2F2F7;
     --line: #E5E5EA;
     --ink: #1C1C1E;
     --ink-soft: #8E8E93;
-    --accent: #007AFF; /* iOS Blue */
-    --accent-hover: #005ecb;
+    
+    /* User Colors */
+    --accent: #1B766C;       /* Dark Teal */
+    --accent-light: #AAEDE7; /* Light Cyan */
+    --accent-hover: #12544D; /* Darker Teal for hover */
+    
     --error: #FF3B30; /* iOS Red */
-    --green: #34C759; /* iOS Green */
     --locked-bg: #E5E5EA;
     
-    --shadow-card: 0 4px 20px rgba(0,0,0,0.04);
-    --shadow-btn: 0 4px 12px rgba(0, 122, 255, 0.25);
+    --shadow-card: 0 4px 20px rgba(27, 118, 108, 0.06);
+    --shadow-btn: 0 4px 12px rgba(27, 118, 108, 0.3);
     --shadow-btn-red: 0 4px 12px rgba(255, 59, 48, 0.25);
   }
   
@@ -30,7 +33,7 @@
     margin:0;
     background: var(--bg-body);
     color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
     padding-bottom: 60px;
@@ -84,9 +87,9 @@
   }
   .card > h2 .tag {
     font-size: 11px;
-    font-weight: 600;
-    color: var(--ink-soft);
-    background: var(--bg-body);
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-light);
     padding: 4px 10px;
     border-radius: 12px;
   }
@@ -120,6 +123,7 @@
     outline: none;
     border-color: var(--accent);
     background: #fff;
+    box-shadow: 0 0 0 3px var(--accent-light);
   }
   
   /* IPHONE STYLE BUTTONS */
@@ -137,7 +141,7 @@
     transition: all 0.2s ease-in-out;
   }
   .btn:focus {
-    outline: 3px solid rgba(0, 122, 255, 0.4);
+    outline: 3px solid var(--accent-light);
     outline-offset: 2px;
   }
   .btn:hover {
@@ -146,12 +150,12 @@
   }
   
   .btn.secondary {
-    background: var(--bg-input);
+    background: var(--accent-light);
     color: var(--accent);
     box-shadow: none;
   }
   .btn.secondary:hover {
-    background: #E5E5EA;
+    background: #95ded8;
   }
   
   /* Red Reset Button */
@@ -188,10 +192,10 @@
     border: none;
     border-radius: 10px;
     font-family: inherit;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 14px;
     color: var(--accent);
-    background: rgba(0, 122, 255, 0.1);
+    background: var(--accent-light);
     cursor: pointer;
   }
   #studentBar .who .roll{
@@ -275,7 +279,7 @@
   }
   .progress-fill {
     height: 100%;
-    background: var(--green);
+    background: var(--accent);
     width: 0%;
     transition: width 0.5s ease-out;
   }
@@ -295,6 +299,7 @@
     font-size: 14px;
     font-weight: 500;
     width:220px;
+    color: var(--ink);
   }
 
   /* Layout */
@@ -348,7 +353,7 @@
     outline: none;
     border-color: var(--accent);
     background: #fff;
-    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+    box-shadow: 0 0 0 3px var(--accent-light);
   }
   .qcell input.locked{
     background: var(--locked-bg);
@@ -388,7 +393,7 @@
     margin-top: 2px;
   }
 
-  /* --- REPLICA TABLE (Modernized) --- */
+  /* --- REPLICA TABLE (UPDATED FOR PURE BLACK MARKS) --- */
   #previewCard{position:sticky;top:20px;}
   table.replica {
     width: 100%;
@@ -431,18 +436,18 @@
   }
   table.replica td.val {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-weight: 700;
-    color: var(--ink);
-    font-size: 16px;
+    font-weight: 800; /* Extra Bold */
+    color: #000000;   /* Pure Black */
+    font-size: 18px;  /* Made Larger */
   }
   table.replica td.val.absent-text {
     color: var(--error);
   }
   table.replica td.total-col {
     background: #FAFAFA;
-    color: var(--accent);
-    font-weight: 700;
-    font-size: 16px;
+    color: #000000;   /* Pure Black */
+    font-weight: 800;
+    font-size: 18px;
   }
   table.replica .dim {
     color: var(--ink-soft);
@@ -471,7 +476,7 @@
   
   .savednote{
     font-size: 13px;
-    color: var(--green);
+    color: var(--accent);
     font-weight: 700;
     opacity: 0;
     transition: opacity .3s;
@@ -489,7 +494,7 @@
     font-size:14px;
   }
   #setupLockedRow div span{color:var(--ink-soft);font-size:11px;display:block;margin-bottom:2px;font-weight:600;}
-  #setupLockedRow div b{font-weight:600;font-size:15px;}
+  #setupLockedRow div b{font-weight:700;font-size:15px; color:var(--ink);}
 </style>
 </head>
 <body>
@@ -882,8 +887,8 @@ function renderSetup(){
       <div><span>Batch / Section</span><b>${config.batch||'—'}</b></div>
       <div><span>Course Title</span><b>${config.course||'—'}</b></div>
       <div style="display:flex; gap:8px; margin-left:auto;">
-        <button class="btn secondary" id="editSetupBtn" style="padding:6px 16px;font-size:12px;">Edit Setup</button>
-        <button class="btn btn-reset" id="resetAllBtnLocked" style="padding:6px 16px;font-size:12px;">Reset Database</button>
+        <button class="btn secondary" id="editSetupBtn" style="padding:8px 16px;font-size:12px;">Edit Setup</button>
+        <button class="btn btn-reset" id="resetAllBtnLocked" style="padding:8px 16px;font-size:12px;">Reset Database</button>
       </div>`;
     document.getElementById('setupTag').textContent = 'LOCKED';
     
@@ -1216,8 +1221,6 @@ function checkPartD() {
    LIVE PREVIEW (EXACT REPLICA MAPPING)
    ============================================================ */
 function updatePreview(){
-  const absText = isCurrentAbsent ? 'ABS' : '0';
-  
   const a = SIMPLE_FIELDS.slice(0,10).map(f=>getVal(f.id));
   const sumA = a.reduce((x,y)=>x+y,0);
   document.getElementById('sumA').textContent = isCurrentAbsent ? 'ABS' : String(sumA).padStart(2, '0');
