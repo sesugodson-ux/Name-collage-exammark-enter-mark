@@ -1066,7 +1066,6 @@ function renderSetup(){
 
     document.getElementById('resetAllBtnLocked').addEventListener('click', handleResetAll);
 
-    // After setup is locked, automatically focus on the first question of the current student
     setTimeout(() => {
       focusField(FOCUS_ORDER[0]);
     }, 100);
@@ -1199,7 +1198,6 @@ function jumpToNextAvailable(startIndex){
     }
   }
   if (!found) {
-    // When all questions are passed, jump to Grand Total row first!
     const grandTotalEl = document.getElementById('grandTotal');
     if (grandTotalEl) {
       grandTotalEl.focus();
@@ -1250,16 +1248,14 @@ function advanceFrom(id){
   jumpToNextAvailable(idx + 1);
 }
 
-/* Grand Total Keyboard Listener for seamless workflow */
 document.getElementById('grandTotal').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     e.preventDefault();
-    // Trigger Save & Next Student action directly
     document.getElementById('nextBtn').click();
   }
 });
 
-/* Attach listeners to every question input with Part D smart 1-vs-10 timer logic */
+/* Attach listeners to every question input */
 ALL_Q_IDS.forEach((id, index) => {
   const input = document.getElementById(id);
 
@@ -1332,18 +1328,13 @@ ALL_Q_IDS.forEach((id, index) => {
     if (validate(id)){
       updatePreview();
       
-      // Part D Smart Input Logic: if max is 10 (q20, q21, q22)
+      // Part D Rule: Except '1', any other valid digit (0, 2-9) auto-jumps instantly without needing Enter.
       if (max === 10) {
-        clearTimeout(input._timer);
-        if (input.value === '1') {
-          // Wait briefly in case user is typing '10'
-          input._timer = setTimeout(() => {
-            if (input.value === '1') {
-              advanceFrom(id);
-            }
-          }, 400);
-        } else if (input.value.length >= maxLen || (input.value >= '2' && input.value <= '9')) {
-          advanceFrom(id);
+        let currentVal = input.value;
+        if (currentVal !== '1' && currentVal !== '') {
+          if (currentVal.length >= maxLen || (currentVal >= '2' && currentVal <= '9') || currentVal === '0') {
+            advanceFrom(id);
+          }
         }
       } else {
         if (input.value.length >= maxLen && input.value !== ''){
@@ -1613,4 +1604,4 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
 loadStudent(currentIndex);
 </script>
 </body>
-</html>
+</html> 
