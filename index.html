@@ -601,7 +601,8 @@
     <div id="setupLockedRow" style="display:none;"></div>
   </div>
 
-  <div class="card">
+  <!-- Student Bar Card assigned an ID for auto-scrolling -->
+  <div class="card" id="studentCardAnchor">
     <div id="studentBarWrap">
       <div id="studentBar">
         <div class="who">
@@ -1502,6 +1503,12 @@ function loadStudent(index){
   document.getElementById('prevBtn').disabled = index===0;
   document.getElementById('nextBtn').textContent = index===STUDENTS.length-1 ? 'Save & Finish' : 'Save & Next Student';
   localStorage.setItem(LS_INDEX, String(index));
+
+  // Smooth auto-scroll to the top student info anchor so roll number is clearly visible
+  const studentAnchor = document.getElementById('studentCardAnchor');
+  if (studentAnchor) {
+    studentAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 function saveCurrentStudent(silent = false){
@@ -1604,4 +1611,4 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
 loadStudent(currentIndex);
 </script>
 </body>
-</html> 
+</html>
