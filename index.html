@@ -115,17 +115,18 @@
     padding: 10px 12px;
     border: 2px solid var(--line);
     border-radius: 10px;
-    background: #fff;
+    background: var(--bg-input);
     font-family: inherit;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--ink);
     transition: all 0.2s;
   }
   .field-group input:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-light);
+    background: #fff;
+    box-shadow: 0 0 0 4px var(--accent-light);
   }
 
   /* CUSTOM SELECT BUTTONS */
@@ -138,7 +139,7 @@
     background: var(--accent-light);
     font-family: inherit;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--accent-hover);
     cursor: pointer;
     display: flex;
@@ -154,10 +155,10 @@
     border: none;
     background: var(--accent);
     color: #fff;
-    padding: 10px 20px;
+    padding: 12px 24px;
     font-size: 14px;
-    font-weight: 700;
-    border-radius: 20px; 
+    font-weight: 800;
+    border-radius: 24px; 
     cursor: pointer;
     font-family: inherit;
     box-shadow: var(--shadow-btn);
@@ -165,12 +166,12 @@
   }
   .btn:hover {
     background: var(--accent-hover); 
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
   
   .btn.secondary {
     background: var(--accent-light);
-    color: var(--accent);
+    color: var(--accent-hover);
     box-shadow: none;
   }
   .btn.secondary:hover { background: #95ded8; }
@@ -179,14 +180,14 @@
     background: var(--error);
     box-shadow: var(--shadow-btn-red);
   }
-  .btn.btn-reset:hover { background: #D70015; }
+  .btn.btn-reset:hover { background: #C82333; }
   .btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;}
 
   /* Student switch bar */
   #studentBarWrap {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
   }
   #studentBar{
     display:flex;
@@ -198,18 +199,24 @@
   #studentBar .who{
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:16px;
   }
+  /* STYLED ROLL NUMBER BADGE */
   #studentBar .who .roll{
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-weight:700;
+    font-weight:800;
     font-size:16px;
-    color: var(--ink-soft);
+    color: var(--accent-hover);
+    background: var(--accent-light);
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--accent);
   }
   #studentBar .who .name{
-    font-size:22px;
+    font-size:24px;
     font-weight:800;
     letter-spacing: -0.01em;
+    color: var(--accent);
   }
   .sec-badge {
     font-size: 13px;
@@ -217,7 +224,7 @@
     color: #fff;
     padding: 3px 8px;
     border-radius: 8px;
-    font-weight: 700;
+    font-weight: 800;
     vertical-align: middle;
     margin-left: 6px;
   }
@@ -229,7 +236,7 @@
     background: #fff;
     border: 2px solid var(--error);
     color: var(--error);
-    padding: 6px 14px 6px 8px;
+    padding: 6px 16px 6px 8px;
     border-radius: 30px;
     font-size: 14px;
     font-weight: 800;
@@ -270,7 +277,7 @@
   .progress-container {
     width: 100%;
     background: var(--line);
-    border-radius: 6px;
+    border-radius: 8px;
     height: 8px;
     overflow: hidden;
   }
@@ -280,18 +287,19 @@
     width: 0%;
     transition: width 0.5s ease-out;
   }
+  /* STYLED PROGRESS TEXT */
   .progress-text {
     font-size: 13px;
-    color: var(--accent);
-    font-weight: 700;
+    color: var(--accent-hover);
+    font-weight: 800;
     text-align: right;
-    margin-top: 6px;
+    margin-top: 8px;
   }
 
   .split{
     display:grid;
     grid-template-columns:1.15fr 1fr;
-    gap:20px;
+    gap:24px;
     align-items:start;
   }
   @media (max-width:920px){
@@ -309,26 +317,29 @@
   .qgrid.cols3{grid-template-columns:repeat(3,1fr);}
 
   .qcell{position:relative;}
+  
+  /* Q Number Highly Visible */
   .qcell label{
     display:block;
     text-align:center;
-    font-size:13px; 
+    font-size:14px; 
     font-weight:800;
-    color: var(--ink);
+    color: var(--accent-hover);
     margin-bottom:8px;
   }
+  /* Dark Teal Input Box */
   .qcell input{
     width:100%;
     text-align:center;
     padding:4px 2px; 
-    height: 48px;
+    height: 52px;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-weight: 800;
-    font-size: 22px; 
+    font-size: 24px; 
     border: 2px solid transparent;
     border-radius: 12px;
-    background: var(--accent);
-    color: #ffffff;
+    background: var(--accent); 
+    color: #ffffff; 
     transition: all 0.2s;
   }
   .qcell input:focus{
@@ -338,14 +349,14 @@
   }
   .qcell input.locked, .qcell input:disabled {
     background: var(--locked-bg);
-    color: #999999;
-    border: none;
+    color: var(--ink-soft);
+    border: 2px dashed #CBE6E3;
     font-weight:600;
   }
   .qcell input.err{
     background: var(--error);
     color: #fff;
-    box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.3);
+    box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.3);
   }
   .qcell .errmsg{
     position:absolute;
@@ -354,7 +365,7 @@
     color:var(--error);
     text-align:center;
     margin-top:4px;
-    font-weight:700;
+    font-weight:800;
   }
   .choice-pair{
     display:grid;
@@ -363,14 +374,16 @@
   }
   .choice-pair .sub{
     font-size:12px;
-    color:var(--ink);
+    color:var(--accent);
     text-align:center;
     display:block;
-    font-weight:700;
+    font-weight:800;
     margin-top: 4px;
   }
 
-  /* REPLICA TABLE - FLAWLESS FLEXBOX GRID ALIGNMENT */
+  /* ============================================================
+     REPLICA TABLE - FLAWLESS FLEXBOX GRID ALIGNMENT
+     ============================================================ */
   #previewCard{position:sticky;top:20px;}
   table.replica {
     width: 100%;
@@ -380,63 +393,65 @@
     border-radius: 12px;
     overflow: hidden;
     border-style: hidden; 
-    box-shadow: 0 0 0 2px var(--line);
-    table-layout: fixed;
+    box-shadow: 0 0 0 2px var(--accent-light);
   }
   table.replica th, table.replica td {
-    border: 1px solid var(--line);
+    border: 1px solid var(--accent-light);
     text-align: center;
     vertical-align: middle;
   }
   table.replica th {
     background: var(--accent);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 800;
     color: #fff;
-    padding: 10px;
+    padding: 12px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
   table.replica td.partlabel {
     text-align: left;
     font-weight: 800;
-    background: var(--accent-light);
-    font-size: 13px;
-    padding: 6px 12px;
-    color: var(--accent-hover);
+    background: var(--bg-input);
+    font-size: 14px;
+    padding: 10px 14px;
+    color: var(--accent);
     width: 22%;
   }
+  /* Remove padding for exact grid control inside */
   table.replica td.data-cell {
     padding: 0;
     width: 60%;
-    height: 100%;
   }
   table.replica td.total-col {
-    background: #E8F3F2;
+    background: var(--bg-input);
     color: #000000;
     font-weight: 900;
-    font-size: 22px;
+    font-size: 24px;
     width: 18%;
   }
   table.replica .dim {
-    color: var(--accent-hover);
-    font-weight: 600;
+    color: var(--ink-soft);
+    font-weight: 700;
   }
 
-  /* INNER DATA GRIDS - PERFECT ALIGNMENT */
+  /* INNER DATA GRIDS */
   .data-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); height: 100%; }
   .data-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); height: 100%; }
   .data-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); height: 100%; }
   
-  .g-col { display: flex; flex-direction: column; border-right: 1px solid var(--line); }
-  .g-col:last-child { border-right: none; }
+  .d-col { display: flex; flex-direction: column; border-right: 1px solid var(--accent-light); }
+  .d-col:last-child { border-right: none; }
   
-  .g-head { background: #E8F3F2; padding: 6px; font-size: 13px; font-weight: 800; color: var(--accent); border-bottom: 1px solid var(--line); text-align: center;}
-  .g-val { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #000; padding: 10px 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;}
-  .g-val.absent-text { color: var(--error); font-size: 18px; }
+  .d-head { background: var(--bg-input); padding: 6px; font-size: 13px; font-weight: 800; color: var(--accent); border-bottom: 1px solid var(--accent-light); text-align: center;}
+  .d-val { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #000; padding: 10px 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;}
+  .d-val.absent-text { color: var(--error); font-size: 18px; }
 
-  .row-no-bottom { border-bottom: none !important; }
-  .row-no-top { border-top: none !important; }
+  /* For Part C Rows */
+  .d-row { display: flex; flex: 1; align-items: stretch; }
+  .r-lbl { background: var(--bg-input); width: 28px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--accent-hover); border-right: 1px solid var(--accent-light); }
+  .r-val { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #000; padding: 8px 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;}
+  .r-val.absent-text { color: var(--error); font-size: 16px; }
 
   .navbtns{display:flex;gap:12px;justify-content:space-between;margin-top:20px;}
   .navbtns .btn{flex:1;text-align:center; padding: 14px; font-size: 15px;}
@@ -469,18 +484,18 @@
     display:flex;
     align-items: center;
     flex-wrap:wrap;
-    gap:12px 24px;
+    gap:16px 28px;
     font-size:14px;
   }
-  #setupLockedRow div span{color:var(--ink-soft);font-size:11px;display:block;margin-bottom:2px;font-weight:700;}
-  #setupLockedRow div b{font-weight:800;font-size:15px; color:var(--ink);}
+  #setupLockedRow div span{color:var(--accent);font-size:12px;display:block;margin-bottom:4px;font-weight:800;}
+  #setupLockedRow div b{font-weight:800;font-size:16px; color:var(--ink);}
 
   /* MODAL UI */
   .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(5px);
+    background: rgba(27, 118, 108, 0.4);
+    backdrop-filter: blur(6px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -539,9 +554,9 @@
     padding: 14px 16px;
     border-radius: 12px;
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 800;
     font-size: 15px;
-    color: var(--ink);
+    color: var(--accent);
     border: 2px solid transparent;
     transition: all 0.2s;
   }
@@ -563,7 +578,6 @@
 
 <div class="wrap">
 
-  <!-- SETUP CARD -->
   <div class="card" id="setupCard">
     <h2>Exam Configuration <span class="tag" id="setupTag">EDIT ONCE</span></h2>
     <div id="setupForm">
@@ -583,11 +597,9 @@
         <button class="btn btn-reset" id="resetAllBtn">Reset Database</button>
       </div>
     </div>
-    <!-- Locked View -->
     <div id="setupLockedRow" style="display:none;"></div>
   </div>
 
-  <!-- STUDENT SWITCH BAR -->
   <div class="card">
     <div id="studentBarWrap">
       <div id="studentBar">
@@ -603,10 +615,8 @@
             Mark ABS
           </label>
         </div>
-        <!-- Custom Student Selector Button -->
-        <button type="button" id="studentTriggerBtn" class="custom-select-btn" style="width: 280px;">Select Student ▼</button>
+        <button type="button" id="studentTriggerBtn" class="custom-select-btn" style="width: 300px;">Select Student ▼</button>
       </div>
-      <!-- PROGRESS BAR -->
       <div>
         <div class="progress-container">
           <div class="progress-fill" id="progressFill"></div>
@@ -617,7 +627,6 @@
   </div>
 
   <div class="split">
-    <!-- ENTRY -->
     <div>
       <div class="card">
         <h2>Part A &middot; MCQ <span class="tag">Q1–Q10 &middot; max 1</span></h2>
@@ -645,22 +654,20 @@
       </div>
     </div>
 
-    <!-- PREVIEW -->
     <div>
       <div class="card" id="previewCard">
         <h2>Marks Scored <span class="tag">Live Preview</span></h2>
         
-        <!-- REWORKED TABLE FOR PERFECT WIDTH DISTRIBUTION -->
         <table class="replica">
           <thead>
             <tr>
-              <th>SECTION</th>
-              <th>MARKS SCORED</th>
-              <th>TOTAL</th>
+              <th style="width:22%">Section</th>
+              <th style="width:60%">Marks Scored</th>
+              <th style="width:18%;">Total</th>
             </tr>
           </thead>
           <tbody>
-            <!-- Part A -->
+            
             <tr>
               <td class="partlabel">Part A</td>
               <td class="data-cell">
@@ -669,71 +676,61 @@
               <td class="val total-col" id="sumA_tot">0</td>
             </tr>
 
-            <!-- Part B -->
             <tr>
               <td class="partlabel row-no-bottom">Part B<br><span class="dim" style="font-size:11px;">(2 Marks)</span></td>
               <td class="data-cell">
                 <div class="data-grid-5">
-                  <div class="g-col"><div class="g-head">11</div><div class="g-val" id="pb11"></div></div>
-                  <div class="g-col"><div class="g-head">12</div><div class="g-val" id="pb12"></div></div>
-                  <div class="g-col"><div class="g-head">13</div><div class="g-val" id="pb13"></div></div>
-                  <div class="g-col"><div class="g-head">14</div><div class="g-val" id="pb14"></div></div>
-                  <div class="g-col"><div class="g-head">15</div><div class="g-val" id="pb15"></div></div>
+                  <div class="d-col"><div class="d-head">11</div><div class="d-val" id="pb11"></div></div>
+                  <div class="d-col"><div class="d-head">12</div><div class="d-val" id="pb12"></div></div>
+                  <div class="d-col"><div class="d-head">13</div><div class="d-val" id="pb13"></div></div>
+                  <div class="d-col"><div class="d-head">14</div><div class="d-val" id="pb14"></div></div>
+                  <div class="d-col"><div class="d-head">15</div><div class="d-val" id="pb15"></div></div>
                 </div>
               </td>
               <td class="val total-col" id="sumB">0</td>
             </tr>
 
-            <!-- Part C (THE FIX: a and b moved to the SECTION column!) -->
             <tr>
-              <td class="partlabel row-no-bottom" style="padding-bottom: 4px;">Part C<br><span class="dim" style="font-size:11px;">(5 Marks)</span></td>
+              <td class="partlabel row-no-bottom">Part C<br><span class="dim" style="font-size:11px;">(5 Marks)</span></td>
               <td class="data-cell">
                 <div class="data-grid-4">
-                  <div class="g-head" style="border-right: 1px solid var(--line);">16</div>
-                  <div class="g-head" style="border-right: 1px solid var(--line);">17</div>
-                  <div class="g-head" style="border-right: 1px solid var(--line);">18</div>
-                  <div class="g-head">19</div>
+                  <div class="d-col">
+                    <div class="d-head">16</div>
+                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca16"></span></div>
+                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb16"></span></div>
+                  </div>
+                  <div class="d-col">
+                    <div class="d-head">17</div>
+                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca17"></span></div>
+                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb17"></span></div>
+                  </div>
+                  <div class="d-col">
+                    <div class="d-head">18</div>
+                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca18"></span></div>
+                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb18"></span></div>
+                  </div>
+                  <div class="d-col">
+                    <div class="d-head">19</div>
+                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca19"></span></div>
+                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb19"></span></div>
+                  </div>
                 </div>
               </td>
-              <td class="val total-col" rowspan="3" id="sumC">0</td>
-            </tr>
-            <tr>
-              <td class="partlabel row-no-bottom row-no-top" style="text-align: right; padding-right: 16px; font-size: 14px; color: var(--accent-hover);">a)</td>
-              <td class="data-cell">
-                <div class="data-grid-4">
-                  <div class="g-val" style="border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);" id="pca16"></div>
-                  <div class="g-val" style="border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);" id="pca17"></div>
-                  <div class="g-val" style="border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);" id="pca18"></div>
-                  <div class="g-val" style="border-bottom: 1px solid var(--line);" id="pca19"></div>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="partlabel row-no-top" style="text-align: right; padding-right: 16px; font-size: 14px; color: var(--accent-hover);">b)</td>
-              <td class="data-cell">
-                <div class="data-grid-4">
-                  <div class="g-val" style="border-right: 1px solid var(--line);" id="pcb16"></div>
-                  <div class="g-val" style="border-right: 1px solid var(--line);" id="pcb17"></div>
-                  <div class="g-val" style="border-right: 1px solid var(--line);" id="pcb18"></div>
-                  <div class="g-val" id="pcb19"></div>
-                </div>
-              </td>
+              <td class="val total-col" id="sumC">0</td>
             </tr>
 
-            <!-- Part D -->
             <tr>
               <td class="partlabel row-no-bottom">Part D<br><span class="dim" style="font-size:11px;">(10 Marks)</span></td>
               <td class="data-cell">
                 <div class="data-grid-3">
-                  <div class="g-col"><div class="g-head">20</div><div class="g-val" id="pd20"></div></div>
-                  <div class="g-col"><div class="g-head">21</div><div class="g-val" id="pd21"></div></div>
-                  <div class="g-col"><div class="g-head">22</div><div class="g-val" id="pd22"></div></div>
+                  <div class="d-col"><div class="d-head">20</div><div class="d-val" id="pd20"></div></div>
+                  <div class="d-col"><div class="d-head">21</div><div class="d-val" id="pd21"></div></div>
+                  <div class="d-col"><div class="d-head">22</div><div class="d-val" id="pd22"></div></div>
                 </div>
               </td>
               <td class="val total-col" id="sumD">0</td>
             </tr>
 
-            <!-- Grand Total -->
             <tr>
               <td colspan="2" class="partlabel" style="text-align:right; font-size:16px;">Grand Total</td>
               <td class="val total-col" id="grandTotal" style="font-size:26px;">0</td>
@@ -753,7 +750,6 @@
   </div>
 </div>
 
-<!-- CUSTOM MODAL OVERLAY -->
 <div id="uiModal" class="modal-overlay">
   <div class="modal-card">
     <div class="modal-header">
@@ -1074,7 +1070,6 @@ document.getElementById('saveSetupBtn').addEventListener('click', ()=>{
 });
 renderSetup();
 
-
 /* ============================================================
    FIELD VALUE HELPERS & ABSENT LOGIC
    ============================================================ */
@@ -1335,7 +1330,7 @@ function checkPartD() {
 }
 
 /* ============================================================
-   LIVE PREVIEW (EXACT REPLICA MAPPING)
+   LIVE PREVIEW (NEW FLEXBOX GRID - MATHEMATICALLY PERFECT)
    ============================================================ */
 function updatePreview(){
   const a = SIMPLE_FIELDS.slice(0,10).map(f=>getVal(f.id));
@@ -1347,10 +1342,8 @@ function updatePreview(){
   let sumB = 0;
   bIds.forEach(n => {
     let el = document.getElementById('pb'+n);
-    if (el) {
-        el.textContent = fmtMark('q'+n);
-        isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
-    }
+    el.textContent = fmtMark('q'+n);
+    isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
     sumB += getVal('q'+n);
   });
   document.getElementById('sumB').textContent = isCurrentAbsent ? 'ABS' : sumB;
@@ -1360,11 +1353,11 @@ function updatePreview(){
   CHOICE_QS.forEach(n => {
     let elA = document.getElementById('pca'+n);
     let elB = document.getElementById('pcb'+n);
-    if(elA) elA.textContent = fmtMark('q'+n+'a');
-    if(elB) elB.textContent = fmtMark('q'+n+'b');
+    elA.textContent = fmtMark('q'+n+'a');
+    elB.textContent = fmtMark('q'+n+'b');
     
-    if(elA) isCurrentAbsent ? elA.classList.add('absent-text') : elA.classList.remove('absent-text');
-    if(elB) isCurrentAbsent ? elB.classList.add('absent-text') : elB.classList.remove('absent-text');
+    isCurrentAbsent ? elA.classList.add('absent-text') : elA.classList.remove('absent-text');
+    isCurrentAbsent ? elB.classList.add('absent-text') : elB.classList.remove('absent-text');
 
     sumC += getVal('q'+n+'a') + getVal('q'+n+'b');
   });
@@ -1377,10 +1370,8 @@ function updatePreview(){
   let sumD = 0;
   dIds.forEach(n => {
     let el = document.getElementById('pd'+n);
-    if (el) {
-        el.textContent = fmtMark('q'+n);
-        isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
-    }
+    el.textContent = fmtMark('q'+n);
+    isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
     sumD += getVal('q'+n);
   });
   document.getElementById('sumD').textContent = isCurrentAbsent ? 'ABS' : sumD;
