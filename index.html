@@ -574,7 +574,7 @@
 <header class="masthead">
   <div class="crest-line">Bishop Heber College (Autonomous) · Tiruchirappalli-17</div>
   <h1>Internal Test Mark Entry</h1>
-  <div class="sub">Smart Mark Ledger & CSV Export</div>
+  <div class="sub">Smart Mark Ledger &amp; CSV</div>
 </header>
 
 <div class="wrap">
@@ -744,9 +744,10 @@
               <td class="val total-col" id="sumD">0</td>
             </tr>
 
+            <!-- Grand Total Row configured as focusable element for keyboard flow -->
             <tr>
               <td colspan="2" class="partlabel" style="text-align:right; font-size:16px;">Grand Total</td>
-              <td class="val total-col" id="grandTotal" style="font-size:26px;">0</td>
+              <td class="val total-col" id="grandTotal" tabindex="0" style="font-size:26px; outline: none; cursor: pointer;">0</td>
             </tr>
           </tbody>
         </table>
@@ -1065,6 +1066,11 @@ function renderSetup(){
 
     document.getElementById('resetAllBtnLocked').addEventListener('click', handleResetAll);
 
+    // After setup is locked, automatically focus on the first question of the current student
+    setTimeout(() => {
+      focusField(FOCUS_ORDER[0]);
+    }, 100);
+
   } else {
     document.getElementById('setupForm').style.display='block';
     document.getElementById('setupLockedRow').style.display='none';
@@ -1171,7 +1177,7 @@ function validate(id){
 }
 
 /* ============================================================
-   FOCUS ADVANCE LOGIC
+   FOCUS ADVANCE LOGIC WITH GRAND TOTAL JUMP
    ============================================================ */
 function focusField(id){
   const el = document.getElementById(id);
@@ -1193,7 +1199,13 @@ function jumpToNextAvailable(startIndex){
     }
   }
   if (!found) {
-    document.getElementById('nextBtn').focus();
+    // When all questions are passed, jump to Grand Total row first!
+    const grandTotalEl = document.getElementById('grandTotal');
+    if (grandTotalEl) {
+      grandTotalEl.focus();
+    } else {
+      document.getElementById('nextBtn').focus();
+    }
   }
 }
 
@@ -1238,7 +1250,16 @@ function advanceFrom(id){
   jumpToNextAvailable(idx + 1);
 }
 
-/* Attach listeners to every question input */
+/* Grand Total Keyboard Listener for seamless workflow */
+document.getElementById('grandTotal').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    // Trigger Save & Next Student action directly
+    document.getElementById('nextBtn').click();
+  }
+});
+
+/* Attach listeners to every question input with Part D smart 1-vs-10 timer logic */
 ALL_Q_IDS.forEach((id, index) => {
   const input = document.getElementById(id);
 
@@ -1307,10 +1328,27 @@ ALL_Q_IDS.forEach((id, index) => {
     input.value = input.value.replace(/[^\d]/g,'');
     const max = parseInt(input.dataset.max,10);
     const maxLen = String(max).length;
+
     if (validate(id)){
       updatePreview();
-      if (input.value.length >= maxLen && input.value !== ''){
-        advanceFrom(id);
+      
+      // Part D Smart Input Logic: if max is 10 (q20, q21, q22)
+      if (max === 10) {
+        clearTimeout(input._timer);
+        if (input.value === '1') {
+          // Wait briefly in case user is typing '10'
+          input._timer = setTimeout(() => {
+            if (input.value === '1') {
+              advanceFrom(id);
+            }
+          }, 400);
+        } else if (input.value.length >= maxLen || (input.value >= '2' && input.value <= '9')) {
+          advanceFrom(id);
+        }
+      } else {
+        if (input.value.length >= maxLen && input.value !== ''){
+          advanceFrom(id);
+        }
       }
     } else {
       updatePreview();
