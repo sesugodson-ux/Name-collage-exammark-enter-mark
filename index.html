@@ -88,11 +88,11 @@
     color:var(--muted);
   }
 
-  /* Setup grid */
+  /* Setup grid (Updated to 3 columns) */
   #setupGrid{
     display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:12px;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px 12px;
   }
   .field-group label{
     display:block;
@@ -155,17 +155,6 @@
     align-items:center;
     gap:14px;
   }
-  .class-dropdown {
-    padding: 6px 12px;
-    border: 2px solid var(--ink);
-    border-radius: 4px;
-    font-family: 'Inter';
-    font-weight: 700;
-    font-size: 14px;
-    color: var(--ink);
-    background: var(--paper);
-    cursor: pointer;
-  }
   #studentBar .who .roll{
     font-family:'IBM Plex Mono';
     font-weight:600;
@@ -188,26 +177,54 @@
     margin-left: 6px;
   }
   
-  /* ABS Toggle */
+  /* Modern ABS Toggle */
   .abs-toggle {
     display: flex;
     align-items: center;
-    gap: 6px;
-    background: #FBEAE9;
-    border: 1px solid var(--error);
+    gap: 8px;
+    background: #fff;
+    border: 2px solid var(--error);
     color: var(--error);
-    padding: 4px 10px;
-    border-radius: 4px;
+    padding: 4px 12px 4px 6px;
+    border-radius: 30px;
     font-size: 13px;
     font-weight: 700;
     cursor: pointer;
     user-select: none;
+    transition: all 0.3s ease;
   }
-  .abs-toggle input {
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 32px;
+    height: 18px;
+  }
+  .toggle-switch input { display: none; }
+  .toggle-slider {
+    position: absolute;
     cursor: pointer;
-    accent-color: var(--error);
-    width: 16px;
-    height: 16px;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #FBEAE9;
+    transition: .3s;
+    border-radius: 20px;
+  }
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 3px;
+    bottom: 3px;
+    background-color: var(--error);
+    transition: .3s;
+    border-radius: 50%;
+  }
+  input:checked + .toggle-slider {
+    background-color: #fff;
+  }
+  input:checked + .toggle-slider:before {
+    transform: translateX(14px);
+    background-color: var(--error);
   }
 
   /* Progress Bar */
@@ -471,18 +488,26 @@
 
 <div class="wrap">
 
-  <!-- SETUP CARD -->
+  <!-- SETUP CARD (Dropdown Moved Here) -->
   <div class="card" id="setupCard">
     <h2>Exam Setup <span class="tag" id="setupTag">EDIT ONCE</span></h2>
     <div id="setupForm">
       <div id="setupGrid">
+        <div class="field-group">
+          <label>Class / Group</label>
+          <select id="classSelector">
+            <option value="2nd_Year">2nd Year BCA (D)</option>
+            <option value="3rd_Year">3rd Year BCA (D)</option>
+            <option value="Web_Programming">Web Programming (DSE)</option>
+          </select>
+        </div>
         <div class="field-group"><label>Semester</label><input id="cfgSemester" placeholder="e.g. II"></div>
         <div class="field-group"><label>Paper Code</label><input id="cfgPaperCode" placeholder="e.g. U25CA304"></div>
         <div class="field-group"><label>Exam Name</label><input id="cfgExam" placeholder="e.g. Internal Test I"></div>
         <div class="field-group"><label>Batch / Section</label><input id="cfgBatch" placeholder="e.g. II-BCA D"></div>
         <div class="field-group"><label>Course Title</label><input id="cfgCourse" placeholder="e.g. Database Management System"></div>
       </div>
-      <div style="margin-top:12px;">
+      <div style="margin-top:16px;">
         <button class="btn" id="saveSetupBtn">Save Setup</button>
       </div>
     </div>
@@ -494,17 +519,16 @@
     <div id="studentBarWrap">
       <div id="studentBar">
         <div class="who">
-          <select id="classSelector" class="class-dropdown">
-            <option value="2nd_Year">2nd Year BCA (D)</option>
-            <option value="3rd_Year">3rd Year BCA (D)</option>
-            <option value="Web_Programming">Web Programming (DSE)</option>
-          </select>
           <span class="roll" id="curRoll">—</span>
           <span class="name" id="curName">—</span>
           
-          <!-- ABSENT TOGGLE -->
-          <label class="abs-toggle">
-            <input type="checkbox" id="absentToggle"> Mark ABS
+          <!-- MODERN ABSENT TOGGLE -->
+          <label class="abs-toggle" id="absToggleContainer">
+            <div class="toggle-switch">
+              <input type="checkbox" id="absentToggle">
+              <span class="toggle-slider"></span>
+            </div>
+            Mark ABS
           </label>
         </div>
         <select id="studentSearch"></select>
@@ -548,7 +572,7 @@
       </div>
     </div>
 
-    <!-- PREVIEW: EXACT REPLICA -->
+    <!-- PREVIEW & ANALYTICS -->
     <div>
       <div class="card" id="previewCard">
         <h2>Marks Scored <span class="tag">Live Paper Replica</span></h2>
@@ -834,7 +858,13 @@ function renderSetup(){
     document.getElementById('setupForm').style.display='none';
     const row = document.getElementById('setupLockedRow');
     row.style.display='flex';
+    
+    // Safely get class label
+    const classSelect = document.getElementById('classSelector');
+    const classLabel = classSelect.options[classSelect.selectedIndex]?.text || activeClassKey;
+
     row.innerHTML = `
+      <div><span>Class</span><b style="color:var(--accent);">${classLabel}</b></div>
       <div><span>Semester</span><b>${config.semester||'—'}</b></div>
       <div><span>Paper Code</span><b>${config.paperCode||'—'}</b></div>
       <div><span>Exam</span><b>${config.exam||'—'}</b></div>
@@ -842,6 +872,7 @@ function renderSetup(){
       <div><span>Course</span><b>${config.course||'—'}</b></div>
       <div><button class="btn secondary" id="editSetupBtn" style="padding:4px 10px;font-size:11px;">Edit</button></div>`;
     document.getElementById('setupTag').textContent = 'LOCKED';
+    
     document.getElementById('editSetupBtn').addEventListener('click', ()=>{
       document.getElementById('setupForm').style.display='block';
       row.style.display='none';
@@ -886,7 +917,7 @@ function populateStudentDropdown() {
 }
 
 classSelector.addEventListener('change', (e)=>{
-  saveCurrentStudent(true); // silent save
+  saveCurrentStudent(true); 
   hasUnsavedChanges = false;
   activeClassKey = e.target.value;
   localStorage.setItem('markLedger_activeClass', activeClassKey);
@@ -894,6 +925,9 @@ classSelector.addEventListener('change', (e)=>{
   currentIndex = 0;
   populateStudentDropdown();
   loadStudent(0);
+  
+  // Re-render setup if locked to update the class label
+  if (config) renderSetup();
 });
 
 studentSearch.addEventListener('change', ()=>{
@@ -907,11 +941,21 @@ studentSearch.addEventListener('change', ()=>{
    FIELD VALUE HELPERS & ABSENT LOGIC
    ============================================================ */
 const absToggle = document.getElementById('absentToggle');
+const absToggleContainer = document.getElementById('absToggleContainer');
 let isCurrentAbsent = false;
 
 absToggle.addEventListener('change', (e) => {
   hasUnsavedChanges = true;
   isCurrentAbsent = e.target.checked;
+  
+  if(isCurrentAbsent) {
+    absToggleContainer.style.background = 'var(--error)';
+    absToggleContainer.style.color = '#fff';
+  } else {
+    absToggleContainer.style.background = '#fff';
+    absToggleContainer.style.color = 'var(--error)';
+  }
+
   ALL_Q_IDS.forEach(id => {
     const input = document.getElementById(id);
     if (isCurrentAbsent) {
@@ -922,7 +966,7 @@ absToggle.addEventListener('change', (e) => {
       input.value = '0';
     }
   });
-  if (!isCurrentAbsent) checkPartD(); // Re-apply Part D logic if un-absenting
+  if (!isCurrentAbsent) checkPartD();
   updatePreview();
 });
 
@@ -1212,7 +1256,6 @@ function updateProgressAndAnalytics() {
     if (rec) {
       gradedCount++;
       if (rec.isAbsent) {
-        // Absent doesn't count towards averages/top scores
         failCount++; 
       } else {
         const mark = parseInt(rec.total, 10);
@@ -1245,6 +1288,9 @@ function updateProgressAndAnalytics() {
 function resetFieldsToDefault(){
   isCurrentAbsent = false;
   absToggle.checked = false;
+  absToggleContainer.style.background = '#fff';
+  absToggleContainer.style.color = 'var(--error)';
+  
   ALL_Q_IDS.forEach(id=>{
     const input = document.getElementById(id);
     input.value = '0';
@@ -1264,6 +1310,11 @@ function loadStudent(index){
   if (saved){
     isCurrentAbsent = !!saved.isAbsent;
     absToggle.checked = isCurrentAbsent;
+    
+    if(isCurrentAbsent) {
+      absToggleContainer.style.background = 'var(--error)';
+      absToggleContainer.style.color = '#fff';
+    }
     
     if (isCurrentAbsent) {
       ALL_Q_IDS.forEach(id => {
