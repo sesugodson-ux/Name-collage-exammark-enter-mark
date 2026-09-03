@@ -6,7 +6,7 @@
 <title>Mark Entry Ledger — Bishop Heber College</title>
 <style>
   :root {
-    /* Custom User Palette + iOS Theme */
+    /* Custom User Palette */
     --bg-body: #F4F7F7; 
     --bg-card: #FFFFFF;
     --bg-input: #F2F2F7;
@@ -20,9 +20,9 @@
     --accent-hover: #12544D; /* Darker Teal */
     
     --error: #FF3B30; 
-    --locked-bg: #E5E5EA;
+    --locked-bg: #EAEAEA;
     
-    --shadow-card: 0 4px 20px rgba(27, 118, 108, 0.06);
+    --shadow-card: 0 4px 20px rgba(27, 118, 108, 0.08);
     --shadow-btn: 0 4px 12px rgba(27, 118, 108, 0.3);
     --shadow-btn-red: 0 4px 12px rgba(255, 59, 48, 0.25);
     --shadow-modal: 0 20px 40px rgba(0,0,0,0.2);
@@ -44,25 +44,26 @@
     background: var(--bg-card);
     padding: 24px 28px 20px;
     text-align: center;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid var(--accent-light);
   }
   header.masthead .crest-line {
     font-size: 11px;
     letter-spacing: 0.12em;
-    color: var(--ink-soft);
-    font-weight: 600;
+    color: var(--accent);
+    font-weight: 700;
     text-transform: uppercase;
   }
   header.masthead h1 {
-    font-weight: 700;
+    font-weight: 800;
     font-size: 24px;
     margin: 6px 0 4px;
     letter-spacing: -0.02em;
+    color: var(--ink);
   }
   header.masthead .sub {
     font-size: 13px;
     color: var(--ink-soft);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .wrap{max-width:1180px;margin:0 auto;padding:24px 20px 0;}
@@ -71,25 +72,25 @@
     background: var(--bg-card);
     border-radius: 16px;
     box-shadow: var(--shadow-card);
-    padding: 20px 24px;
+    padding: 24px;
     margin-bottom: 20px;
+    border: 1px solid rgba(27, 118, 108, 0.1);
   }
   .card > h2 {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 17px;
+    font-weight: 800;
     margin: 0 0 16px;
-    color: var(--ink);
+    color: var(--accent);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    letter-spacing: -0.01em;
   }
   .card > h2 .tag {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--accent);
     background: var(--accent-light);
-    padding: 4px 10px;
+    padding: 6px 12px;
     border-radius: 12px;
   }
 
@@ -97,31 +98,30 @@
   #setupGrid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:16px 16px;
+    gap:16px;
   }
   .field-group label{
     display:block;
     font-size:12px;
-    color: var(--ink-soft);
+    color: var(--accent);
     margin-bottom:6px;
-    font-weight:600;
+    font-weight:700;
   }
   .field-group input {
     width:100%;
     padding: 10px 12px;
-    border: 2px solid transparent;
+    border: 2px solid var(--line);
     border-radius: 10px;
-    background: var(--bg-input);
+    background: #fff;
     font-family: inherit;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--ink);
     transition: all 0.2s;
   }
   .field-group input:focus {
     outline: none;
     border-color: var(--accent);
-    background: #fff;
     box-shadow: 0 0 0 3px var(--accent-light);
   }
 
@@ -130,13 +130,13 @@
     width: 100%;
     text-align: left;
     padding: 10px 12px;
-    border: 2px solid transparent;
+    border: 2px solid var(--accent);
     border-radius: 10px;
-    background: var(--bg-input);
+    background: var(--accent-light);
     font-family: inherit;
     font-size: 14px;
-    font-weight: 600;
-    color: var(--accent);
+    font-weight: 700;
+    color: var(--accent-hover);
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -144,12 +144,7 @@
     transition: all 0.2s;
   }
   .custom-select-btn:hover {
-    background: var(--accent-light);
-  }
-  .custom-select-btn:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-light);
+    background: #95ded8;
   }
   
   .btn {
@@ -158,16 +153,12 @@
     color: #fff;
     padding: 10px 20px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     border-radius: 20px; 
     cursor: pointer;
     font-family: inherit;
     box-shadow: var(--shadow-btn);
     transition: all 0.2s ease-in-out;
-  }
-  .btn:focus {
-    outline: 3px solid var(--accent-light);
-    outline-offset: 2px;
   }
   .btn:hover {
     background: var(--accent-hover); 
@@ -179,18 +170,13 @@
     color: var(--accent);
     box-shadow: none;
   }
-  .btn.secondary:hover {
-    background: #95ded8;
-  }
+  .btn.secondary:hover { background: #95ded8; }
   
   .btn.btn-reset {
     background: var(--error);
     box-shadow: var(--shadow-btn-red);
   }
-  .btn.btn-reset:hover {
-    background: #D70015;
-  }
-
+  .btn.btn-reset:hover { background: #D70015; }
   .btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;}
 
   /* Student switch bar */
@@ -213,22 +199,22 @@
   }
   #studentBar .who .roll{
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-weight:600;
-    font-size:15px;
+    font-weight:700;
+    font-size:16px;
     color: var(--ink-soft);
   }
   #studentBar .who .name{
-    font-size:20px;
-    font-weight:700;
+    font-size:22px;
+    font-weight:800;
     letter-spacing: -0.01em;
   }
   .sec-badge {
-    font-size: 12px;
-    background: var(--ink);
+    font-size: 13px;
+    background: var(--accent);
     color: #fff;
     padding: 3px 8px;
     border-radius: 8px;
-    font-weight: 600;
+    font-weight: 700;
     vertical-align: middle;
     margin-left: 6px;
   }
@@ -237,12 +223,13 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: var(--bg-input);
+    background: #fff;
+    border: 2px solid var(--error);
     color: var(--error);
     padding: 6px 14px 6px 8px;
     border-radius: 30px;
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 800;
     cursor: pointer;
     user-select: none;
     transition: all 0.3s ease;
@@ -281,7 +268,7 @@
     width: 100%;
     background: var(--line);
     border-radius: 6px;
-    height: 6px;
+    height: 8px;
     overflow: hidden;
   }
   .progress-fill {
@@ -291,9 +278,9 @@
     transition: width 0.5s ease-out;
   }
   .progress-text {
-    font-size: 12px;
-    color: var(--ink-soft);
-    font-weight: 600;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 700;
     text-align: right;
     margin-top: 6px;
   }
@@ -322,41 +309,40 @@
   .qcell label{
     display:block;
     text-align:center;
-    font-size:12px; 
-    font-weight:700;
-    color: var(--ink-soft);
-    margin-bottom:6px;
+    font-size:13px; 
+    font-weight:800;
+    color: var(--ink); /* Made Highly Visible */
+    margin-bottom:8px;
   }
   .qcell input{
     width:100%;
     text-align:center;
     padding:4px 2px; 
-    height: 44px;
+    height: 48px;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-weight: 700;
-    font-size: 20px; 
+    font-weight: 800;
+    font-size: 22px; 
     border: 2px solid transparent;
     border-radius: 12px;
-    background: var(--bg-input);
-    color: var(--ink);
+    background: var(--accent); /* Dark Teal Background */
+    color: #ffffff; /* White Text */
     transition: all 0.2s;
   }
   .qcell input:focus{
     outline: none;
-    border-color: var(--accent);
-    background: #fff;
-    box-shadow: 0 0 0 3px var(--accent-light);
+    background: var(--accent-hover);
+    box-shadow: 0 0 0 4px var(--accent-light);
   }
   .qcell input.locked, .qcell input:disabled {
     background: var(--locked-bg);
-    color: var(--ink-soft);
-    border-style: dashed;
-    border-color: transparent;
-    font-weight:500;
+    color: #999999;
+    border: none;
+    font-weight:600;
   }
   .qcell input.err{
-    border-color: var(--error);
-    background: #FFEEEE;
+    background: var(--error);
+    color: #fff;
+    box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.3);
   }
   .qcell .errmsg{
     position:absolute;
@@ -365,7 +351,7 @@
     color:var(--error);
     text-align:center;
     margin-top:4px;
-    font-weight:600;
+    font-weight:700;
   }
   .choice-pair{
     display:grid;
@@ -373,15 +359,15 @@
     gap:8px;
   }
   .choice-pair .sub{
-    font-size:11px;
-    color:var(--ink-soft);
+    font-size:12px;
+    color:var(--ink);
     text-align:center;
     display:block;
-    font-weight:600;
-    margin-top: 2px;
+    font-weight:700;
+    margin-top: 4px;
   }
 
-  /* REPLICA TABLE */
+  /* REPLICA TABLE - FULLY REWORKED GRID FOR EQUAL SIZES & HIGH CONTRAST */
   #previewCard{position:sticky;top:20px;}
   table.replica {
     width: 100%;
@@ -391,59 +377,60 @@
     border-radius: 12px;
     overflow: hidden;
     border-style: hidden; 
-    box-shadow: 0 0 0 1px var(--line);
+    box-shadow: 0 0 0 2px var(--line);
+    table-layout: fixed; /* Ensures perfect width distribution */
   }
   table.replica th, table.replica td {
     border: 1px solid var(--line);
     text-align: center;
-    height: 36px;
+    height: 40px;
     vertical-align: middle;
   }
   table.replica th {
-    background: var(--bg-input);
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--ink-soft);
-    padding: 8px;
+    background: var(--accent);
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+    padding: 10px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
   table.replica td.partlabel {
     text-align: left;
-    font-weight: 700;
-    background: #FAFAFA;
+    font-weight: 800;
+    background: var(--accent-light);
     font-size: 13px;
     padding: 6px 12px;
-    color: var(--ink);
+    color: var(--accent-hover);
   }
   table.replica td.qhead {
-    background: #FAFAFA;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--ink-soft);
+    background: #E8F3F2;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--accent);
   }
   table.replica td.val {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-weight: 800; 
-    color: #000000;   
-    font-size: 18px;  
+    font-weight: 900; 
+    color: #000000;   /* Pure Black */
+    font-size: 20px;  
   }
-  table.replica td.val.absent-text { color: var(--error); }
+  table.replica td.val.absent-text { color: var(--error); font-size: 16px;}
   table.replica td.total-col {
-    background: #FAFAFA;
+    background: #E8F3F2;
     color: #000000;
-    font-weight: 800;
-    font-size: 18px;
+    font-weight: 900;
+    font-size: 22px;
   }
   table.replica .dim {
-    color: var(--ink-soft);
-    font-weight: 500;
+    color: var(--accent-hover);
+    font-weight: 600;
   }
   .row-no-bottom { border-bottom: none !important; }
   .row-no-top { border-top: none !important; }
 
   .navbtns{display:flex;gap:12px;justify-content:space-between;margin-top:20px;}
-  .navbtns .btn{flex:1;text-align:center; padding: 12px;}
+  .navbtns .btn{flex:1;text-align:center; padding: 14px; font-size: 15px;}
 
   #exportBar{
     display:flex;
@@ -458,9 +445,9 @@
   .btn-export:hover { background: #000; }
   
   .savednote{
-    font-size: 13px;
+    font-size: 14px;
     color: var(--accent);
-    font-weight: 700;
+    font-weight: 800;
     opacity: 0;
     transition: opacity .3s;
     display: flex;
@@ -476,17 +463,15 @@
     gap:12px 24px;
     font-size:14px;
   }
-  #setupLockedRow div span{color:var(--ink-soft);font-size:11px;display:block;margin-bottom:2px;font-weight:600;}
-  #setupLockedRow div b{font-weight:700;font-size:15px; color:var(--ink);}
+  #setupLockedRow div span{color:var(--ink-soft);font-size:11px;display:block;margin-bottom:2px;font-weight:700;}
+  #setupLockedRow div b{font-weight:800;font-size:15px; color:var(--ink);}
 
-  /* =========================================
-     MODAL UI STYLES (CENTERED SELECTION)
-     ========================================= */
+  /* MODAL UI */
   .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(5px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -502,7 +487,7 @@
   .modal-card {
     background: #fff;
     width: 90%;
-    max-width: 420px;
+    max-width: 440px;
     border-radius: 20px;
     box-shadow: var(--shadow-modal);
     display: flex;
@@ -511,13 +496,11 @@
     transform: scale(0.95);
     transition: transform 0.2s ease;
   }
-  .modal-overlay.active .modal-card {
-    transform: scale(1);
-  }
+  .modal-overlay.active .modal-card { transform: scale(1); }
   .modal-header {
     background: var(--accent);
     color: #fff;
-    padding: 16px 20px;
+    padding: 18px 24px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     display: flex;
@@ -526,36 +509,34 @@
   }
   .modal-header h3 {
     margin: 0;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 800;
   }
   .modal-close {
     cursor: pointer;
-    font-size: 24px;
+    font-size: 28px;
     line-height: 1;
     color: var(--accent-light);
   }
   .modal-close:hover { color: #fff; }
   .modal-body {
-    padding: 12px;
+    padding: 16px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
   }
   .modal-option {
     padding: 14px 16px;
     border-radius: 12px;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: 700;
+    font-size: 15px;
     color: var(--ink);
     border: 2px solid transparent;
     transition: all 0.2s;
   }
-  .modal-option:hover {
-    background: var(--bg-input);
-  }
+  .modal-option:hover { background: var(--bg-input); }
   .modal-option.selected {
     background: var(--accent-light);
     color: var(--accent-hover);
@@ -568,7 +549,7 @@
 <header class="masthead">
   <div class="crest-line">Bishop Heber College (Autonomous) · Tiruchirappalli-17</div>
   <h1>Internal Test Mark Entry</h1>
-  <div class="sub">iOS Optimized Ledger Dashboard</div>
+  <div class="sub">Premium Dark Teal Dashboard</div>
 </header>
 
 <div class="wrap">
@@ -614,7 +595,7 @@
           </label>
         </div>
         <!-- Custom Student Selector Button -->
-        <button type="button" id="studentTriggerBtn" class="custom-select-btn" style="width: 260px;">Select Student ▼</button>
+        <button type="button" id="studentTriggerBtn" class="custom-select-btn" style="width: 280px;">Select Student ▼</button>
       </div>
       <!-- PROGRESS BAR -->
       <div>
@@ -630,22 +611,22 @@
     <!-- ENTRY -->
     <div>
       <div class="card">
-        <h2>Part A &middot; MCQ <span class="tag">Q1–Q10 · max 1</span></h2>
+        <h2>Part A &middot; MCQ <span class="tag">Q1–Q10 &middot; max 1</span></h2>
         <div class="qgrid cols10" id="partA"></div>
       </div>
 
       <div class="card">
-        <h2>Part B <span class="tag">Q11–Q15 · max 2</span></h2>
+        <h2>Part B <span class="tag">Q11–Q15 &middot; max 2</span></h2>
         <div class="qgrid" id="partB"></div>
       </div>
 
       <div class="card">
-        <h2>Part C — either / or <span class="tag">Q16–Q19 · max 5</span></h2>
+        <h2>Part C — either / or <span class="tag">Q16–Q19 &middot; max 5</span></h2>
         <div class="qgrid cols4" id="partC"></div>
       </div>
 
       <div class="card">
-        <h2>Part D <span class="tag">Q20–Q22 · Any 2 · max 10</span></h2>
+        <h2>Part D <span class="tag">Q20–Q22 &middot; Any 2 &middot; max 10</span></h2>
         <div class="qgrid cols3" id="partD"></div>
       </div>
 
@@ -659,10 +640,12 @@
     <div>
       <div class="card" id="previewCard">
         <h2>Marks Scored <span class="tag">Live Preview</span></h2>
+        
+        <!-- REWORKED TABLE FOR PERFECT WIDTH DISTRIBUTION -->
         <table class="replica">
           <thead>
             <tr>
-              <th colspan="6">Marks Scored</th>
+              <th colspan="61">Marks Scored</th>
               <th style="width:18%;">Total</th>
             </tr>
           </thead>
@@ -670,76 +653,79 @@
             <!-- Part A -->
             <tr>
               <td class="partlabel">Part A</td>
-              <td colspan="5" style="text-align:center; font-weight:600; color:var(--ink-soft); font-size:12px;">MCQ Marks 1–10</td>
+              <td colspan="60" style="text-align:center; font-weight:800; color:var(--accent); font-size:13px;">MCQ Marks 1–10</td>
               <td class="val total-col" id="sumA">0</td>
             </tr>
             <!-- Part B -->
             <tr>
               <td class="partlabel row-no-bottom">Part B</td>
-              <td class="qhead" style="width:11%;">11</td>
-              <td class="qhead" style="width:11%;">12</td>
-              <td class="qhead" style="width:11%;">13</td>
-              <td class="qhead" style="width:11%;">14</td>
-              <td class="qhead" style="width:11%;">15</td>
+              <!-- 60 cols / 5 items = 12 cols each -->
+              <td class="qhead" colspan="12">11</td>
+              <td class="qhead" colspan="12">12</td>
+              <td class="qhead" colspan="12">13</td>
+              <td class="qhead" colspan="12">14</td>
+              <td class="qhead" colspan="12">15</td>
               <td rowspan="2" class="val total-col" id="sumB">0</td>
             </tr>
             <tr>
               <td class="partlabel row-no-top dim" style="font-size:11px;">(2 Marks)</td>
-              <td class="val" id="pb11"></td>
-              <td class="val" id="pb12"></td>
-              <td class="val" id="pb13"></td>
-              <td class="val" id="pb14"></td>
-              <td class="val" id="pb15"></td>
+              <td class="val" colspan="12" id="pb11"></td>
+              <td class="val" colspan="12" id="pb12"></td>
+              <td class="val" colspan="12" id="pb13"></td>
+              <td class="val" colspan="12" id="pb14"></td>
+              <td class="val" colspan="12" id="pb15"></td>
             </tr>
             <!-- Part C -->
             <tr>
               <td class="partlabel row-no-bottom">Part C<br><span class="dim" style="font-size:11px;">(5 Marks)</span></td>
-              <td class="qhead">16</td>
-              <td class="qhead">17</td>
-              <td class="qhead">18</td>
-              <td class="qhead" colspan="2">19</td>
+              <!-- 60 cols / 4 items = 15 cols each. No empty boxes! -->
+              <td class="qhead" colspan="15">16</td>
+              <td class="qhead" colspan="15">17</td>
+              <td class="qhead" colspan="15">18</td>
+              <td class="qhead" colspan="15">19</td>
               <td rowspan="3" class="val total-col" id="sumC">0</td>
             </tr>
             <tr>
               <td class="partlabel row-no-bottom row-no-top" style="text-align:center; padding:4px;">a)</td>
-              <td class="val" id="pca16"></td>
-              <td class="val" id="pca17"></td>
-              <td class="val" id="pca18"></td>
-              <td class="val" id="pca19" colspan="2"></td>
+              <td class="val" colspan="15" id="pca16"></td>
+              <td class="val" colspan="15" id="pca17"></td>
+              <td class="val" colspan="15" id="pca18"></td>
+              <td class="val" colspan="15" id="pca19"></td>
             </tr>
             <tr>
               <td class="partlabel row-no-top" style="text-align:center; padding:4px;">b)</td>
-              <td class="val" id="pcb16"></td>
-              <td class="val" id="pcb17"></td>
-              <td class="val" id="pcb18"></td>
-              <td class="val" id="pcb19" colspan="2"></td>
+              <td class="val" colspan="15" id="pcb16"></td>
+              <td class="val" colspan="15" id="pcb17"></td>
+              <td class="val" colspan="15" id="pcb18"></td>
+              <td class="val" colspan="15" id="pcb19"></td>
             </tr>
             <!-- Part D -->
             <tr>
               <td class="partlabel row-no-bottom">Part D</td>
-              <td class="qhead" colspan="2">20</td>
-              <td class="qhead" colspan="2">21</td>
-              <td class="qhead">22</td>
+              <!-- 60 cols / 3 items = 20 cols each -->
+              <td class="qhead" colspan="20">20</td>
+              <td class="qhead" colspan="20">21</td>
+              <td class="qhead" colspan="20">22</td>
               <td rowspan="2" class="val total-col" id="sumD">0</td>
             </tr>
             <tr>
               <td class="partlabel row-no-top dim" style="font-size:11px;">(10 Marks)</td>
-              <td class="val" id="pd20" colspan="2"></td>
-              <td class="val" id="pd21" colspan="2"></td>
-              <td class="val" id="pd22"></td>
+              <td class="val" colspan="20" id="pd20"></td>
+              <td class="val" colspan="20" id="pd21"></td>
+              <td class="val" colspan="20" id="pd22"></td>
             </tr>
             <!-- Grand Total -->
             <tr>
-              <td colspan="5" style="border-bottom:none; border-left:none;"></td>
-              <td class="partlabel" style="text-align:center;">Total</td>
-              <td class="val total-col" id="grandTotal" style="font-size:20px;">0</td>
+              <td colspan="61" class="partlabel" style="text-align:right; padding-right:20px; font-size:15px;">Total</td>
+              <td class="val total-col" id="grandTotal" style="font-size:24px;">0</td>
             </tr>
           </tbody>
         </table>
+        
         <div id="exportBar">
           <button class="btn btn-export" id="exportBtn">Export as CSV</button>
           <span class="savednote" id="savedNote">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
             Saved
           </span>
         </div>
@@ -956,7 +942,6 @@ uiModal.addEventListener('click', (e) => {
   if (e.target === uiModal) closeModal();
 });
 
-
 /* ============================================================
    QUESTION FIELD DEFINITIONS
    ============================================================ */
@@ -1086,7 +1071,7 @@ absToggle.addEventListener('change', (e) => {
     absToggleContainer.style.borderColor = 'var(--error)';
     absToggleContainer.style.color = '#fff';
   } else {
-    absToggleContainer.style.background = 'var(--bg-input)';
+    absToggleContainer.style.background = '#fff';
     absToggleContainer.style.borderColor = 'var(--error)';
     absToggleContainer.style.color = 'var(--error)';
   }
@@ -1396,7 +1381,7 @@ function updateProgressAndAnalytics() {
 function resetFieldsToDefault(){
   isCurrentAbsent = false;
   absToggle.checked = false;
-  absToggleContainer.style.background = 'var(--bg-input)';
+  absToggleContainer.style.background = '#fff';
   absToggleContainer.style.borderColor = 'var(--error)';
   absToggleContainer.style.color = 'var(--error)';
   
