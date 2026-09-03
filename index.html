@@ -397,6 +397,7 @@
         <select id="classSelector" class="class-dropdown">
           <option value="2nd_Year">2nd Year BCA (D)</option>
           <option value="3rd_Year">3rd Year BCA (D)</option>
+          <option value="Web_Programming">Web Programming (DSE)</option>
         </select>
         <span class="roll" id="curRoll">—</span>
         <span class="name" id="curName">—</span>
@@ -578,6 +579,31 @@ const CLASS_DATA = {
     ["245113451","GOKUL M"],["245113452","GOKULKRISHNA M"],["245113453","GOTHAIESWAR N"],
     ["245113454","GOWTHAM R"],["245113455","GURUPRASATH K"],["245113456","GURUPRASATH M"],
     ["245113459","KAVISURYA N"],["245113460","ABDUL MUQSITH A"]
+  ].map(([roll,name])=>({roll,name})),
+
+  "Web_Programming": [
+    ["255113213","BHAOMI RANJITHA U"],["255113214","DANYA B"],["255113218","DHARSHINI S"],
+    ["255113228","HAIFA M"],["255113230","HARINEE R"],["255113232","HARINI S"],
+    ["255113233","HARINI S"],["255113238","HEMAKIRUPA S"],["255113240","JAMBUKESWARI S"],
+    ["255113259","MEHAR SABEEHA M"],["255113314","RESHMA PARVEEN S"],["255113315","RIONA P"],
+    ["255113321","SANDHIYA G"],["255113323","SASTIPRIYA E"],["255113324","SHALBIYA S"],
+    ["255113327","SHIFANA BANU J"],["255113330","SOWMIYA M"],["255113331","SOWMYA M"],
+    ["255113332","SREYA R"],["255113336","SUBHA SHREE R P"],["255113347","VISHNU PRIYA A"],
+    ["255113354","NATHIYA S"],["255113356","LEKHA SRI R"],["255113358","PRIYADHARSHINI M"],
+    ["255113401","AALAN ASHNUWA V"],["255113404","ABISHEK C S"],["255113406","AHAJAS AHMED R"],
+    ["255113409","AKASH R"],["255113411","ALLENJOE"],["255113412","ANBARASU S"],
+    ["255113413","ANBUSELVAN K"],["255113414","ARIHARAN B"],["255113419","ARUSH VINCENT"],
+    ["255113428","BOOPATHI R"],["255113442","GODSON S"],["255113453","HARIHARAN D"],
+    ["255113454","HARIHARAN K"],["255113455","HARIHARAN K P"],["255113467","IBRAHIM JAMEEL K"],
+    ["255113472","BOOPALAN G"],["255113513","KANNAN S"],["255113531","MARSHAL"],
+    ["255113533","MERVIN SERGIO M S"],["255113536","MOHAMED THABRASH BA"],["255113544","NANDHAKUMAR E"],
+    ["255113545","NANDHAKUMAR G"],["255113558","PRASANTH M"],["255113563","PREMKUMAR M"],
+    ["255113565","RABIN J"],["255113607","ROBIN WINSLEY M"],["255113608","ROHANRAJ M"],
+    ["255113609","ROHITH K"],["255113620","SANTHOSH KUMAR K"],["255113628","SRIKUMARAN P"],
+    ["255113629","SRIRAM P S"],["255113631","SUBRAMANI M"],["255113633","SUDHARSAN S"],
+    ["255113637","SURAJ L"],["255113640","SURIYAPRAKASH P"],["255113647","VASU K"],
+    ["255113652","VETRIVEL M"],["255113653","VIGNA GANESH D"],["255113656","VIJAYASRIRAM R"],
+    ["255113660","VISHAL U"],["255113664","YADAV SRIHARI S"]
   ].map(([roll,name])=>({roll,name}))
 };
 
@@ -781,7 +807,7 @@ function validate(id){
 }
 
 /* ============================================================
-   FOCUS ADVANCE LOGIC (Auto Jump to Save Button added)
+   FOCUS ADVANCE LOGIC
    ============================================================ */
 function focusField(id){
   const el = document.getElementById(id);
@@ -1073,7 +1099,6 @@ function toCsvValue(v){
 document.getElementById('exportBtn').addEventListener('click', ()=>{
   saveCurrentStudent();
   
-  // Headers now perfectly match Q1, Q2... Q16A, Q16B...
   const qHeaders = ALL_Q_IDS.map(id => id.toUpperCase());
   const header = ['RollNo','Name','Semester','PaperCode','Exam','Batch','Course', ...qHeaders, 'Total'];
   const rows = [header];
@@ -1081,7 +1106,6 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
   STUDENTS.forEach(s=>{
     const rec = studentData[s.roll];
     
-    // Values are pulled exactly for every single input field
     const qVals = ALL_Q_IDS.map(id => {
       return rec ? (rec[id] || 0) : 0;
     });
