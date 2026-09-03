@@ -799,7 +799,6 @@ function jumpToNextAvailable(startIndex){
     }
   }
   if (!found) {
-    // Reached the end, jump to Save & Next Student button automatically
     document.getElementById('nextBtn').focus();
   }
 }
@@ -861,7 +860,6 @@ ALL_Q_IDS.forEach((id, index) => {
       e.preventDefault();
       if (validate(id)) advanceFrom(id);
     } 
-    // BACKSPACE LOGIC ADDED HERE
     else if (e.key === 'Backspace') {
       if (input.value === '' || input.value === '0') {
         e.preventDefault();
@@ -872,7 +870,6 @@ ALL_Q_IDS.forEach((id, index) => {
             focusField(ALL_Q_IDS[prevIdx]);
             prevEl.value = '0';
             
-            // Unlock partner if it's an a/b question
             if (/^q\d+[ab]$/.test(ALL_Q_IDS[prevIdx])) {
               let partnerId = prevEl.dataset.partner;
               let partnerEl = document.getElementById(partnerId);
@@ -1065,7 +1062,7 @@ document.getElementById('prevBtn').addEventListener('click', ()=>{
 });
 
 /* ============================================================
-   CSV EXPORT (EXPORTS ONLY CURRENTLY SELECTED CLASS)
+   CSV EXPORT (UPDATED: EVERY QUESTION GETS ITS OWN COLUMN)
    ============================================================ */
 function toCsvValue(v){
   const s = String(v ?? '');
@@ -1075,22 +1072,20 @@ function toCsvValue(v){
 
 document.getElementById('exportBtn').addEventListener('click', ()=>{
   saveCurrentStudent();
-  const header = ['RollNo','Name','Semester','PaperCode','Exam','Batch','Course',
-    ...Array.from({length:22},(_,i)=>'Q'+(i+1)), 'Total'];
+  
+  // Headers now perfectly match Q1, Q2... Q16A, Q16B...
+  const qHeaders = ALL_Q_IDS.map(id => id.toUpperCase());
+  const header = ['RollNo','Name','Semester','PaperCode','Exam','Batch','Course', ...qHeaders, 'Total'];
   const rows = [header];
 
   STUDENTS.forEach(s=>{
     const rec = studentData[s.roll];
-    const qVals = [];
-    for (let n=1;n<=22;n++){
-      if (CHOICE_QS.includes(n)){
-        const av = rec ? (rec['q'+n+'a']||0) : 0;
-        const bv = rec ? (rec['q'+n+'b']||0) : 0;
-        qVals.push(av>0?av:bv);
-      } else {
-        qVals.push(rec ? (rec['q'+n]||0) : 0);
-      }
-    }
+    
+    // Values are pulled exactly for every single input field
+    const qVals = ALL_Q_IDS.map(id => {
+      return rec ? (rec[id] || 0) : 0;
+    });
+    
     const total = rec ? rec.total : 0;
     rows.push([
       s.roll, s.name,
