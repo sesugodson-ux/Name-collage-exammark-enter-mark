@@ -4,162 +4,172 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mark Entry Ledger — Bishop Heber College</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --paper:#F4F0E4;
-    --panel:#FFFDF8;
-    --line:#D9D0B8;
-    --ink:#1F2D4A;
-    --ink-soft:#4A5470;
-    --accent:#2563EB; 
-    --gold:#A9832B;
-    --green:#2F6F4E;
-    --error:#B3261E;
-    --muted:#7A7460;
-    --locked-bg:#EDE9DC;
+  :root {
+    /* Apple iOS Theme Colors */
+    --bg-body: #F2F2F7;
+    --bg-card: #FFFFFF;
+    --bg-input: #F2F2F7;
+    --line: #E5E5EA;
+    --ink: #1C1C1E;
+    --ink-soft: #8E8E93;
+    --accent: #007AFF; /* iOS Blue */
+    --accent-hover: #005ecb;
+    --error: #FF3B30; /* iOS Red */
+    --green: #34C759; /* iOS Green */
+    --locked-bg: #E5E5EA;
+    
+    --shadow-card: 0 4px 20px rgba(0,0,0,0.04);
+    --shadow-btn: 0 4px 12px rgba(0, 122, 255, 0.25);
+    --shadow-btn-red: 0 4px 12px rgba(255, 59, 48, 0.25);
   }
+  
   *{box-sizing:border-box;}
-  body{
+  
+  body {
     margin:0;
-    background:var(--paper);
-    background-image:
-      linear-gradient(var(--paper),var(--paper)),
-      repeating-linear-gradient(0deg, rgba(31,45,74,0.025) 0px, rgba(31,45,74,0.025) 1px, transparent 1px, transparent 28px);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    min-height:100vh;
-    padding-bottom:60px;
-  }
-  .serif{font-family:'Source Serif 4', Georgia, serif;}
-  .mono{font-family:'IBM Plex Mono', monospace;}
-
-  header.masthead{
-    border-bottom:3px double var(--ink);
-    background:var(--panel);
-    padding:22px 28px 18px;
-    text-align:center;
-    position:relative;
-  }
-  header.masthead .crest-line{
-    font-size:11px;
-    letter-spacing:0.14em;
-    color:var(--muted);
-    font-family:'Inter',sans-serif;
-  }
-  header.masthead h1{
-    font-family:'Source Serif 4',serif;
-    font-weight:700;
-    font-size:26px;
-    margin:6px 0 2px;
-    color:var(--ink);
-  }
-  header.masthead .sub{
-    font-size:13px;
-    color:var(--ink-soft);
-    font-style:italic;
-    font-family:'Source Serif 4',serif;
+    background: var(--bg-body);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    padding-bottom: 60px;
   }
 
-  .wrap{max-width:1180px;margin:0 auto;padding:22px 20px 0;}
+  /* Sleek Header */
+  header.masthead {
+    background: var(--bg-card);
+    padding: 24px 28px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  header.masthead .crest-line {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  header.masthead h1 {
+    font-weight: 700;
+    font-size: 24px;
+    margin: 6px 0 4px;
+    letter-spacing: -0.02em;
+  }
+  header.masthead .sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
 
-  .card{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:3px;
-    padding:18px 20px;
-    margin-bottom:20px;
+  .wrap{max-width:1180px;margin:0 auto;padding:24px 20px 0;}
+
+  /* Modern Cards */
+  .card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    box-shadow: var(--shadow-card);
+    padding: 20px 24px;
+    margin-bottom: 20px;
   }
-  .card > h2{
-    font-family:'Source Serif 4',serif;
-    font-size:16px;
-    font-weight:600;
-    margin:0 0 14px;
-    color:var(--ink);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+  .card > h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 16px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    letter-spacing: -0.01em;
   }
-  .card > h2 .tag{
-    font-size:11px;
-    font-family:'Inter';
-    font-weight:600;
-    color:var(--muted);
+  .card > h2 .tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    background: var(--bg-body);
+    padding: 4px 10px;
+    border-radius: 12px;
   }
 
   /* Setup grid */
   #setupGrid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:16px 12px;
+    gap:16px 16px;
   }
   .field-group label{
     display:block;
-    font-size:11px;
-    color:var(--muted);
-    margin-bottom:4px;
+    font-size:12px;
+    color: var(--ink-soft);
+    margin-bottom:6px;
     font-weight:600;
   }
-  .field-group input, .field-group select{
+  .field-group input, .field-group select {
     width:100%;
-    padding:7px 9px;
-    border:1px solid var(--line);
-    border-radius:2px;
-    background:#fff;
-    font-family:'Inter';
-    font-size:14px;
-    color:var(--ink);
+    padding: 10px 12px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: var(--bg-input);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    transition: all 0.2s;
   }
-  .field-group input:focus, .field-group select:focus{
-    outline:2px solid var(--accent);
-    outline-offset:1px;
-    border-color:var(--accent);
+  .field-group input:focus, .field-group select:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: #fff;
   }
   
   /* IPHONE STYLE BUTTONS */
-  .btn{
-    border: 1.5px solid var(--ink);
-    background: var(--ink);
+  .btn {
+    border: none;
+    background: var(--accent);
     color: #fff;
-    padding: 8px 20px;
-    font-size: 13px;
+    padding: 10px 20px;
+    font-size: 14px;
     font-weight: 600;
-    border-radius: 24px; /* iPhone Pill Shape */
+    border-radius: 20px; 
     cursor: pointer;
-    font-family: 'Inter';
+    font-family: inherit;
+    box-shadow: var(--shadow-btn);
     transition: all 0.2s ease-in-out;
   }
   .btn:focus {
-    outline: 3px solid var(--accent);
+    outline: 3px solid rgba(0, 122, 255, 0.4);
     outline-offset: 2px;
   }
-  .btn:hover{
-    background: #0F172A; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Soft shadow on hover */
+  .btn:hover {
+    background: var(--accent-hover); 
+    transform: translateY(-1px);
   }
   
-  .btn.secondary{background:#fff;color:var(--ink);border-color:var(--line);}
-  .btn.secondary:hover{border-color:var(--ink);}
+  .btn.secondary {
+    background: var(--bg-input);
+    color: var(--accent);
+    box-shadow: none;
+  }
+  .btn.secondary:hover {
+    background: #E5E5EA;
+  }
   
   /* Red Reset Button */
   .btn.btn-reset {
-    background: #fff;
-    color: var(--error);
-    border-color: var(--error);
+    background: var(--error);
+    box-shadow: var(--shadow-btn-red);
   }
   .btn.btn-reset:hover {
-    background: var(--error);
-    color: #fff;
+    background: #D70015;
   }
 
-  .btn:disabled{opacity:0.4;cursor:not-allowed;}
+  .btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;}
 
   /* Student switch bar & Progress */
   #studentBarWrap {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
   }
   #studentBar{
     display:flex;
@@ -171,37 +181,37 @@
   #studentBar .who{
     display:flex;
     align-items:center;
-    gap:14px;
+    gap:12px;
   }
   .class-dropdown {
-    padding: 6px 12px;
-    border: 2px solid var(--ink);
-    border-radius: 4px;
-    font-family: 'Inter';
-    font-weight: 700;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-weight: 600;
     font-size: 14px;
-    color: var(--ink);
-    background: var(--paper);
+    color: var(--accent);
+    background: rgba(0, 122, 255, 0.1);
     cursor: pointer;
   }
   #studentBar .who .roll{
-    font-family:'IBM Plex Mono';
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-weight:600;
     font-size:15px;
-    color:var(--ink);
+    color: var(--ink-soft);
   }
   #studentBar .who .name{
-    font-family:'Source Serif 4',serif;
-    font-size:19px;
-    font-weight:600;
+    font-size:20px;
+    font-weight:700;
+    letter-spacing: -0.01em;
   }
   .sec-badge {
-    font-size: 13px;
+    font-size: 12px;
     background: var(--ink);
     color: #fff;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-family: 'Inter';
+    padding: 3px 8px;
+    border-radius: 8px;
+    font-weight: 600;
     vertical-align: middle;
     margin-left: 6px;
   }
@@ -211,10 +221,9 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #fff;
-    border: 2px solid var(--error);
+    background: var(--bg-input);
     color: var(--error);
-    padding: 4px 12px 4px 6px;
+    padding: 6px 14px 6px 8px;
     border-radius: 30px;
     font-size: 13px;
     font-weight: 700;
@@ -225,65 +234,66 @@
   .toggle-switch {
     position: relative;
     display: inline-block;
-    width: 32px;
-    height: 18px;
+    width: 36px;
+    height: 20px;
   }
   .toggle-switch input { display: none; }
   .toggle-slider {
     position: absolute;
     cursor: pointer;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #FBEAE9;
+    background-color: var(--line);
     transition: .3s;
     border-radius: 20px;
   }
   .toggle-slider:before {
     position: absolute;
     content: "";
-    height: 12px;
-    width: 12px;
-    left: 3px;
-    bottom: 3px;
-    background-color: var(--error);
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #fff;
     transition: .3s;
     border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
   input:checked + .toggle-slider {
-    background-color: #fff;
+    background-color: var(--error);
   }
   input:checked + .toggle-slider:before {
-    transform: translateX(14px);
-    background-color: var(--error);
+    transform: translateX(16px);
   }
 
   /* Progress Bar */
   .progress-container {
     width: 100%;
     background: var(--line);
-    border-radius: 4px;
-    height: 8px;
+    border-radius: 6px;
+    height: 6px;
     overflow: hidden;
-    position: relative;
   }
   .progress-fill {
     height: 100%;
     background: var(--green);
     width: 0%;
-    transition: width 0.4s ease;
+    transition: width 0.5s ease-out;
   }
   .progress-text {
     font-size: 12px;
-    color: var(--muted);
+    color: var(--ink-soft);
     font-weight: 600;
     text-align: right;
-    margin-top: 4px;
+    margin-top: 6px;
   }
 
   #studentSearch{
-    padding:6px 9px;
-    border:1px solid var(--line);
-    border-radius:2px;
-    font-size:13px;
+    padding: 8px 12px;
+    border: none;
+    background: var(--bg-input);
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
     width:220px;
   }
 
@@ -303,7 +313,7 @@
   .qgrid{
     display:grid;
     grid-template-columns:repeat(5,1fr);
-    gap:10px;
+    gap:12px;
   }
   .qgrid.cols10{grid-template-columns:repeat(10,1fr);}
   .qgrid.cols4{grid-template-columns:repeat(4,1fr);} 
@@ -315,109 +325,112 @@
     display:block;
     text-align:center;
     font-size:12px; 
-    font-weight:800;
-    color:var(--ink);
+    font-weight:700;
+    color: var(--ink-soft);
     margin-bottom:6px;
-    font-family:'Inter', sans-serif;
   }
   
   .qcell input{
     width:100%;
     text-align:center;
     padding:4px 2px; 
-    height:36px;
-    font-family:'IBM Plex Mono';
-    font-weight:700;
-    font-size:20px; 
-    border:1.5px solid var(--line);
-    border-radius:2px;
-    background:#fff;
-    color:var(--ink);
+    height: 44px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 700;
+    font-size: 20px; 
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background: var(--bg-input);
+    color: var(--ink);
+    transition: all 0.2s;
   }
   .qcell input:focus{
-    outline:none;
-    border-color:var(--accent);
-    box-shadow:0 0 0 3px rgba(37, 99, 235, 0.12);
+    outline: none;
+    border-color: var(--accent);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
   }
   .qcell input.locked{
-    background:var(--locked-bg);
-    color:var(--muted);
-    border-style:dashed;
-    font-weight:400;
+    background: var(--locked-bg);
+    color: var(--ink-soft);
+    border-style: dashed;
+    border-color: transparent;
+    font-weight:500;
   }
   .qcell input:disabled {
     background: var(--locked-bg);
-    color: var(--muted);
+    color: var(--ink-soft);
   }
   .qcell input.err{
-    border-color:var(--error);
-    background:#FBEAE9;
+    border-color: var(--error);
+    background: #FFEEEE;
   }
   .qcell .errmsg{
     position:absolute;
     top:100%;left:0;right:0;
-    font-size:10px;
+    font-size:11px;
     color:var(--error);
     text-align:center;
-    margin-top:2px;
+    margin-top:4px;
     font-weight:600;
-    line-height:1.2;
   }
   .choice-pair{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:6px;
+    gap:8px;
   }
   .choice-pair .sub{
     font-size:11px;
-    color:var(--muted);
+    color:var(--ink-soft);
     text-align:center;
     display:block;
     font-weight:600;
-    font-family:'Inter', sans-serif;
+    margin-top: 2px;
   }
 
-  /* --- EXACT REPLICA TABLE STYLES --- */
-  #previewCard{position:sticky;top:16px;}
+  /* --- REPLICA TABLE (Modernized) --- */
+  #previewCard{position:sticky;top:20px;}
   table.replica {
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
     background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border-style: hidden; 
+    box-shadow: 0 0 0 1px var(--line);
   }
   table.replica th, table.replica td {
-    border: 1px solid var(--ink);
+    border: 1px solid var(--line);
     text-align: center;
-    height: 32px;
+    height: 36px;
     vertical-align: middle;
   }
   table.replica th {
-    background: #EDE7D6;
-    font-family: 'Inter';
+    background: var(--bg-input);
     font-size: 11px;
     font-weight: 700;
     color: var(--ink-soft);
-    padding: 6px;
+    padding: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
   table.replica td.partlabel {
     text-align: left;
     font-weight: 700;
-    font-family: 'Source Serif 4', serif;
-    background: #F8F4E9;
-    font-size: 12px;
-    padding: 4px 8px;
+    background: #FAFAFA;
+    font-size: 13px;
+    padding: 6px 12px;
     color: var(--ink);
   }
   table.replica td.qhead {
-    background: #F8F4E9;
-    font-size: 10px;
-    font-family: 'Inter';
-    font-weight: 500;
-    color: var(--muted);
+    background: #FAFAFA;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-soft);
   }
-  
   table.replica td.val {
-    font-family: 'IBM Plex Mono';
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-weight: 700;
     color: var(--ink);
     font-size: 16px;
@@ -426,101 +439,72 @@
     color: var(--error);
   }
   table.replica td.total-col {
-    background: #F8F4E9;
-    color: var(--ink);
+    background: #FAFAFA;
+    color: var(--accent);
     font-weight: 700;
     font-size: 16px;
   }
   table.replica .dim {
-    color: var(--muted);
-    font-weight: 400;
+    color: var(--ink-soft);
+    font-weight: 500;
   }
   .row-no-bottom { border-bottom: none !important; }
   .row-no-top { border-top: none !important; }
 
-  .navbtns{display:flex;gap:10px;justify-content:space-between;margin-top:16px;}
-  .navbtns .btn{flex:1;text-align:center;}
+  .navbtns{display:flex;gap:12px;justify-content:space-between;margin-top:20px;}
+  .navbtns .btn{flex:1;text-align:center; padding: 12px;}
 
   #exportBar{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-top:12px;
+    margin-top:16px;
   }
   
   .btn-export {
     background: var(--ink);
-    border-color: var(--ink);
+    box-shadow: 0 4px 12px rgba(28, 28, 30, 0.2);
+  }
+  .btn-export:hover {
+    background: #000;
   }
   
   .savednote{
-    font-size:12px;
-    color:var(--green);
-    font-weight:600;
-    opacity:0;
-    transition:opacity .3s;
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity .3s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
   .savednote.show{opacity:1;}
-
-  /* Mini Analytics */
-  .analytics-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-top: 10px;
-  }
-  .stat-box {
-    background: #F8F4E9;
-    border: 1px solid var(--line);
-    padding: 10px;
-    border-radius: 4px;
-    text-align: center;
-  }
-  .stat-box span {
-    display: block;
-    font-size: 10px;
-    color: var(--muted);
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .stat-box b {
-    font-size: 18px;
-    color: var(--ink);
-    font-family: 'IBM Plex Mono';
-  }
-  .stat-box .small-text {
-    font-size: 12px;
-    font-family: 'Inter';
-    display: block;
-    color: var(--ink-soft);
-    margin-top: 2px;
-  }
 
   #setupLockedRow{
     display:flex;
     align-items: center;
     flex-wrap:wrap;
-    gap:6px 22px;
-    font-size:13px;
+    gap:12px 24px;
+    font-size:14px;
   }
-  #setupLockedRow div span{color:var(--muted);font-size:11px;display:block;}
-  #setupLockedRow div b{font-family:'Source Serif 4',serif;font-size:14px;}
+  #setupLockedRow div span{color:var(--ink-soft);font-size:11px;display:block;margin-bottom:2px;font-weight:600;}
+  #setupLockedRow div b{font-weight:600;font-size:15px;}
 </style>
 </head>
 <body>
 
 <header class="masthead">
-  <div class="crest-line">BISHOP HEBER COLLEGE (AUTONOMOUS) · TIRUCHIRAPPALLI-17</div>
-  <h1>Internal Test Mark Entry Ledger</h1>
-  <div class="sub">Digitised answer-sheet front page &mdash; keyboard-first entry</div>
+  <div class="crest-line">Bishop Heber College (Autonomous) · Tiruchirappalli-17</div>
+  <h1>Internal Test Mark Entry</h1>
+  <div class="sub">iOS Optimized Ledger Dashboard</div>
 </header>
 
 <div class="wrap">
 
   <!-- SETUP CARD -->
   <div class="card" id="setupCard">
-    <h2>Exam Setup <span class="tag" id="setupTag">EDIT ONCE</span></h2>
+    <h2>Exam Configuration <span class="tag" id="setupTag">EDIT ONCE</span></h2>
     <div id="setupForm">
       <div id="setupGrid">
         <div class="field-group">
@@ -537,9 +521,9 @@
         <div class="field-group"><label>Batch / Section</label><input id="cfgBatch" placeholder="e.g. II-BCA D"></div>
         <div class="field-group"><label>Course Title</label><input id="cfgCourse" placeholder="e.g. Database Management System"></div>
       </div>
-      <div style="margin-top:16px; display:flex; gap:12px;">
+      <div style="margin-top:20px; display:flex; gap:12px;">
         <button class="btn" id="saveSetupBtn">Save Setup</button>
-        <button class="btn btn-reset" id="resetAllBtn">Reset All Data</button>
+        <button class="btn btn-reset" id="resetAllBtn">Reset Database</button>
       </div>
     </div>
     <!-- Locked View -->
@@ -579,22 +563,22 @@
     <!-- ENTRY -->
     <div>
       <div class="card">
-        <h2>Part A &middot; MCQ <span class="tag">Q1–Q10 · max 1 each</span></h2>
+        <h2>Part A &middot; MCQ <span class="tag">Q1–Q10 · max 1</span></h2>
         <div class="qgrid cols10" id="partA"></div>
       </div>
 
       <div class="card">
-        <h2>Part B <span class="tag">Q11–Q15 · max 2 each</span></h2>
+        <h2>Part B <span class="tag">Q11–Q15 · max 2</span></h2>
         <div class="qgrid" id="partB"></div>
       </div>
 
       <div class="card">
-        <h2>Part C — either / or <span class="tag">Q16–Q19 · max 5 each</span></h2>
+        <h2>Part C — either / or <span class="tag">Q16–Q19 · max 5</span></h2>
         <div class="qgrid cols4" id="partC"></div>
       </div>
 
       <div class="card">
-        <h2>Part D <span class="tag">Q20–Q22 · Any 2 · max 10 each</span></h2>
+        <h2>Part D <span class="tag">Q20–Q22 · Any 2 · max 10</span></h2>
         <div class="qgrid cols3" id="partD"></div>
       </div>
 
@@ -604,22 +588,22 @@
       </div>
     </div>
 
-    <!-- PREVIEW & ANALYTICS -->
+    <!-- PREVIEW -->
     <div>
       <div class="card" id="previewCard">
-        <h2>Marks Scored <span class="tag">Live Paper Replica</span></h2>
+        <h2>Marks Scored <span class="tag">Live Preview</span></h2>
         <table class="replica">
           <thead>
             <tr>
-              <th colspan="6" style="text-align:center; font-size:12px;">Marks Scored</th>
-              <th style="width:16%;">Total</th>
+              <th colspan="6">Marks Scored</th>
+              <th style="width:18%;">Total</th>
             </tr>
           </thead>
           <tbody>
             <!-- Part A -->
             <tr>
               <td class="partlabel">Part A</td>
-              <td colspan="5" style="text-align:center; font-weight:700; color:#4A5470; font-size:12px;">MCQ Marks 1–10</td>
+              <td colspan="5" style="text-align:center; font-weight:600; color:var(--ink-soft); font-size:12px;">MCQ Marks 1–10</td>
               <td class="val total-col" id="sumA">0</td>
             </tr>
             <!-- Part B -->
@@ -633,7 +617,7 @@
               <td rowspan="2" class="val total-col" id="sumB">0</td>
             </tr>
             <tr>
-              <td class="partlabel row-no-top dim" style="font-size:10px;">(2 Marks)</td>
+              <td class="partlabel row-no-top dim" style="font-size:11px;">(2 Marks)</td>
               <td class="val" id="pb11"></td>
               <td class="val" id="pb12"></td>
               <td class="val" id="pb13"></td>
@@ -642,12 +626,12 @@
             </tr>
             <!-- Part C -->
             <tr>
-              <td class="partlabel row-no-bottom">Part C<br><span class="dim" style="font-size:10px;">(5 Marks)</span></td>
+              <td class="partlabel row-no-bottom">Part C<br><span class="dim" style="font-size:11px;">(5 Marks)</span></td>
               <td class="qhead">16</td>
               <td class="qhead">17</td>
               <td class="qhead">18</td>
               <td class="qhead">19</td>
-              <td rowspan="3" style="background-color:#F8F4E9;"></td>
+              <td rowspan="3" style="background: #FAFAFA;"></td>
               <td rowspan="3" class="val total-col" id="sumC">0</td>
             </tr>
             <tr>
@@ -673,7 +657,7 @@
               <td rowspan="2" class="val total-col" id="sumD">0</td>
             </tr>
             <tr>
-              <td class="partlabel row-no-top dim" style="font-size:10px;">(10 Marks)</td>
+              <td class="partlabel row-no-top dim" style="font-size:11px;">(10 Marks)</td>
               <td class="val" id="pd20" colspan="2"></td>
               <td class="val" id="pd21" colspan="2"></td>
               <td class="val" id="pd22"></td>
@@ -682,36 +666,18 @@
             <tr>
               <td colspan="5" style="border-bottom:none; border-left:none;"></td>
               <td class="partlabel" style="text-align:center;">Total</td>
-              <td class="val total-col" id="grandTotal" style="font-size:18px;">0</td>
+              <td class="val total-col" id="grandTotal" style="font-size:20px;">0</td>
             </tr>
           </tbody>
         </table>
         <div id="exportBar">
-          <button class="btn btn-export" id="exportBtn">Export All as CSV</button>
-          <span class="savednote" id="savedNote">Saved ✓</span>
+          <button class="btn btn-export" id="exportBtn">Export as CSV</button>
+          <span class="savednote" id="savedNote">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Saved
+          </span>
         </div>
       </div>
-
-      <!-- ANALYTICS CARD -->
-      <div class="card" style="margin-top: 20px;">
-        <h2>Class Analytics <span class="tag">Auto-updating</span></h2>
-        <div class="analytics-grid">
-          <div class="stat-box">
-            <span>Class Avg</span>
-            <b id="statAvg">0</b>
-          </div>
-          <div class="stat-box">
-            <span>Pass / Fail</span>
-            <b id="statPassFail">0 / 0</b>
-          </div>
-          <div class="stat-box">
-            <span>Top Scorer</span>
-            <b id="statTopMark">0</b>
-            <span class="small-text" id="statTopName">—</span>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 
@@ -912,12 +878,12 @@ function renderSetup(){
       <div><span>Class / Group</span><b style="color:var(--accent);">${classLabel}</b></div>
       <div><span>Semester</span><b>${config.semester||'—'}</b></div>
       <div><span>Paper Code</span><b>${config.paperCode||'—'}</b></div>
-      <div><span>Exam</span><b>${config.exam||'—'}</b></div>
-      <div><span>Batch</span><b>${config.batch||'—'}</b></div>
-      <div><span>Course</span><b>${config.course||'—'}</b></div>
+      <div><span>Exam Name</span><b>${config.exam||'—'}</b></div>
+      <div><span>Batch / Section</span><b>${config.batch||'—'}</b></div>
+      <div><span>Course Title</span><b>${config.course||'—'}</b></div>
       <div style="display:flex; gap:8px; margin-left:auto;">
-        <button class="btn secondary" id="editSetupBtn" style="padding:6px 12px;font-size:11px;">Edit Setup</button>
-        <button class="btn btn-reset" id="resetAllBtnLocked" style="padding:6px 12px;font-size:11px;">Reset All Data</button>
+        <button class="btn secondary" id="editSetupBtn" style="padding:6px 16px;font-size:12px;">Edit Setup</button>
+        <button class="btn btn-reset" id="resetAllBtnLocked" style="padding:6px 16px;font-size:12px;">Reset Database</button>
       </div>`;
     document.getElementById('setupTag').textContent = 'LOCKED';
     
@@ -1000,9 +966,11 @@ absToggle.addEventListener('change', (e) => {
   
   if(isCurrentAbsent) {
     absToggleContainer.style.background = 'var(--error)';
+    absToggleContainer.style.borderColor = 'var(--error)';
     absToggleContainer.style.color = '#fff';
   } else {
-    absToggleContainer.style.background = '#fff';
+    absToggleContainer.style.background = 'var(--bg-input)';
+    absToggleContainer.style.borderColor = 'var(--error)';
     absToggleContainer.style.color = 'var(--error)';
   }
 
@@ -1292,42 +1260,17 @@ function updatePreview(){
 }
 
 /* ============================================================
-   PROGRESS BAR & ANALYTICS DASHBOARD
+   PROGRESS BAR
    ============================================================ */
 function updateProgressAndAnalytics() {
   let gradedCount = 0;
-  let totalMarksSum = 0;
-  let passCount = 0;
-  let failCount = 0;
-  let topScorer = { name: "—", mark: 0 };
-
   STUDENTS.forEach(s => {
-    const rec = studentData[s.roll];
-    if (rec) {
-      gradedCount++;
-      if (rec.isAbsent) {
-        failCount++; 
-      } else {
-        const mark = parseInt(rec.total, 10);
-        totalMarksSum += mark;
-        if (mark >= 20) passCount++; else failCount++;
-        if (mark > topScorer.mark) {
-          topScorer = { name: s.name, mark: mark };
-        }
-      }
-    }
+    if (studentData[s.roll]) gradedCount++;
   });
-
   const totalStudents = STUDENTS.length;
   const pct = totalStudents === 0 ? 0 : Math.round((gradedCount / totalStudents) * 100);
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressText').textContent = `Graded: ${gradedCount} / ${totalStudents} (${pct}%)`;
-
-  const avg = gradedCount === 0 ? 0 : Math.round(totalMarksSum / gradedCount);
-  document.getElementById('statAvg').textContent = avg;
-  document.getElementById('statPassFail').textContent = `${passCount} / ${failCount}`;
-  document.getElementById('statTopMark').textContent = topScorer.mark;
-  document.getElementById('statTopName').textContent = topScorer.name;
 }
 
 /* ============================================================
@@ -1336,7 +1279,8 @@ function updateProgressAndAnalytics() {
 function resetFieldsToDefault(){
   isCurrentAbsent = false;
   absToggle.checked = false;
-  absToggleContainer.style.background = '#fff';
+  absToggleContainer.style.background = 'var(--bg-input)';
+  absToggleContainer.style.borderColor = 'var(--error)';
   absToggleContainer.style.color = 'var(--error)';
   
   ALL_Q_IDS.forEach(id=>{
@@ -1388,7 +1332,7 @@ function loadStudent(index){
   updatePreview();
   updateProgressAndAnalytics();
   document.getElementById('prevBtn').disabled = index===0;
-  document.getElementById('nextBtn').textContent = index===STUDENTS.length-1 ? 'Save (Last Student)' : 'Save & Next Student →';
+  document.getElementById('nextBtn').textContent = index===STUDENTS.length-1 ? 'Save & Finish' : 'Save & Next Student';
   localStorage.setItem(LS_INDEX, String(index));
 }
 
