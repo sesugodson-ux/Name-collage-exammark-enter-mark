@@ -7,7 +7,7 @@
 <style>
   :root {
     /* Custom User Palette + iOS Theme */
-    --bg-body: #F4F7F7; /* Very subtle tint */
+    --bg-body: #F4F7F7; 
     --bg-card: #FFFFFF;
     --bg-input: #F2F2F7;
     --line: #E5E5EA;
@@ -17,14 +17,15 @@
     /* User Colors */
     --accent: #1B766C;       /* Dark Teal */
     --accent-light: #AAEDE7; /* Light Cyan */
-    --accent-hover: #12544D; /* Darker Teal for hover */
+    --accent-hover: #12544D; /* Darker Teal */
     
-    --error: #FF3B30; /* iOS Red */
+    --error: #FF3B30; 
     --locked-bg: #E5E5EA;
     
     --shadow-card: 0 4px 20px rgba(27, 118, 108, 0.06);
     --shadow-btn: 0 4px 12px rgba(27, 118, 108, 0.3);
     --shadow-btn-red: 0 4px 12px rgba(255, 59, 48, 0.25);
+    --shadow-modal: 0 20px 40px rgba(0,0,0,0.2);
   }
   
   *{box-sizing:border-box;}
@@ -39,7 +40,6 @@
     padding-bottom: 60px;
   }
 
-  /* Sleek Header */
   header.masthead {
     background: var(--bg-card);
     padding: 24px 28px 20px;
@@ -67,7 +67,6 @@
 
   .wrap{max-width:1180px;margin:0 auto;padding:24px 20px 0;}
 
-  /* Modern Cards */
   .card {
     background: var(--bg-card);
     border-radius: 16px;
@@ -107,7 +106,7 @@
     margin-bottom:6px;
     font-weight:600;
   }
-  .field-group input, .field-group select {
+  .field-group input {
     width:100%;
     padding: 10px 12px;
     border: 2px solid transparent;
@@ -119,14 +118,40 @@
     color: var(--ink);
     transition: all 0.2s;
   }
-  .field-group input:focus, .field-group select:focus {
+  .field-group input:focus {
     outline: none;
     border-color: var(--accent);
     background: #fff;
     box-shadow: 0 0 0 3px var(--accent-light);
   }
+
+  /* CUSTOM SELECT BUTTONS */
+  .custom-select-btn {
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: var(--bg-input);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+  }
+  .custom-select-btn:hover {
+    background: var(--accent-light);
+  }
+  .custom-select-btn:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-light);
+  }
   
-  /* IPHONE STYLE BUTTONS */
   .btn {
     border: none;
     background: var(--accent);
@@ -158,7 +183,6 @@
     background: #95ded8;
   }
   
-  /* Red Reset Button */
   .btn.btn-reset {
     background: var(--error);
     box-shadow: var(--shadow-btn-red);
@@ -169,7 +193,7 @@
 
   .btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;}
 
-  /* Student switch bar & Progress */
+  /* Student switch bar */
   #studentBarWrap {
     display: flex;
     flex-direction: column;
@@ -186,17 +210,6 @@
     display:flex;
     align-items:center;
     gap:12px;
-  }
-  .class-dropdown {
-    padding: 8px 14px;
-    border: none;
-    border-radius: 10px;
-    font-family: inherit;
-    font-weight: 700;
-    font-size: 14px;
-    color: var(--accent);
-    background: var(--accent-light);
-    cursor: pointer;
   }
   #studentBar .who .roll{
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -220,7 +233,6 @@
     margin-left: 6px;
   }
   
-  /* Modern ABS Toggle */
   .abs-toggle {
     display: flex;
     align-items: center;
@@ -262,14 +274,9 @@
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
-  input:checked + .toggle-slider {
-    background-color: var(--error);
-  }
-  input:checked + .toggle-slider:before {
-    transform: translateX(16px);
-  }
+  input:checked + .toggle-slider { background-color: var(--error); }
+  input:checked + .toggle-slider:before { transform: translateX(16px); }
 
-  /* Progress Bar */
   .progress-container {
     width: 100%;
     background: var(--line);
@@ -291,18 +298,6 @@
     margin-top: 6px;
   }
 
-  #studentSearch{
-    padding: 8px 12px;
-    border: none;
-    background: var(--bg-input);
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    width:220px;
-    color: var(--ink);
-  }
-
-  /* Layout */
   .split{
     display:grid;
     grid-template-columns:1.15fr 1fr;
@@ -314,7 +309,6 @@
     #setupGrid{grid-template-columns:repeat(2,1fr);}
   }
 
-  /* Grid */
   .qgrid{
     display:grid;
     grid-template-columns:repeat(5,1fr);
@@ -325,7 +319,6 @@
   .qgrid.cols3{grid-template-columns:repeat(3,1fr);}
 
   .qcell{position:relative;}
-  
   .qcell label{
     display:block;
     text-align:center;
@@ -334,7 +327,6 @@
     color: var(--ink-soft);
     margin-bottom:6px;
   }
-  
   .qcell input{
     width:100%;
     text-align:center;
@@ -355,16 +347,12 @@
     background: #fff;
     box-shadow: 0 0 0 3px var(--accent-light);
   }
-  .qcell input.locked{
+  .qcell input.locked, .qcell input:disabled {
     background: var(--locked-bg);
     color: var(--ink-soft);
     border-style: dashed;
     border-color: transparent;
     font-weight:500;
-  }
-  .qcell input:disabled {
-    background: var(--locked-bg);
-    color: var(--ink-soft);
   }
   .qcell input.err{
     border-color: var(--error);
@@ -393,7 +381,7 @@
     margin-top: 2px;
   }
 
-  /* --- REPLICA TABLE (UPDATED FOR PURE BLACK MARKS) --- */
+  /* REPLICA TABLE */
   #previewCard{position:sticky;top:20px;}
   table.replica {
     width: 100%;
@@ -436,16 +424,14 @@
   }
   table.replica td.val {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-weight: 800; /* Extra Bold */
-    color: #000000;   /* Pure Black */
-    font-size: 18px;  /* Made Larger */
+    font-weight: 800; 
+    color: #000000;   
+    font-size: 18px;  
   }
-  table.replica td.val.absent-text {
-    color: var(--error);
-  }
+  table.replica td.val.absent-text { color: var(--error); }
   table.replica td.total-col {
     background: #FAFAFA;
-    color: #000000;   /* Pure Black */
+    color: #000000;
     font-weight: 800;
     font-size: 18px;
   }
@@ -465,14 +451,11 @@
     align-items:center;
     margin-top:16px;
   }
-  
   .btn-export {
     background: var(--ink);
     box-shadow: 0 4px 12px rgba(28, 28, 30, 0.2);
   }
-  .btn-export:hover {
-    background: #000;
-  }
+  .btn-export:hover { background: #000; }
   
   .savednote{
     font-size: 13px;
@@ -495,6 +478,89 @@
   }
   #setupLockedRow div span{color:var(--ink-soft);font-size:11px;display:block;margin-bottom:2px;font-weight:600;}
   #setupLockedRow div b{font-weight:700;font-size:15px; color:var(--ink);}
+
+  /* =========================================
+     MODAL UI STYLES (CENTERED SELECTION)
+     ========================================= */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal-card {
+    background: #fff;
+    width: 90%;
+    max-width: 420px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-modal);
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh;
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+  }
+  .modal-overlay.active .modal-card {
+    transform: scale(1);
+  }
+  .modal-header {
+    background: var(--accent);
+    color: #fff;
+    padding: 16px 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .modal-close {
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+    color: var(--accent-light);
+  }
+  .modal-close:hover { color: #fff; }
+  .modal-body {
+    padding: 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .modal-option {
+    padding: 14px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    border: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .modal-option:hover {
+    background: var(--bg-input);
+  }
+  .modal-option.selected {
+    background: var(--accent-light);
+    color: var(--accent-hover);
+    border-color: var(--accent);
+  }
 </style>
 </head>
 <body>
@@ -514,11 +580,7 @@
       <div id="setupGrid">
         <div class="field-group">
           <label>Class / Group</label>
-          <select id="classSelector">
-            <option value="2nd_Year">2nd Year BCA (D)</option>
-            <option value="3rd_Year">3rd Year BCA (D)</option>
-            <option value="Web_Programming">Web Programming (DSE)</option>
-          </select>
+          <button type="button" id="classTriggerBtn" class="custom-select-btn">Select Class ▼</button>
         </div>
         <div class="field-group"><label>Semester</label><input id="cfgSemester" placeholder="e.g. II"></div>
         <div class="field-group"><label>Paper Code</label><input id="cfgPaperCode" placeholder="e.g. U25CA304"></div>
@@ -543,7 +605,6 @@
           <span class="roll" id="curRoll">—</span>
           <span class="name" id="curName">—</span>
           
-          <!-- MODERN ABSENT TOGGLE -->
           <label class="abs-toggle" id="absToggleContainer">
             <div class="toggle-switch">
               <input type="checkbox" id="absentToggle">
@@ -552,7 +613,8 @@
             Mark ABS
           </label>
         </div>
-        <select id="studentSearch"></select>
+        <!-- Custom Student Selector Button -->
+        <button type="button" id="studentTriggerBtn" class="custom-select-btn" style="width: 260px;">Select Student ▼</button>
       </div>
       <!-- PROGRESS BAR -->
       <div>
@@ -685,13 +747,29 @@
       </div>
     </div>
   </div>
+</div>
 
+<!-- CUSTOM MODAL OVERLAY -->
+<div id="uiModal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 id="modalTitle">Select Option</h3>
+      <span class="modal-close" id="modalClose">&times;</span>
+    </div>
+    <div class="modal-body" id="modalList"></div>
+  </div>
 </div>
 
 <script>
 /* ============================================================
    STATIC DATA (MULTIPLE CLASSES & SECTIONS)
    ============================================================ */
+const CLASS_OPTIONS = [
+  { id: "2nd_Year", label: "2nd Year BCA (D)" },
+  { id: "3rd_Year", label: "3rd Year BCA (D)" },
+  { id: "Web_Programming", label: "Web Programming (DSE)" }
+];
+
 const CLASS_DATA = {
   "2nd_Year": [
     ["255113401","AALAN ASHNUWA V"],["255113402","AATHAVAN A"],
@@ -770,22 +848,28 @@ const CLASS_DATA = {
   ].map(([roll,name,sec])=>({roll,name,sec}))
 };
 
+/* ============================================================
+   STORAGE & STATE
+   ============================================================ */
+const LS_CONFIG = 'markLedger_config';
+const LS_DATA   = 'markLedger_studentData';
+const LS_INDEX  = 'markLedger_currentIndex';
+
+let config = JSON.parse(localStorage.getItem(LS_CONFIG) || 'null');
+let studentData = JSON.parse(localStorage.getItem(LS_DATA) || '{}');
+
 let activeClassKey = localStorage.getItem('markLedger_activeClass') || "2nd_Year";
 let STUDENTS = CLASS_DATA[activeClassKey];
 
-const classSelector = document.getElementById('classSelector');
-classSelector.value = activeClassKey;
+let currentIndex = parseInt(localStorage.getItem(LS_INDEX) || '0', 10);
+if (isNaN(currentIndex) || currentIndex < 0 || currentIndex >= STUDENTS.length) currentIndex = 0;
 
-// Unsaved changes tracking
 let hasUnsavedChanges = false;
 window.addEventListener('beforeunload', (e) => {
-  if (hasUnsavedChanges) {
-    e.preventDefault();
-    e.returnValue = '';
-  }
+  if (hasUnsavedChanges) { e.preventDefault(); e.returnValue = ''; }
 });
 
-// Reset All Logic
+// Reset Logic
 function handleResetAll() {
   const confirmMsg = "⚠️ WARNING: This will permanently delete ALL marks, setups, and student progress for EVERY class. Are you sure you want to start a fresh exam?";
   if (confirm(confirmMsg)) {
@@ -799,7 +883,84 @@ function handleResetAll() {
 }
 document.getElementById('resetAllBtn').addEventListener('click', handleResetAll);
 
-// Question field definitions
+/* ============================================================
+   CUSTOM MODAL LOGIC (CLASS & STUDENT SELECTION)
+   ============================================================ */
+const classTriggerBtn = document.getElementById('classTriggerBtn');
+const studentTriggerBtn = document.getElementById('studentTriggerBtn');
+const uiModal = document.getElementById('uiModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalList = document.getElementById('modalList');
+const modalClose = document.getElementById('modalClose');
+
+// Init Button Text
+function updateClassBtnText() {
+  const activeObj = CLASS_OPTIONS.find(c => c.id === activeClassKey);
+  if(activeObj) classTriggerBtn.textContent = activeObj.label + ' ▼';
+}
+function updateStudentBtnText() {
+  const s = STUDENTS[currentIndex];
+  studentTriggerBtn.textContent = `${s.roll} — ${s.name} ▼`;
+}
+updateClassBtnText();
+
+function openModal(type) {
+  modalList.innerHTML = '';
+  
+  if (type === 'class') {
+    modalTitle.textContent = "Select Class / Group";
+    CLASS_OPTIONS.forEach(c => {
+      const opt = document.createElement('div');
+      opt.className = 'modal-option' + (c.id === activeClassKey ? ' selected' : '');
+      opt.textContent = c.label;
+      opt.onclick = () => {
+        saveCurrentStudent(true);
+        hasUnsavedChanges = false;
+        activeClassKey = c.id;
+        localStorage.setItem('markLedger_activeClass', activeClassKey);
+        STUDENTS = CLASS_DATA[activeClassKey];
+        currentIndex = 0;
+        updateClassBtnText();
+        loadStudent(0);
+        if (config) renderSetup();
+        closeModal();
+      };
+      modalList.appendChild(opt);
+    });
+  } else if (type === 'student') {
+    modalTitle.textContent = "Jump to Student";
+    STUDENTS.forEach((s, i) => {
+      const opt = document.createElement('div');
+      opt.className = 'modal-option' + (i === currentIndex ? ' selected' : '');
+      opt.textContent = `${s.roll} — ${s.name} (Sec: ${s.sec})`;
+      opt.onclick = () => {
+        saveCurrentStudent(true);
+        hasUnsavedChanges = false;
+        currentIndex = i;
+        loadStudent(currentIndex);
+        closeModal();
+      };
+      modalList.appendChild(opt);
+    });
+  }
+  uiModal.classList.add('active');
+}
+
+function closeModal() {
+  uiModal.classList.remove('active');
+}
+
+classTriggerBtn.addEventListener('click', () => openModal('class'));
+studentTriggerBtn.addEventListener('click', () => openModal('student'));
+modalClose.addEventListener('click', closeModal);
+uiModal.addEventListener('click', (e) => {
+  if (e.target === uiModal) closeModal();
+});
+
+
+/* ============================================================
+   QUESTION FIELD DEFINITIONS
+   ============================================================ */
 const SIMPLE_FIELDS = [
   ...Array.from({length:10},(_,i)=>({id:'q'+(i+1), max:1})),
   ...Array.from({length:5},(_,i)=>({id:'q'+(i+11), max:2})),
@@ -817,20 +978,7 @@ const MAX_LOOKUP = {};
 SIMPLE_FIELDS.forEach(f=>MAX_LOOKUP[f.id]=f.max);
 CHOICE_QS.forEach(n=>{MAX_LOOKUP['q'+n+'a']=5; MAX_LOOKUP['q'+n+'b']=5;});
 PART_D_FIELDS.forEach(f=>MAX_LOOKUP[f.id]=f.max);
-
 const ALL_Q_IDS = FOCUS_ORDER;
-
-/* ============================================================
-   STORAGE KEYS & STATE
-   ============================================================ */
-const LS_CONFIG = 'markLedger_config';
-const LS_DATA   = 'markLedger_studentData';
-const LS_INDEX  = 'markLedger_currentIndex';
-
-let config = JSON.parse(localStorage.getItem(LS_CONFIG) || 'null');
-let studentData = JSON.parse(localStorage.getItem(LS_DATA) || '{}');
-let currentIndex = parseInt(localStorage.getItem(LS_INDEX) || '0', 10);
-if (isNaN(currentIndex) || currentIndex < 0 || currentIndex >= STUDENTS.length) currentIndex = 0;
 
 /* ============================================================
    BUILD STATIC DOM
@@ -876,8 +1024,8 @@ function renderSetup(){
     const row = document.getElementById('setupLockedRow');
     row.style.display='flex';
     
-    const classSelect = document.getElementById('classSelector');
-    const classLabel = classSelect.options[classSelect.selectedIndex]?.text || activeClassKey;
+    const activeObj = CLASS_OPTIONS.find(c => c.id === activeClassKey);
+    const classLabel = activeObj ? activeObj.label : activeClassKey;
 
     row.innerHTML = `
       <div><span>Class / Group</span><b style="color:var(--accent);">${classLabel}</b></div>
@@ -922,41 +1070,6 @@ document.getElementById('saveSetupBtn').addEventListener('click', ()=>{
   renderSetup();
 });
 renderSetup();
-
-/* ============================================================
-   STUDENT SELECT & CLASS SWITCH
-   ============================================================ */
-const studentSearch = document.getElementById('studentSearch');
-
-function populateStudentDropdown() {
-  studentSearch.innerHTML = '';
-  STUDENTS.forEach((s,i)=>{
-    const opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = `${s.roll} — ${s.name} (${s.sec})`;
-    studentSearch.appendChild(opt);
-  });
-}
-
-classSelector.addEventListener('change', (e)=>{
-  saveCurrentStudent(true); 
-  hasUnsavedChanges = false;
-  activeClassKey = e.target.value;
-  localStorage.setItem('markLedger_activeClass', activeClassKey);
-  STUDENTS = CLASS_DATA[activeClassKey];
-  currentIndex = 0;
-  populateStudentDropdown();
-  loadStudent(0);
-  
-  if (config) renderSetup();
-});
-
-studentSearch.addEventListener('change', ()=>{
-  saveCurrentStudent(true);
-  hasUnsavedChanges = false;
-  currentIndex = parseInt(studentSearch.value,10);
-  loadStudent(currentIndex);
-});
 
 /* ============================================================
    FIELD VALUE HELPERS & ABSENT LOGIC
@@ -1221,6 +1334,8 @@ function checkPartD() {
    LIVE PREVIEW (EXACT REPLICA MAPPING)
    ============================================================ */
 function updatePreview(){
+  const absText = isCurrentAbsent ? 'ABS' : '0';
+  
   const a = SIMPLE_FIELDS.slice(0,10).map(f=>getVal(f.id));
   const sumA = a.reduce((x,y)=>x+y,0);
   document.getElementById('sumA').textContent = isCurrentAbsent ? 'ABS' : String(sumA).padStart(2, '0');
@@ -1299,7 +1414,8 @@ function loadStudent(index){
   const s = STUDENTS[index];
   document.getElementById('curRoll').textContent = s.roll;
   document.getElementById('curName').innerHTML = `${s.name} <span class="sec-badge">Sec: ${s.sec}</span>`;
-  
+  updateStudentBtnText();
+
   resetFieldsToDefault();
   const saved = studentData[s.roll];
   if (saved){
@@ -1436,7 +1552,6 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
 /* ============================================================
    INIT
    ============================================================ */
-populateStudentDropdown();
 loadStudent(currentIndex);
 </script>
 </body>
