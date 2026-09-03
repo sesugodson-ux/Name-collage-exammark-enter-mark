@@ -88,7 +88,7 @@
     color:var(--muted);
   }
 
-  /* Setup grid (Updated to 3 columns) */
+  /* Setup grid */
   #setupGrid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -117,24 +117,42 @@
     border-color:var(--accent);
   }
   
+  /* IPHONE STYLE BUTTONS */
   .btn{
-    border:1px solid var(--ink);
-    background:var(--ink);
-    color:#fff;
-    padding:8px 16px;
-    font-size:13px;
-    font-weight:600;
-    border-radius:2px;
-    cursor:pointer;
-    font-family:'Inter';
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: #fff;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 24px; /* iPhone Pill Shape */
+    cursor: pointer;
+    font-family: 'Inter';
+    transition: all 0.2s ease-in-out;
   }
   .btn:focus {
     outline: 3px solid var(--accent);
     outline-offset: 2px;
   }
-  .btn:hover{background:#0F172A; border-color:#0F172A;}
+  .btn:hover{
+    background: #0F172A; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Soft shadow on hover */
+  }
+  
   .btn.secondary{background:#fff;color:var(--ink);border-color:var(--line);}
   .btn.secondary:hover{border-color:var(--ink);}
+  
+  /* Red Reset Button */
+  .btn.btn-reset {
+    background: #fff;
+    color: var(--error);
+    border-color: var(--error);
+  }
+  .btn.btn-reset:hover {
+    background: var(--error);
+    color: #fff;
+  }
+
   .btn:disabled{opacity:0.4;cursor:not-allowed;}
 
   /* Student switch bar & Progress */
@@ -154,6 +172,17 @@
     display:flex;
     align-items:center;
     gap:14px;
+  }
+  .class-dropdown {
+    padding: 6px 12px;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--paper);
+    cursor: pointer;
   }
   #studentBar .who .roll{
     font-family:'IBM Plex Mono';
@@ -258,7 +287,7 @@
     width:220px;
   }
 
-  /* Layout: entry left, preview right */
+  /* Layout */
   .split{
     display:grid;
     grid-template-columns:1.15fr 1fr;
@@ -270,7 +299,7 @@
     #setupGrid{grid-template-columns:repeat(2,1fr);}
   }
 
-  /* Grid Columns Definitions */
+  /* Grid */
   .qgrid{
     display:grid;
     grid-template-columns:repeat(5,1fr);
@@ -470,6 +499,7 @@
 
   #setupLockedRow{
     display:flex;
+    align-items: center;
     flex-wrap:wrap;
     gap:6px 22px;
     font-size:13px;
@@ -488,7 +518,7 @@
 
 <div class="wrap">
 
-  <!-- SETUP CARD (Dropdown Moved Here) -->
+  <!-- SETUP CARD -->
   <div class="card" id="setupCard">
     <h2>Exam Setup <span class="tag" id="setupTag">EDIT ONCE</span></h2>
     <div id="setupForm">
@@ -507,10 +537,12 @@
         <div class="field-group"><label>Batch / Section</label><input id="cfgBatch" placeholder="e.g. II-BCA D"></div>
         <div class="field-group"><label>Course Title</label><input id="cfgCourse" placeholder="e.g. Database Management System"></div>
       </div>
-      <div style="margin-top:16px;">
+      <div style="margin-top:16px; display:flex; gap:12px;">
         <button class="btn" id="saveSetupBtn">Save Setup</button>
+        <button class="btn btn-reset" id="resetAllBtn">Reset All Data</button>
       </div>
     </div>
+    <!-- Locked View -->
     <div id="setupLockedRow" style="display:none;"></div>
   </div>
 
@@ -782,6 +814,20 @@ window.addEventListener('beforeunload', (e) => {
   }
 });
 
+// Reset All Logic
+function handleResetAll() {
+  const confirmMsg = "⚠️ WARNING: This will permanently delete ALL marks, setups, and student progress for EVERY class. Are you sure you want to start a fresh exam?";
+  if (confirm(confirmMsg)) {
+    hasUnsavedChanges = false;
+    localStorage.removeItem(LS_CONFIG);
+    localStorage.removeItem(LS_DATA);
+    localStorage.removeItem(LS_INDEX);
+    localStorage.removeItem('markLedger_activeClass');
+    window.location.reload();
+  }
+}
+document.getElementById('resetAllBtn').addEventListener('click', handleResetAll);
+
 // Question field definitions
 const SIMPLE_FIELDS = [
   ...Array.from({length:10},(_,i)=>({id:'q'+(i+1), max:1})),
@@ -859,18 +905,20 @@ function renderSetup(){
     const row = document.getElementById('setupLockedRow');
     row.style.display='flex';
     
-    // Safely get class label
     const classSelect = document.getElementById('classSelector');
     const classLabel = classSelect.options[classSelect.selectedIndex]?.text || activeClassKey;
 
     row.innerHTML = `
-      <div><span>Class</span><b style="color:var(--accent);">${classLabel}</b></div>
+      <div><span>Class / Group</span><b style="color:var(--accent);">${classLabel}</b></div>
       <div><span>Semester</span><b>${config.semester||'—'}</b></div>
       <div><span>Paper Code</span><b>${config.paperCode||'—'}</b></div>
       <div><span>Exam</span><b>${config.exam||'—'}</b></div>
       <div><span>Batch</span><b>${config.batch||'—'}</b></div>
       <div><span>Course</span><b>${config.course||'—'}</b></div>
-      <div><button class="btn secondary" id="editSetupBtn" style="padding:4px 10px;font-size:11px;">Edit</button></div>`;
+      <div style="display:flex; gap:8px; margin-left:auto;">
+        <button class="btn secondary" id="editSetupBtn" style="padding:6px 12px;font-size:11px;">Edit Setup</button>
+        <button class="btn btn-reset" id="resetAllBtnLocked" style="padding:6px 12px;font-size:11px;">Reset All Data</button>
+      </div>`;
     document.getElementById('setupTag').textContent = 'LOCKED';
     
     document.getElementById('editSetupBtn').addEventListener('click', ()=>{
@@ -883,6 +931,9 @@ function renderSetup(){
       document.getElementById('cfgBatch').value = config.batch||'';
       document.getElementById('cfgCourse').value = config.course||'';
     });
+
+    document.getElementById('resetAllBtnLocked').addEventListener('click', handleResetAll);
+
   } else {
     document.getElementById('setupForm').style.display='block';
     document.getElementById('setupLockedRow').style.display='none';
@@ -926,7 +977,6 @@ classSelector.addEventListener('change', (e)=>{
   populateStudentDropdown();
   loadStudent(0);
   
-  // Re-render setup if locked to update the class label
   if (config) renderSetup();
 });
 
@@ -1268,13 +1318,11 @@ function updateProgressAndAnalytics() {
     }
   });
 
-  // Update Progress
   const totalStudents = STUDENTS.length;
   const pct = totalStudents === 0 ? 0 : Math.round((gradedCount / totalStudents) * 100);
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressText').textContent = `Graded: ${gradedCount} / ${totalStudents} (${pct}%)`;
 
-  // Update Analytics
   const avg = gradedCount === 0 ? 0 : Math.round(totalMarksSum / gradedCount);
   document.getElementById('statAvg').textContent = avg;
   document.getElementById('statPassFail').textContent = `${passCount} / ${failCount}`;
