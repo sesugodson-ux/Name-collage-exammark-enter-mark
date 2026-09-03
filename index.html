@@ -137,7 +137,12 @@
   .btn.secondary:hover{border-color:var(--ink);}
   .btn:disabled{opacity:0.4;cursor:not-allowed;}
 
-  /* Student switch bar */
+  /* Student switch bar & Progress */
+  #studentBarWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
   #studentBar{
     display:flex;
     align-items:center;
@@ -147,7 +152,7 @@
   }
   #studentBar .who{
     display:flex;
-    align-items:baseline;
+    align-items:center;
     gap:14px;
   }
   .class-dropdown {
@@ -182,10 +187,52 @@
     vertical-align: middle;
     margin-left: 6px;
   }
-  #studentBar .progress{
-    font-size:12px;
-    color:var(--muted);
+  
+  /* ABS Toggle */
+  .abs-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #FBEAE9;
+    border: 1px solid var(--error);
+    color: var(--error);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
   }
+  .abs-toggle input {
+    cursor: pointer;
+    accent-color: var(--error);
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Progress Bar */
+  .progress-container {
+    width: 100%;
+    background: var(--line);
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--green);
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+  .progress-text {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+    text-align: right;
+    margin-top: 4px;
+  }
+
   #studentSearch{
     padding:6px 9px;
     border:1px solid var(--line);
@@ -251,6 +298,10 @@
     color:var(--muted);
     border-style:dashed;
     font-weight:400;
+  }
+  .qcell input:disabled {
+    background: var(--locked-bg);
+    color: var(--muted);
   }
   .qcell input.err{
     border-color:var(--error);
@@ -325,6 +376,9 @@
     color: var(--ink);
     font-size: 16px;
   }
+  table.replica td.val.absent-text {
+    color: var(--error);
+  }
   table.replica td.total-col {
     background: #F8F4E9;
     color: var(--ink);
@@ -361,6 +415,41 @@
     transition:opacity .3s;
   }
   .savednote.show{opacity:1;}
+
+  /* Mini Analytics */
+  .analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .stat-box {
+    background: #F8F4E9;
+    border: 1px solid var(--line);
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+  }
+  .stat-box span {
+    display: block;
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .stat-box b {
+    font-size: 18px;
+    color: var(--ink);
+    font-family: 'IBM Plex Mono';
+  }
+  .stat-box .small-text {
+    font-size: 12px;
+    font-family: 'Inter';
+    display: block;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
 
   #setupLockedRow{
     display:flex;
@@ -402,18 +491,31 @@
 
   <!-- STUDENT SWITCH BAR -->
   <div class="card">
-    <div id="studentBar">
-      <div class="who">
-        <select id="classSelector" class="class-dropdown">
-          <option value="2nd_Year">2nd Year BCA (D)</option>
-          <option value="3rd_Year">3rd Year BCA (D)</option>
-          <option value="Web_Programming">Web Programming (DSE)</option>
-        </select>
-        <span class="roll" id="curRoll">—</span>
-        <span class="name" id="curName">—</span>
+    <div id="studentBarWrap">
+      <div id="studentBar">
+        <div class="who">
+          <select id="classSelector" class="class-dropdown">
+            <option value="2nd_Year">2nd Year BCA (D)</option>
+            <option value="3rd_Year">3rd Year BCA (D)</option>
+            <option value="Web_Programming">Web Programming (DSE)</option>
+          </select>
+          <span class="roll" id="curRoll">—</span>
+          <span class="name" id="curName">—</span>
+          
+          <!-- ABSENT TOGGLE -->
+          <label class="abs-toggle">
+            <input type="checkbox" id="absentToggle"> Mark ABS
+          </label>
+        </div>
+        <select id="studentSearch"></select>
       </div>
-      <div class="progress" id="progressNote">Student 1</div>
-      <select id="studentSearch"></select>
+      <!-- PROGRESS BAR -->
+      <div>
+        <div class="progress-container">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">Graded: 0 / 0 (0%)</div>
+      </div>
     </div>
   </div>
 
@@ -533,6 +635,27 @@
           <span class="savednote" id="savedNote">Saved ✓</span>
         </div>
       </div>
+
+      <!-- ANALYTICS CARD -->
+      <div class="card" style="margin-top: 20px;">
+        <h2>Class Analytics <span class="tag">Auto-updating</span></h2>
+        <div class="analytics-grid">
+          <div class="stat-box">
+            <span>Class Avg</span>
+            <b id="statAvg">0</b>
+          </div>
+          <div class="stat-box">
+            <span>Pass / Fail</span>
+            <b id="statPassFail">0 / 0</b>
+          </div>
+          <div class="stat-box">
+            <span>Top Scorer</span>
+            <b id="statTopMark">0</b>
+            <span class="small-text" id="statTopName">—</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -625,6 +748,15 @@ let STUDENTS = CLASS_DATA[activeClassKey];
 
 const classSelector = document.getElementById('classSelector');
 classSelector.value = activeClassKey;
+
+// Unsaved changes tracking
+let hasUnsavedChanges = false;
+window.addEventListener('beforeunload', (e) => {
+  if (hasUnsavedChanges) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
 
 // Question field definitions
 const SIMPLE_FIELDS = [
@@ -754,7 +886,8 @@ function populateStudentDropdown() {
 }
 
 classSelector.addEventListener('change', (e)=>{
-  saveCurrentStudent();
+  saveCurrentStudent(true); // silent save
+  hasUnsavedChanges = false;
   activeClassKey = e.target.value;
   localStorage.setItem('markLedger_activeClass', activeClassKey);
   STUDENTS = CLASS_DATA[activeClassKey];
@@ -764,21 +897,46 @@ classSelector.addEventListener('change', (e)=>{
 });
 
 studentSearch.addEventListener('change', ()=>{
-  saveCurrentStudent();
+  saveCurrentStudent(true);
+  hasUnsavedChanges = false;
   currentIndex = parseInt(studentSearch.value,10);
   loadStudent(currentIndex);
 });
 
 /* ============================================================
-   FIELD VALUE HELPERS
+   FIELD VALUE HELPERS & ABSENT LOGIC
    ============================================================ */
+const absToggle = document.getElementById('absentToggle');
+let isCurrentAbsent = false;
+
+absToggle.addEventListener('change', (e) => {
+  hasUnsavedChanges = true;
+  isCurrentAbsent = e.target.checked;
+  ALL_Q_IDS.forEach(id => {
+    const input = document.getElementById(id);
+    if (isCurrentAbsent) {
+      input.disabled = true;
+      input.value = '';
+    } else {
+      input.disabled = false;
+      input.value = '0';
+    }
+  });
+  if (!isCurrentAbsent) checkPartD(); // Re-apply Part D logic if un-absenting
+  updatePreview();
+});
+
 function getVal(id){
+  if (isCurrentAbsent) return 0;
   const v = parseInt(document.getElementById(id).value, 10);
   return isNaN(v) ? 0 : v;
 }
-function setVal(id, v){ document.getElementById(id).value = v; }
+function setVal(id, v){ 
+  document.getElementById(id).value = (v === '' && !isCurrentAbsent) ? '0' : v; 
+}
 
 function fmtMark(id) {
+  if (isCurrentAbsent) return '';
   const el = document.getElementById(id);
   if (!el || el.disabled || el.classList.contains('locked')) return '';
   return el.value === '' ? '' : el.value;
@@ -803,6 +961,7 @@ function clearError(id){
 }
 
 function validate(id){
+  if (isCurrentAbsent) return true;
   const input = document.getElementById(id);
   const max = parseInt(input.dataset.max, 10);
   const raw = input.value.trim();
@@ -820,7 +979,7 @@ function validate(id){
 }
 
 /* ============================================================
-   FOCUS ADVANCE LOGIC (Auto Jump to Save Button added)
+   FOCUS ADVANCE LOGIC
    ============================================================ */
 function focusField(id){
   const el = document.getElementById(id);
@@ -828,6 +987,10 @@ function focusField(id){
 }
 
 function jumpToNextAvailable(startIndex){
+  if (isCurrentAbsent) {
+    document.getElementById('nextBtn').focus();
+    return;
+  }
   let found = false;
   for (let i = startIndex; i < ALL_Q_IDS.length; i++) {
     let el = document.getElementById(ALL_Q_IDS[i]);
@@ -895,6 +1058,7 @@ ALL_Q_IDS.forEach((id, index) => {
   });
 
   input.addEventListener('keydown', (e) => {
+    hasUnsavedChanges = true;
     if (e.key === 'Enter'){
       e.preventDefault();
       if (validate(id)) advanceFrom(id);
@@ -947,6 +1111,7 @@ ALL_Q_IDS.forEach((id, index) => {
   });
 
   input.addEventListener('input', ()=>{
+    hasUnsavedChanges = true;
     input.value = input.value.replace(/[^\d]/g,'');
     const max = parseInt(input.dataset.max,10);
     const maxLen = String(max).length;
@@ -967,6 +1132,7 @@ ALL_Q_IDS.forEach((id, index) => {
    PART D "ANY 2" LOCKING LOGIC
    ============================================================ */
 function checkPartD() {
+  if (isCurrentAbsent) return;
   const dIds = ['q20', 'q21', 'q22'];
   let attemptCount = dIds.filter(id => getVal(id) > 0).length;
 
@@ -988,9 +1154,12 @@ function checkPartD() {
    LIVE PREVIEW (EXACT REPLICA MAPPING)
    ============================================================ */
 function updatePreview(){
+  const absText = isCurrentAbsent ? 'ABS' : '0';
+  
   const a = SIMPLE_FIELDS.slice(0,10).map(f=>getVal(f.id));
   const sumA = a.reduce((x,y)=>x+y,0);
-  document.getElementById('sumA').textContent = String(sumA).padStart(2, '0');
+  document.getElementById('sumA').textContent = isCurrentAbsent ? 'ABS' : String(sumA).padStart(2, '0');
+  isCurrentAbsent ? document.getElementById('sumA').classList.add('absent-text') : document.getElementById('sumA').classList.remove('absent-text');
 
   const bIds = [11, 12, 13, 14, 15];
   let sumB = 0;
@@ -998,7 +1167,8 @@ function updatePreview(){
     document.getElementById('pb'+n).textContent = fmtMark('q'+n);
     sumB += getVal('q'+n);
   });
-  document.getElementById('sumB').textContent = sumB;
+  document.getElementById('sumB').textContent = isCurrentAbsent ? 'ABS' : sumB;
+  isCurrentAbsent ? document.getElementById('sumB').classList.add('absent-text') : document.getElementById('sumB').classList.remove('absent-text');
 
   let sumC = 0;
   CHOICE_QS.forEach(n => {
@@ -1006,9 +1176,9 @@ function updatePreview(){
     document.getElementById('pcb'+n).textContent = fmtMark('q'+n+'b');
     sumC += getVal('q'+n+'a') + getVal('q'+n+'b');
   });
-  document.getElementById('sumC').textContent = sumC;
+  document.getElementById('sumC').textContent = isCurrentAbsent ? 'ABS' : sumC;
+  isCurrentAbsent ? document.getElementById('sumC').classList.add('absent-text') : document.getElementById('sumC').classList.remove('absent-text');
 
-  // Re-evaluate Part D locks before getting values
   checkPartD();
 
   const dIds = [20, 21, 22];
@@ -1017,17 +1187,64 @@ function updatePreview(){
     document.getElementById('pd'+n).textContent = fmtMark('q'+n);
     sumD += getVal('q'+n);
   });
-  document.getElementById('sumD').textContent = sumD;
+  document.getElementById('sumD').textContent = isCurrentAbsent ? 'ABS' : sumD;
+  isCurrentAbsent ? document.getElementById('sumD').classList.add('absent-text') : document.getElementById('sumD').classList.remove('absent-text');
 
   const grand = sumA + sumB + sumC + sumD;
-  document.getElementById('grandTotal').textContent = grand;
-  return grand;
+  document.getElementById('grandTotal').textContent = isCurrentAbsent ? 'ABS' : grand;
+  isCurrentAbsent ? document.getElementById('grandTotal').classList.add('absent-text') : document.getElementById('grandTotal').classList.remove('absent-text');
+  
+  return isCurrentAbsent ? 'ABS' : grand;
+}
+
+/* ============================================================
+   PROGRESS BAR & ANALYTICS DASHBOARD
+   ============================================================ */
+function updateProgressAndAnalytics() {
+  let gradedCount = 0;
+  let totalMarksSum = 0;
+  let passCount = 0;
+  let failCount = 0;
+  let topScorer = { name: "—", mark: 0 };
+
+  STUDENTS.forEach(s => {
+    const rec = studentData[s.roll];
+    if (rec) {
+      gradedCount++;
+      if (rec.isAbsent) {
+        // Absent doesn't count towards averages/top scores
+        failCount++; 
+      } else {
+        const mark = parseInt(rec.total, 10);
+        totalMarksSum += mark;
+        if (mark >= 20) passCount++; else failCount++;
+        if (mark > topScorer.mark) {
+          topScorer = { name: s.name, mark: mark };
+        }
+      }
+    }
+  });
+
+  // Update Progress
+  const totalStudents = STUDENTS.length;
+  const pct = totalStudents === 0 ? 0 : Math.round((gradedCount / totalStudents) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `Graded: ${gradedCount} / ${totalStudents} (${pct}%)`;
+
+  // Update Analytics
+  const avg = gradedCount === 0 ? 0 : Math.round(totalMarksSum / gradedCount);
+  document.getElementById('statAvg').textContent = avg;
+  document.getElementById('statPassFail').textContent = `${passCount} / ${failCount}`;
+  document.getElementById('statTopMark').textContent = topScorer.mark;
+  document.getElementById('statTopName').textContent = topScorer.name;
 }
 
 /* ============================================================
    STUDENT LOAD / SAVE
    ============================================================ */
 function resetFieldsToDefault(){
+  isCurrentAbsent = false;
+  absToggle.checked = false;
   ALL_Q_IDS.forEach(id=>{
     const input = document.getElementById(id);
     input.value = '0';
@@ -1040,39 +1257,59 @@ function resetFieldsToDefault(){
 function loadStudent(index){
   const s = STUDENTS[index];
   document.getElementById('curRoll').textContent = s.roll;
-  // UPDATE: Now showing the Section next to the Name
   document.getElementById('curName').innerHTML = `${s.name} <span class="sec-badge">Sec: ${s.sec}</span>`;
-  document.getElementById('progressNote').textContent = `Student ${index+1} of ${STUDENTS.length}`;
-  studentSearch.value = index;
-
+  
   resetFieldsToDefault();
   const saved = studentData[s.roll];
   if (saved){
-    ALL_Q_IDS.forEach(id=>{
-      if (saved[id] !== undefined) setVal(id, saved[id]);
-    });
-    CHOICE_QS.forEach(n=>{
-      const aId='q'+n+'a', bId='q'+n+'b';
-      const aVal = getVal(aId), bVal = getVal(bId);
-      const aInput=document.getElementById(aId), bInput=document.getElementById(bId);
-      if (aVal>0){ bInput.disabled=true; bInput.classList.add('locked'); }
-      else if (bVal>0){ aInput.disabled=true; aInput.classList.add('locked'); }
-    });
+    isCurrentAbsent = !!saved.isAbsent;
+    absToggle.checked = isCurrentAbsent;
+    
+    if (isCurrentAbsent) {
+      ALL_Q_IDS.forEach(id => {
+        const input = document.getElementById(id);
+        input.disabled = true;
+        input.value = '';
+      });
+    } else {
+      ALL_Q_IDS.forEach(id=>{
+        if (saved[id] !== undefined) setVal(id, saved[id]);
+      });
+      CHOICE_QS.forEach(n=>{
+        const aId='q'+n+'a', bId='q'+n+'b';
+        const aVal = getVal(aId), bVal = getVal(bId);
+        const aInput=document.getElementById(aId), bInput=document.getElementById(bId);
+        if (aVal>0){ bInput.disabled=true; bInput.classList.add('locked'); }
+        else if (bVal>0){ aInput.disabled=true; aInput.classList.add('locked'); }
+      });
+    }
   }
+  
+  hasUnsavedChanges = false;
   updatePreview();
+  updateProgressAndAnalytics();
   document.getElementById('prevBtn').disabled = index===0;
   document.getElementById('nextBtn').textContent = index===STUDENTS.length-1 ? 'Save (Last Student)' : 'Save & Next Student →';
   localStorage.setItem(LS_INDEX, String(index));
 }
 
-function saveCurrentStudent(){
+function saveCurrentStudent(silent = false){
   const s = STUDENTS[currentIndex];
-  const record = { roll: s.roll, name: s.name, sec: s.sec }; // Save section
-  ALL_Q_IDS.forEach(id=>{ record[id] = getVal(id); });
+  const record = { roll: s.roll, name: s.name, sec: s.sec, isAbsent: isCurrentAbsent };
+  
+  if (!isCurrentAbsent) {
+    ALL_Q_IDS.forEach(id=>{ record[id] = getVal(id); });
+  } else {
+    ALL_Q_IDS.forEach(id=>{ record[id] = ''; });
+  }
+  
   record.total = updatePreview();
   studentData[s.roll] = record;
   localStorage.setItem(LS_DATA, JSON.stringify(studentData));
-  flashSaved();
+  
+  hasUnsavedChanges = false;
+  updateProgressAndAnalytics();
+  if(!silent) flashSaved();
 }
 
 function flashSaved(){
@@ -1083,13 +1320,15 @@ function flashSaved(){
 }
 
 document.getElementById('nextBtn').addEventListener('click', ()=>{
-  const invalid = ALL_Q_IDS.find(id=>!validate(id));
-  if (invalid){ focusField(invalid); return; }
+  if (!isCurrentAbsent) {
+    const invalid = ALL_Q_IDS.find(id=>!validate(id));
+    if (invalid){ focusField(invalid); return; }
+  }
   saveCurrentStudent();
   if (currentIndex < STUDENTS.length-1){
     currentIndex++;
     loadStudent(currentIndex);
-    focusField(FOCUS_ORDER[0]);
+    focusField(isCurrentAbsent ? null : FOCUS_ORDER[0]);
   }
 });
 document.getElementById('prevBtn').addEventListener('click', ()=>{
@@ -1097,12 +1336,12 @@ document.getElementById('prevBtn').addEventListener('click', ()=>{
   if (currentIndex > 0){
     currentIndex--;
     loadStudent(currentIndex);
-    focusField(FOCUS_ORDER[0]);
+    focusField(isCurrentAbsent ? null : FOCUS_ORDER[0]);
   }
 });
 
 /* ============================================================
-   CSV EXPORT (UPDATED: ADDED SECTION COLUMN)
+   CSV EXPORT
    ============================================================ */
 function toCsvValue(v){
   const s = String(v ?? '');
@@ -1111,23 +1350,27 @@ function toCsvValue(v){
 }
 
 document.getElementById('exportBtn').addEventListener('click', ()=>{
-  saveCurrentStudent();
+  saveCurrentStudent(true);
   
   const qHeaders = ALL_Q_IDS.map(id => id.toUpperCase());
-  // Added "Section" to headers
   const header = ['RollNo','Name','Section','Semester','PaperCode','Exam','Batch','Course', ...qHeaders, 'Total'];
   const rows = [header];
 
   STUDENTS.forEach(s=>{
     const rec = studentData[s.roll];
     
-    const qVals = ALL_Q_IDS.map(id => {
-      return rec ? (rec[id] || 0) : 0;
-    });
+    let qVals;
+    let total;
+    if (rec && rec.isAbsent) {
+      qVals = ALL_Q_IDS.map(() => 'ABS');
+      total = 'ABS';
+    } else {
+      qVals = ALL_Q_IDS.map(id => rec ? (rec[id] || 0) : 0);
+      total = rec ? rec.total : 0;
+    }
     
-    const total = rec ? rec.total : 0;
     rows.push([
-      s.roll, s.name, s.sec, // Pushing Section here
+      s.roll, s.name, s.sec, 
       config?.semester||'', config?.paperCode||'', config?.exam||'', config?.batch||'', config?.course||'',
       ...qVals, total
     ]);
