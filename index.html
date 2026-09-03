@@ -327,7 +327,7 @@
     color: var(--accent-hover);
     margin-bottom:8px;
   }
-  /* Dark Teal Input Box */
+  /* Light Cyan Input Box with Dark Teal text */
   .qcell input{
     width:100%;
     text-align:center;
@@ -338,14 +338,15 @@
     font-size: 24px; 
     border: 2px solid transparent;
     border-radius: 12px;
-    background: var(--accent); 
-    color: #ffffff; 
+    background: var(--accent-light); 
+    color: var(--accent); 
     transition: all 0.2s;
   }
   .qcell input:focus{
     outline: none;
-    background: var(--accent-hover);
-    box-shadow: 0 0 0 4px var(--accent-light);
+    background: #89ded5;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--line);
   }
   .qcell input.locked, .qcell input:disabled {
     background: var(--locked-bg);
@@ -690,14 +691,13 @@
               <td class="val total-col" id="sumB">0</td>
             </tr>
 
-            <!-- UPDATED PART C: Vertical line alignment fixed geometrically -->
+            <!-- PART C -->
             <tr>
               <td class="partlabel row-no-bottom" style="padding: 0;">
                 <div style="display: flex; height: 100%; align-items: stretch;">
                   <div style="flex: 1; padding: 10px 8px; display: flex; flex-direction: column; justify-content: center;">
                     Part C<br><span class="dim" style="font-size:11px;">(5 Marks)</span>
                   </div>
-                  <!-- a, b labels moved strictly inside the 22% Section TD width -->
                   <div style="width: 28px; display: flex; flex-direction: column; border-left: 1px solid var(--accent-light);">
                     <div class="d-head" style="color: transparent; user-select: none;">#</div>
                     <div style="flex: 1; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--accent-hover);">a)</div>
