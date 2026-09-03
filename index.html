@@ -6,13 +6,14 @@
 <title>Mark Entry Ledger — Bishop Heber College</title>
 <style>
   :root {
-    /* Custom User Palette */
-    --bg-body: #E0F2F0; /* Soft Cyan Tint */
-    --bg-card: #FFFFFF;
-    --bg-input: #F4F9F8;
-    --line: #CBE6E3;
-    --ink: #1C1C1E;
-    --ink-soft: #5C7A77;
+    /* FULLY REVAMPED THEME - NO MORE PURE WHITE EVERYWHERE */
+    --bg-body: #E0F2F0;      /* Darker soft cyan for overall page */
+    --bg-card: #F0F9F8;      /* Very soft cyan for cards (instead of white) */
+    --bg-input: #E4F2F0;     /* Slightly darker for empty inputs */
+    --line: #B5DDD8;         /* Teal tinted border */
+    
+    --ink: #11423C;          /* Very dark teal (almost black) for text */
+    --ink-soft: #2B7A72;     /* Medium teal for subtext */
     
     /* User Specific Colors */
     --accent: #1B766C;       /* Dark Teal */
@@ -20,9 +21,9 @@
     --accent-hover: #12544D; /* Darker Teal */
     
     --error: #E63946; 
-    --locked-bg: #E4ECEB;
+    --locked-bg: #CFE5E2;    /* Tinted locked state */
     
-    --shadow-card: 0 8px 24px rgba(27, 118, 108, 0.08);
+    --shadow-card: 0 8px 24px rgba(27, 118, 108, 0.12);
     --shadow-btn: 0 4px 14px rgba(27, 118, 108, 0.3);
     --shadow-btn-red: 0 4px 14px rgba(230, 57, 70, 0.25);
     --shadow-modal: 0 20px 40px rgba(0,0,0,0.25);
@@ -40,7 +41,7 @@
     padding-bottom: 60px;
   }
 
-  /* REWORKED HEADER - FULL DARK TEAL */
+  /* HEADER */
   header.masthead {
     background: var(--accent);
     padding: 24px 28px 20px;
@@ -70,7 +71,7 @@
 
   .wrap{max-width:1180px;margin:0 auto;padding:24px 20px 0;}
 
-  /* Modern Cards */
+  /* Cards */
   .card {
     background: var(--bg-card);
     border-radius: 16px;
@@ -115,7 +116,7 @@
     padding: 10px 12px;
     border: 2px solid var(--line);
     border-radius: 10px;
-    background: var(--bg-input);
+    background: #ffffff; /* Keep inputs white so they are readable */
     font-family: inherit;
     font-size: 14px;
     font-weight: 700;
@@ -125,7 +126,6 @@
   .field-group input:focus {
     outline: none;
     border-color: var(--accent);
-    background: #fff;
     box-shadow: 0 0 0 4px var(--accent-light);
   }
 
@@ -147,9 +147,7 @@
     align-items: center;
     transition: all 0.2s;
   }
-  .custom-select-btn:hover {
-    background: #95ded8;
-  }
+  .custom-select-btn:hover { background: #95ded8; }
   
   .btn {
     border: none;
@@ -201,7 +199,8 @@
     align-items:center;
     gap:16px;
   }
-  /* STYLED ROLL NUMBER BADGE */
+  
+  /* STYLED ROLL NUMBER & BADGES (User Request) */
   #studentBar .who .roll{
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-weight:800;
@@ -274,6 +273,7 @@
   input:checked + .toggle-slider { background-color: var(--error); }
   input:checked + .toggle-slider:before { transform: translateX(16px); }
 
+  /* Progress Bar */
   .progress-container {
     width: 100%;
     background: var(--line);
@@ -287,13 +287,20 @@
     width: 0%;
     transition: width 0.5s ease-out;
   }
-  /* STYLED PROGRESS TEXT */
+  /* STYLED PROGRESS TEXT BADGE (User Request) */
+  .progress-badge-wrap {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
   .progress-text {
     font-size: 13px;
     color: var(--accent-hover);
+    background: var(--accent-light);
+    border: 1px solid var(--accent);
+    padding: 4px 12px;
+    border-radius: 12px;
     font-weight: 800;
-    text-align: right;
-    margin-top: 8px;
   }
 
   .split{
@@ -318,16 +325,14 @@
 
   .qcell{position:relative;}
   
-  /* Q Number Highly Visible */
   .qcell label{
     display:block;
     text-align:center;
     font-size:14px; 
     font-weight:800;
-    color: var(--accent-hover);
+    color: var(--ink); /* Made Highly Visible Dark Teal */
     margin-bottom:8px;
   }
-  /* Dark Teal Input Box */
   .qcell input{
     width:100%;
     text-align:center;
@@ -338,8 +343,8 @@
     font-size: 24px; 
     border: 2px solid transparent;
     border-radius: 12px;
-    background: var(--accent); 
-    color: #ffffff; 
+    background: var(--accent); /* Dark Teal Background */
+    color: #ffffff; /* White Text */
     transition: all 0.2s;
   }
   .qcell input:focus{
@@ -350,7 +355,7 @@
   .qcell input.locked, .qcell input:disabled {
     background: var(--locked-bg);
     color: var(--ink-soft);
-    border: 2px dashed #CBE6E3;
+    border: 2px dashed var(--line);
     font-weight:600;
   }
   .qcell input.err{
@@ -382,7 +387,7 @@
   }
 
   /* ============================================================
-     REPLICA TABLE - FLAWLESS FLEXBOX GRID ALIGNMENT
+     REPLICA TABLE - FLAWLESS NESTED TABLE DESIGN
      ============================================================ */
   #previewCard{position:sticky;top:20px;}
   table.replica {
@@ -393,10 +398,11 @@
     border-radius: 12px;
     overflow: hidden;
     border-style: hidden; 
-    box-shadow: 0 0 0 2px var(--accent-light);
+    box-shadow: 0 0 0 2px var(--accent); /* Solid dark border outside */
+    table-layout: fixed;
   }
   table.replica th, table.replica td {
-    border: 1px solid var(--accent-light);
+    border: 1px solid var(--line);
     text-align: center;
     vertical-align: middle;
   }
@@ -412,46 +418,89 @@
   table.replica td.partlabel {
     text-align: left;
     font-weight: 800;
-    background: var(--bg-input);
+    background: #F8FBFB;
     font-size: 14px;
     padding: 10px 14px;
     color: var(--accent);
-    width: 22%;
   }
-  /* Remove padding for exact grid control inside */
   table.replica td.data-cell {
-    padding: 0;
-    width: 60%;
+    padding: 0; /* Remove padding to let nested table fill perfectly */
   }
-  table.replica td.total-col {
+  
+  /* Inner Tables for perfect alignment */
+  .inner-table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .inner-table th {
     background: var(--bg-input);
-    color: #000000;
+    color: var(--accent);
+    font-size: 12px;
+    padding: 6px;
+    border: none;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .inner-table th:last-child { border-right: none; }
+  
+  .inner-table td {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-weight: 900;
-    font-size: 24px;
-    width: 18%;
+    color: #000000; /* Pure Black marks */
+    font-size: 20px;
+    padding: 12px 0;
+    border: none;
+    border-right: 1px solid var(--line);
+  }
+  .inner-table td:last-child { border-right: none; }
+
+  /* Part C Specific Split Layout */
+  .split-cell {
+    display: flex;
+    align-items: center;
+    height: 50%;
+  }
+  .split-cell .lbl {
+    width: 35%;
+    background: rgba(170, 237, 231, 0.4);
+    color: var(--accent-hover);
+    font-size: 12px;
+    font-weight: 800;
+    padding: 8px 0;
+    border-right: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .split-cell .val {
+    width: 65%;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 900;
+    color: #000000;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Totals */
+  table.replica td.total-col {
+    background: #F8FBFB;
+    color: #000000; /* Pure Black Totals */
+    font-weight: 900;
+    font-size: 22px;
+  }
+  table.replica td.grand-total {
+    background: var(--accent-light);
+    font-size: 28px;
   }
   table.replica .dim {
     color: var(--ink-soft);
     font-weight: 700;
   }
-
-  /* INNER DATA GRIDS */
-  .data-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); height: 100%; }
-  .data-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); height: 100%; }
-  .data-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); height: 100%; }
-  
-  .d-col { display: flex; flex-direction: column; border-right: 1px solid var(--accent-light); }
-  .d-col:last-child { border-right: none; }
-  
-  .d-head { background: var(--bg-input); padding: 6px; font-size: 13px; font-weight: 800; color: var(--accent); border-bottom: 1px solid var(--accent-light); text-align: center;}
-  .d-val { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #000; padding: 10px 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;}
-  .d-val.absent-text { color: var(--error); font-size: 18px; }
-
-  /* For Part C Rows */
-  .d-row { display: flex; flex: 1; align-items: stretch; }
-  .r-lbl { background: var(--bg-input); width: 28px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--accent-hover); border-right: 1px solid var(--accent-light); }
-  .r-val { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #000; padding: 8px 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;}
-  .r-val.absent-text { color: var(--error); font-size: 16px; }
+  .absent-text { color: var(--error) !important; font-size: 16px !important; }
 
   .navbtns{display:flex;gap:12px;justify-content:space-between;margin-top:20px;}
   .navbtns .btn{flex:1;text-align:center; padding: 14px; font-size: 15px;}
@@ -464,7 +513,7 @@
   }
   .btn-export {
     background: var(--ink);
-    box-shadow: 0 4px 12px rgba(28, 28, 30, 0.2);
+    box-shadow: 0 4px 12px rgba(17, 66, 60, 0.3);
   }
   .btn-export:hover { background: #000; }
   
@@ -615,13 +664,15 @@
             Mark ABS
           </label>
         </div>
-        <button type="button" id="studentTriggerBtn" class="custom-select-btn" style="width: 300px;">Select Student ▼</button>
+        <button type="button" id="studentTriggerBtn" class="custom-select-btn" style="width: 280px;">Select Student ▼</button>
       </div>
       <div>
         <div class="progress-container">
           <div class="progress-fill" id="progressFill"></div>
         </div>
-        <div class="progress-text" id="progressText">Graded: 0 / 0 (0%)</div>
+        <div class="progress-badge-wrap">
+          <div class="progress-text" id="progressText">Graded: 0 / 0 (0%)</div>
+        </div>
       </div>
     </div>
   </div>
@@ -661,9 +712,9 @@
         <table class="replica">
           <thead>
             <tr>
-              <th style="width:22%">Section</th>
-              <th style="width:60%">Marks Scored</th>
-              <th style="width:18%;">Total</th>
+              <th style="width: 22%">SECTION</th>
+              <th style="width: 60%">MARKS SCORED</th>
+              <th style="width: 18%;">TOTAL</th>
             </tr>
           </thead>
           <tbody>
@@ -673,67 +724,72 @@
               <td class="data-cell">
                 <div style="display:flex; align-items:center; justify-content:center; height:100%; font-weight:800; color:var(--accent); font-size:14px; padding: 12px;">MCQ Marks 1–10</div>
               </td>
-              <td class="val total-col" id="sumA_tot">0</td>
+              <td class="total-col" id="sumA_tot">0</td>
             </tr>
 
             <tr>
               <td class="partlabel row-no-bottom">Part B<br><span class="dim" style="font-size:11px;">(2 Marks)</span></td>
               <td class="data-cell">
-                <div class="data-grid-5">
-                  <div class="d-col"><div class="d-head">11</div><div class="d-val" id="pb11"></div></div>
-                  <div class="d-col"><div class="d-head">12</div><div class="d-val" id="pb12"></div></div>
-                  <div class="d-col"><div class="d-head">13</div><div class="d-val" id="pb13"></div></div>
-                  <div class="d-col"><div class="d-head">14</div><div class="d-val" id="pb14"></div></div>
-                  <div class="d-col"><div class="d-head">15</div><div class="d-val" id="pb15"></div></div>
-                </div>
+                <table class="inner-table">
+                  <tr>
+                    <th style="width:20%">11</th><th style="width:20%">12</th><th style="width:20%">13</th><th style="width:20%">14</th><th style="width:20%">15</th>
+                  </tr>
+                  <tr>
+                    <td id="pb11"></td><td id="pb12"></td><td id="pb13"></td><td id="pb14"></td><td id="pb15"></td>
+                  </tr>
+                </table>
               </td>
-              <td class="val total-col" id="sumB">0</td>
+              <td class="total-col" id="sumB">0</td>
             </tr>
 
             <tr>
               <td class="partlabel row-no-bottom">Part C<br><span class="dim" style="font-size:11px;">(5 Marks)</span></td>
               <td class="data-cell">
-                <div class="data-grid-4">
-                  <div class="d-col">
-                    <div class="d-head">16</div>
-                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca16"></span></div>
-                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb16"></span></div>
-                  </div>
-                  <div class="d-col">
-                    <div class="d-head">17</div>
-                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca17"></span></div>
-                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb17"></span></div>
-                  </div>
-                  <div class="d-col">
-                    <div class="d-head">18</div>
-                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca18"></span></div>
-                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb18"></span></div>
-                  </div>
-                  <div class="d-col">
-                    <div class="d-head">19</div>
-                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca19"></span></div>
-                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb19"></span></div>
-                  </div>
-                </div>
+                <table class="inner-table">
+                  <tr>
+                    <th style="width:25%">16</th><th style="width:25%">17</th><th style="width:25%">18</th><th style="width:25%">19</th>
+                  </tr>
+                  <tr>
+                    <td style="padding:0; vertical-align:top;">
+                      <div class="split-cell"><span class="lbl">a)</span> <span class="val" id="pca16"></span></div>
+                      <div class="split-cell" style="border-top:1px solid var(--line);"><span class="lbl">b)</span> <span class="val" id="pcb16"></span></div>
+                    </td>
+                    <td style="padding:0; vertical-align:top;">
+                      <div class="split-cell"><span class="lbl">a)</span> <span class="val" id="pca17"></span></div>
+                      <div class="split-cell" style="border-top:1px solid var(--line);"><span class="lbl">b)</span> <span class="val" id="pcb17"></span></div>
+                    </td>
+                    <td style="padding:0; vertical-align:top;">
+                      <div class="split-cell"><span class="lbl">a)</span> <span class="val" id="pca18"></span></div>
+                      <div class="split-cell" style="border-top:1px solid var(--line);"><span class="lbl">b)</span> <span class="val" id="pcb18"></span></div>
+                    </td>
+                    <td style="padding:0; vertical-align:top;">
+                      <div class="split-cell"><span class="lbl">a)</span> <span class="val" id="pca19"></span></div>
+                      <div class="split-cell" style="border-top:1px solid var(--line);"><span class="lbl">b)</span> <span class="val" id="pcb19"></span></div>
+                    </td>
+                  </tr>
+                </table>
               </td>
-              <td class="val total-col" id="sumC">0</td>
+              <td class="total-col" id="sumC">0</td>
             </tr>
 
             <tr>
               <td class="partlabel row-no-bottom">Part D<br><span class="dim" style="font-size:11px;">(10 Marks)</span></td>
               <td class="data-cell">
-                <div class="data-grid-3">
-                  <div class="d-col"><div class="d-head">20</div><div class="d-val" id="pd20"></div></div>
-                  <div class="d-col"><div class="d-head">21</div><div class="d-val" id="pd21"></div></div>
-                  <div class="d-col"><div class="d-head">22</div><div class="d-val" id="pd22"></div></div>
-                </div>
+                <table class="inner-table">
+                  <tr>
+                    <th style="width:33.33%">20</th><th style="width:33.33%">21</th><th style="width:33.33%">22</th>
+                  </tr>
+                  <tr>
+                    <td id="pd20"></td><td id="pd21"></td><td id="pd22"></td>
+                  </tr>
+                </table>
               </td>
-              <td class="val total-col" id="sumD">0</td>
+              <td class="total-col" id="sumD">0</td>
             </tr>
 
             <tr>
               <td colspan="2" class="partlabel" style="text-align:right; font-size:16px;">Grand Total</td>
-              <td class="val total-col" id="grandTotal" style="font-size:26px;">0</td>
+              <td class="total-col grand-total" id="grandTotal">0</td>
             </tr>
           </tbody>
         </table>
@@ -893,7 +949,6 @@ const modalTitle = document.getElementById('modalTitle');
 const modalList = document.getElementById('modalList');
 const modalClose = document.getElementById('modalClose');
 
-// Init Button Text
 function updateClassBtnText() {
   const activeObj = CLASS_OPTIONS.find(c => c.id === activeClassKey);
   if(activeObj) classTriggerBtn.textContent = activeObj.label + ' ▼';
@@ -1069,6 +1124,7 @@ document.getElementById('saveSetupBtn').addEventListener('click', ()=>{
   renderSetup();
 });
 renderSetup();
+
 
 /* ============================================================
    FIELD VALUE HELPERS & ABSENT LOGIC
@@ -1330,7 +1386,7 @@ function checkPartD() {
 }
 
 /* ============================================================
-   LIVE PREVIEW (NEW FLEXBOX GRID - MATHEMATICALLY PERFECT)
+   LIVE PREVIEW (EXACT REPLICA MAPPING)
    ============================================================ */
 function updatePreview(){
   const a = SIMPLE_FIELDS.slice(0,10).map(f=>getVal(f.id));
@@ -1342,8 +1398,10 @@ function updatePreview(){
   let sumB = 0;
   bIds.forEach(n => {
     let el = document.getElementById('pb'+n);
-    el.textContent = fmtMark('q'+n);
-    isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
+    if (el) {
+        el.textContent = fmtMark('q'+n);
+        isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
+    }
     sumB += getVal('q'+n);
   });
   document.getElementById('sumB').textContent = isCurrentAbsent ? 'ABS' : sumB;
@@ -1353,11 +1411,11 @@ function updatePreview(){
   CHOICE_QS.forEach(n => {
     let elA = document.getElementById('pca'+n);
     let elB = document.getElementById('pcb'+n);
-    elA.textContent = fmtMark('q'+n+'a');
-    elB.textContent = fmtMark('q'+n+'b');
+    if(elA) elA.textContent = fmtMark('q'+n+'a');
+    if(elB) elB.textContent = fmtMark('q'+n+'b');
     
-    isCurrentAbsent ? elA.classList.add('absent-text') : elA.classList.remove('absent-text');
-    isCurrentAbsent ? elB.classList.add('absent-text') : elB.classList.remove('absent-text');
+    if(elA) isCurrentAbsent ? elA.classList.add('absent-text') : elA.classList.remove('absent-text');
+    if(elB) isCurrentAbsent ? elB.classList.add('absent-text') : elB.classList.remove('absent-text');
 
     sumC += getVal('q'+n+'a') + getVal('q'+n+'b');
   });
@@ -1370,8 +1428,10 @@ function updatePreview(){
   let sumD = 0;
   dIds.forEach(n => {
     let el = document.getElementById('pd'+n);
-    el.textContent = fmtMark('q'+n);
-    isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
+    if (el) {
+        el.textContent = fmtMark('q'+n);
+        isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
+    }
     sumD += getVal('q'+n);
   });
   document.getElementById('sumD').textContent = isCurrentAbsent ? 'ABS' : sumD;
