@@ -437,7 +437,6 @@
 
   /* INNER DATA GRIDS */
   .data-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); height: 100%; }
-  .data-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); height: 100%; }
   .data-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); height: 100%; }
   
   .d-col { display: flex; flex-direction: column; border-right: 1px solid var(--accent-light); }
@@ -691,28 +690,36 @@
             </tr>
 
             <tr>
-              <td class="partlabel row-no-bottom">Part C<br><span class="dim" style="font-size:11px;">(5 Marks)</span></td>
-              <td class="data-cell">
-                <div class="data-grid-4">
+              <td class="partlabel row-no-bottom" style="border-right: none; padding-right: 0px;">Part C<br><span class="dim" style="font-size:11px;">(5 Marks)</span></td>
+              <td class="data-cell" style="border-left: none;">
+                <!-- Updated Part C Grid: Added a 28px labels column that visually merges with Section -->
+                <div style="display: grid; grid-template-columns: 28px repeat(4, 1fr); height: 100%;">
+                  
+                  <div class="d-col" style="background: var(--bg-input); border-right: 1px solid var(--accent-light);">
+                    <div class="d-head" style="border-bottom: 1px solid var(--accent-light); color: transparent; user-select: none;">#</div>
+                    <div class="d-row"><span class="r-lbl" style="width: 100%; border-right: none; background: transparent;">a)</span></div>
+                    <div class="d-row" style="border-top: 1px solid var(--line);"><span class="r-lbl" style="width: 100%; border-right: none; background: transparent;">b)</span></div>
+                  </div>
+
                   <div class="d-col">
                     <div class="d-head">16</div>
-                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca16"></span></div>
-                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb16"></span></div>
+                    <div class="d-row"><span class="r-val" id="pca16"></span></div>
+                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-val" id="pcb16"></span></div>
                   </div>
                   <div class="d-col">
                     <div class="d-head">17</div>
-                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca17"></span></div>
-                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb17"></span></div>
+                    <div class="d-row"><span class="r-val" id="pca17"></span></div>
+                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-val" id="pcb17"></span></div>
                   </div>
                   <div class="d-col">
                     <div class="d-head">18</div>
-                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca18"></span></div>
-                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb18"></span></div>
+                    <div class="d-row"><span class="r-val" id="pca18"></span></div>
+                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-val" id="pcb18"></span></div>
                   </div>
                   <div class="d-col">
                     <div class="d-head">19</div>
-                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca19"></span></div>
-                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb19"></span></div>
+                    <div class="d-row"><span class="r-val" id="pca19"></span></div>
+                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-val" id="pcb19"></span></div>
                   </div>
                 </div>
               </td>
