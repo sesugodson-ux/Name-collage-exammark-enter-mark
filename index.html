@@ -40,7 +40,6 @@
     padding-bottom: 60px;
   }
 
-  /* REWORKED HEADER - FULL DARK TEAL */
   header.masthead {
     background: var(--accent);
     padding: 24px 28px 20px;
@@ -70,7 +69,6 @@
 
   .wrap{max-width:1180px;margin:0 auto;padding:24px 20px 0;}
 
-  /* Modern Cards */
   .card {
     background: var(--bg-card);
     border-radius: 16px;
@@ -287,7 +285,6 @@
     width: 0%;
     transition: width 0.5s ease-out;
   }
-  /* STYLED PROGRESS TEXT */
   .progress-text {
     font-size: 13px;
     color: var(--accent-hover);
@@ -318,7 +315,6 @@
 
   .qcell{position:relative;}
   
-  /* Q Number Highly Visible */
   .qcell label{
     display:block;
     text-align:center;
@@ -327,7 +323,6 @@
     color: var(--accent-hover);
     margin-bottom:8px;
   }
-  /* Dark Teal Input Box */
   .qcell input{
     width:100%;
     text-align:center;
@@ -394,6 +389,7 @@
     overflow: hidden;
     border-style: hidden; 
     box-shadow: 0 0 0 2px var(--accent-light);
+    table-layout: fixed; /* Ensures perfect width distribution */
   }
   table.replica th, table.replica td {
     border: 1px solid var(--accent-light);
@@ -418,6 +414,16 @@
     color: var(--accent);
     width: 22%;
   }
+  
+  /* Sub Label for a) and b) inside Part C */
+  table.replica td.sub-lbl {
+    text-align: right;
+    padding-right: 18px;
+    font-size: 15px;
+    color: var(--accent-hover);
+    background: var(--bg-input);
+  }
+
   /* Remove padding for exact grid control inside */
   table.replica td.data-cell {
     padding: 0;
@@ -436,22 +442,35 @@
   }
 
   /* INNER DATA GRIDS */
-  .data-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); height: 100%; }
-  .data-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); height: 100%; }
-  .data-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); height: 100%; }
+  .inner-table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .inner-table th {
+    background: var(--bg-input);
+    color: var(--accent);
+    font-size: 13px;
+    padding: 8px;
+    border: none;
+    border-right: 1px solid var(--accent-light);
+    border-bottom: 1px solid var(--accent-light);
+  }
+  .inner-table th:last-child { border-right: none; }
   
-  .d-col { display: flex; flex-direction: column; border-right: 1px solid var(--accent-light); }
-  .d-col:last-child { border-right: none; }
+  .inner-table td {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 900;
+    color: #000000; /* Pure Black marks */
+    font-size: 22px;
+    padding: 12px 0;
+    border: none;
+    border-right: 1px solid var(--accent-light);
+  }
+  .inner-table td:last-child { border-right: none; }
   
-  .d-head { background: var(--bg-input); padding: 6px; font-size: 13px; font-weight: 800; color: var(--accent); border-bottom: 1px solid var(--accent-light); text-align: center;}
-  .d-val { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #000; padding: 10px 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;}
-  .d-val.absent-text { color: var(--error); font-size: 18px; }
-
-  /* For Part C Rows */
-  .d-row { display: flex; flex: 1; align-items: stretch; }
-  .r-lbl { background: var(--bg-input); width: 28px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--accent-hover); border-right: 1px solid var(--accent-light); }
-  .r-val { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #000; padding: 8px 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;}
-  .r-val.absent-text { color: var(--error); font-size: 16px; }
+  .inner-table td.absent-text { color: var(--error); font-size: 18px; }
 
   .navbtns{display:flex;gap:12px;justify-content:space-between;margin-top:20px;}
   .navbtns .btn{flex:1;text-align:center; padding: 14px; font-size: 15px;}
@@ -658,6 +677,7 @@
       <div class="card" id="previewCard">
         <h2>Marks Scored <span class="tag">Live Preview</span></h2>
         
+        <!-- FLALWESS FLEXBOX GRID TABLE -->
         <table class="replica">
           <thead>
             <tr>
@@ -668,6 +688,7 @@
           </thead>
           <tbody>
             
+            <!-- Part A -->
             <tr>
               <td class="partlabel">Part A</td>
               <td class="data-cell">
@@ -676,61 +697,85 @@
               <td class="val total-col" id="sumA_tot">0</td>
             </tr>
 
+            <!-- Part B -->
             <tr>
               <td class="partlabel row-no-bottom">Part B<br><span class="dim" style="font-size:11px;">(2 Marks)</span></td>
               <td class="data-cell">
-                <div class="data-grid-5">
-                  <div class="d-col"><div class="d-head">11</div><div class="d-val" id="pb11"></div></div>
-                  <div class="d-col"><div class="d-head">12</div><div class="d-val" id="pb12"></div></div>
-                  <div class="d-col"><div class="d-head">13</div><div class="d-val" id="pb13"></div></div>
-                  <div class="d-col"><div class="d-head">14</div><div class="d-val" id="pb14"></div></div>
-                  <div class="d-col"><div class="d-head">15</div><div class="d-val" id="pb15"></div></div>
-                </div>
+                <table class="inner-table">
+                  <tr>
+                    <th style="width:20%">11</th><th style="width:20%">12</th><th style="width:20%">13</th><th style="width:20%">14</th><th style="width:20%">15</th>
+                  </tr>
+                  <tr>
+                    <td id="pb11"></td><td id="pb12"></td><td id="pb13"></td><td id="pb14"></td><td id="pb15"></td>
+                  </tr>
+                </table>
               </td>
               <td class="val total-col" id="sumB">0</td>
             </tr>
 
+            <!-- Part C Row 1 (Header) -->
             <tr>
-              <td class="partlabel row-no-bottom">Part C<br><span class="dim" style="font-size:11px;">(5 Marks)</span></td>
+              <td class="partlabel row-no-bottom" style="padding-bottom: 2px;">Part C<br><span class="dim" style="font-size:11px;">(5 Marks)</span></td>
               <td class="data-cell">
-                <div class="data-grid-4">
-                  <div class="d-col">
-                    <div class="d-head">16</div>
-                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca16"></span></div>
-                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb16"></span></div>
-                  </div>
-                  <div class="d-col">
-                    <div class="d-head">17</div>
-                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca17"></span></div>
-                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb17"></span></div>
-                  </div>
-                  <div class="d-col">
-                    <div class="d-head">18</div>
-                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca18"></span></div>
-                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb18"></span></div>
-                  </div>
-                  <div class="d-col">
-                    <div class="d-head">19</div>
-                    <div class="d-row"><span class="r-lbl">a)</span><span class="r-val" id="pca19"></span></div>
-                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-lbl">b)</span><span class="r-val" id="pcb19"></span></div>
-                  </div>
-                </div>
+                <table class="inner-table" style="height: 100%;">
+                  <tr>
+                    <th style="width:25%; border-bottom:none;">16</th>
+                    <th style="width:25%; border-bottom:none;">17</th>
+                    <th style="width:25%; border-bottom:none;">18</th>
+                    <th style="width:25%; border-bottom:none;">19</th>
+                  </tr>
+                </table>
               </td>
-              <td class="val total-col" id="sumC">0</td>
+              <td class="total-col" rowspan="3" id="sumC">0</td>
+            </tr>
+            
+            <!-- Part C Row a) -->
+            <tr>
+              <td class="partlabel sub-lbl row-no-bottom row-no-top">a)</td>
+              <td class="data-cell">
+                <table class="inner-table" style="height: 100%;">
+                  <tr>
+                    <td style="width:25%; border-bottom:1px solid var(--accent-light);" id="pca16"></td>
+                    <td style="width:25%; border-bottom:1px solid var(--accent-light);" id="pca17"></td>
+                    <td style="width:25%; border-bottom:1px solid var(--accent-light);" id="pca18"></td>
+                    <td style="width:25%; border-bottom:1px solid var(--accent-light);" id="pca19"></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            
+            <!-- Part C Row b) -->
+            <tr>
+              <td class="partlabel sub-lbl row-no-top">b)</td>
+              <td class="data-cell">
+                <table class="inner-table" style="height: 100%;">
+                  <tr>
+                    <td style="width:25%" id="pcb16"></td>
+                    <td style="width:25%" id="pcb17"></td>
+                    <td style="width:25%" id="pcb18"></td>
+                    <td style="width:25%" id="pcb19"></td>
+                  </tr>
+                </table>
+              </td>
             </tr>
 
+            <!-- Part D -->
             <tr>
               <td class="partlabel row-no-bottom">Part D<br><span class="dim" style="font-size:11px;">(10 Marks)</span></td>
               <td class="data-cell">
-                <div class="data-grid-3">
-                  <div class="d-col"><div class="d-head">20</div><div class="d-val" id="pd20"></div></div>
-                  <div class="d-col"><div class="d-head">21</div><div class="d-val" id="pd21"></div></div>
-                  <div class="d-col"><div class="d-head">22</div><div class="d-val" id="pd22"></div></div>
-                </div>
+                <table class="inner-table">
+                  <tr>
+                    <th style="width:33.33%">20</th><th style="width:33.33%">21</th><th style="width:33.33%">22</th>
+                  </tr>
+                  <tr>
+                    <td id="pd20"></td><td id="pd21"></td><td id="pd22"></td>
+                  </tr>
+                </table>
               </td>
               <td class="val total-col" id="sumD">0</td>
             </tr>
 
+            <!-- Grand Total -->
             <tr>
               <td colspan="2" class="partlabel" style="text-align:right; font-size:16px;">Grand Total</td>
               <td class="val total-col" id="grandTotal" style="font-size:26px;">0</td>
@@ -1070,6 +1115,7 @@ document.getElementById('saveSetupBtn').addEventListener('click', ()=>{
 });
 renderSetup();
 
+
 /* ============================================================
    FIELD VALUE HELPERS & ABSENT LOGIC
    ============================================================ */
@@ -1330,7 +1376,7 @@ function checkPartD() {
 }
 
 /* ============================================================
-   LIVE PREVIEW (NEW FLEXBOX GRID - MATHEMATICALLY PERFECT)
+   LIVE PREVIEW (EXACT REPLICA MAPPING)
    ============================================================ */
 function updatePreview(){
   const a = SIMPLE_FIELDS.slice(0,10).map(f=>getVal(f.id));
@@ -1342,8 +1388,10 @@ function updatePreview(){
   let sumB = 0;
   bIds.forEach(n => {
     let el = document.getElementById('pb'+n);
-    el.textContent = fmtMark('q'+n);
-    isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
+    if (el) {
+        el.textContent = fmtMark('q'+n);
+        isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
+    }
     sumB += getVal('q'+n);
   });
   document.getElementById('sumB').textContent = isCurrentAbsent ? 'ABS' : sumB;
@@ -1353,11 +1401,11 @@ function updatePreview(){
   CHOICE_QS.forEach(n => {
     let elA = document.getElementById('pca'+n);
     let elB = document.getElementById('pcb'+n);
-    elA.textContent = fmtMark('q'+n+'a');
-    elB.textContent = fmtMark('q'+n+'b');
+    if(elA) elA.textContent = fmtMark('q'+n+'a');
+    if(elB) elB.textContent = fmtMark('q'+n+'b');
     
-    isCurrentAbsent ? elA.classList.add('absent-text') : elA.classList.remove('absent-text');
-    isCurrentAbsent ? elB.classList.add('absent-text') : elB.classList.remove('absent-text');
+    if(elA) isCurrentAbsent ? elA.classList.add('absent-text') : elA.classList.remove('absent-text');
+    if(elB) isCurrentAbsent ? elB.classList.add('absent-text') : elB.classList.remove('absent-text');
 
     sumC += getVal('q'+n+'a') + getVal('q'+n+'b');
   });
@@ -1370,8 +1418,10 @@ function updatePreview(){
   let sumD = 0;
   dIds.forEach(n => {
     let el = document.getElementById('pd'+n);
-    el.textContent = fmtMark('q'+n);
-    isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
+    if (el) {
+        el.textContent = fmtMark('q'+n);
+        isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
+    }
     sumD += getVal('q'+n);
   });
   document.getElementById('sumD').textContent = isCurrentAbsent ? 'ABS' : sumD;
