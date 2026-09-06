@@ -761,6 +761,34 @@
           </span>
         </div>
       </div>
+
+      <!-- NEW ANALYTICS CARD (Added as requested) -->
+      <div class="card" id="analyticsSummaryCard" style="margin-top: 24px;">
+        <h2>Class Summary <span class="tag">Live Stats</span></h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div style="background: var(--bg-input); padding: 16px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
+            <div style="font-size: 12px; font-weight: 800; color: var(--accent); margin-bottom: 4px;">PASSED</div>
+            <div id="statPass" style="font-size: 28px; font-weight: 900; color: var(--accent-hover);">0</div>
+          </div>
+          <div style="background: var(--bg-input); padding: 16px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
+            <div style="font-size: 12px; font-weight: 800; color: var(--accent); margin-bottom: 4px;">FAILED</div>
+            <div id="statFail" style="font-size: 28px; font-weight: 900; color: var(--error);">0</div>
+          </div>
+          <div style="background: var(--bg-input); padding: 16px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
+            <div style="font-size: 12px; font-weight: 800; color: var(--accent); margin-bottom: 4px;">HIGHEST MARK</div>
+            <div id="statHighMark" style="font-size: 24px; font-weight: 900; color: var(--accent-hover);">0</div>
+            <div id="statHighRoll" style="font-size: 11px; font-weight: 700; color: var(--ink-soft); margin-top: 2px;">—</div>
+          </div>
+          <div style="background: var(--bg-input); padding: 16px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
+            <div style="font-size: 12px; font-weight: 800; color: var(--accent); margin-bottom: 4px;">ABSENT</div>
+            <div id="statAbs" style="font-size: 28px; font-weight: 900; color: var(--error);">0</div>
+          </div>
+        </div>
+        <div style="margin-top: 12px; font-size: 11px; font-weight: 700; color: var(--ink-soft); text-align: center;">
+          * Pass mark is set to 24 / 60
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1428,17 +1456,67 @@ function updatePreview(){
 }
 
 /* ============================================================
-   PROGRESS BAR
+   PROGRESS BAR & LIVE ANALYTICS (UPDATED)
    ============================================================ */
 function updateProgressAndAnalytics() {
   let gradedCount = 0;
+  let passCount = 0;
+  let failCount = 0;
+  let absentCount = 0;
+  let highestMark = -1;
+  let highestRolls = [];
+
+  // Pass mark is set to 24 (40% out of 60)
+  const PASS_MARK = 24; 
+
   STUDENTS.forEach(s => {
-    if (studentData[s.roll]) gradedCount++;
+    const record = studentData[s.roll];
+    if (record) {
+      gradedCount++;
+      if (record.isAbsent) {
+        absentCount++;
+      } else {
+        const tot = record.total || 0;
+        
+        // Pass/Fail check
+        if (tot >= PASS_MARK) {
+          passCount++;
+        } else {
+          failCount++;
+        }
+
+        // Highest mark check
+        if (tot > highestMark) {
+          highestMark = tot;
+          highestRolls = [s.roll];
+        } else if (tot === highestMark && tot > 0) {
+          highestRolls.push(s.roll);
+        }
+      }
+    }
   });
+
   const totalStudents = STUDENTS.length;
   const pct = totalStudents === 0 ? 0 : Math.round((gradedCount / totalStudents) * 100);
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressText').textContent = `Graded: ${gradedCount} / ${totalStudents} (${pct}%)`;
+
+  // Update new Analytics UI if it exists
+  if (document.getElementById('statPass')) {
+    document.getElementById('statPass').textContent = passCount;
+    document.getElementById('statFail').textContent = failCount;
+    document.getElementById('statAbs').textContent = absentCount;
+    
+    if (highestMark > -1) {
+      document.getElementById('statHighMark').textContent = highestMark;
+      let displayRolls = highestRolls.slice(0, 2).join(', ');
+      if (highestRolls.length > 2) displayRolls += ` (+${highestRolls.length - 2})`;
+      document.getElementById('statHighRoll').textContent = displayRolls;
+    } else {
+      document.getElementById('statHighMark').textContent = '—';
+      document.getElementById('statHighRoll').textContent = '—';
+    }
+  }
 }
 
 /* ============================================================
@@ -1612,3 +1690,4 @@ loadStudent(currentIndex);
 </script>
 </body>
 </html>
+
