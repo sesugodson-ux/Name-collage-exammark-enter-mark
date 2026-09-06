@@ -296,6 +296,7 @@
     margin-top: 8px;
   }
 
+  /* LAYOUT */
   .split{
     display:grid;
     grid-template-columns:1.15fr 1fr;
@@ -305,6 +306,12 @@
   @media (max-width:920px){
     .split{grid-template-columns:1fr;}
     #setupGrid{grid-template-columns:repeat(2,1fr);}
+  }
+  
+  /* STICKY COLUMN FOR RIGHT SIDE */
+  .sticky-column {
+    position: sticky;
+    top: 24px;
   }
 
   .qgrid{
@@ -385,7 +392,6 @@
   /* ============================================================
      REPLICA TABLE - FLAWLESS FLEXBOX GRID ALIGNMENT
      ============================================================ */
-  #previewCard{position:sticky;top:20px;}
   table.replica {
     width: 100%;
     border-collapse: collapse;
@@ -488,8 +494,8 @@
     gap:16px 28px;
     font-size:14px;
   }
-  #setupLockedRow div span{color:var(--accent);font-size:12px;display:block;margin-bottom:4px;font-weight:800;}
-  #setupLockedRow div b{font-weight:800;font-size:16px; color:var(--ink);}
+  #setupLockedRow div span{color:var(--ink-soft);font-size:11px;display:block;margin-bottom:2px;font-weight:700;}
+  #setupLockedRow div b{font-weight:800;font-size:15px; color:var(--ink);}
 
   /* MODAL UI */
   .modal-overlay {
@@ -656,8 +662,11 @@
       </div>
     </div>
 
-    <div>
-      <div class="card" id="previewCard">
+    <!-- RIGHT COLUMN (STICKY APPLIED HERE) -->
+    <div class="sticky-column">
+      
+      <!-- LIVE PREVIEW CARD -->
+      <div class="card" id="previewCard" style="margin-bottom: 24px;">
         <h2>Marks Scored <span class="tag">Live Preview</span></h2>
         
         <table class="replica">
@@ -762,8 +771,8 @@
         </div>
       </div>
 
-      <!-- NEW ANALYTICS CARD (Added as requested) -->
-      <div class="card" id="analyticsSummaryCard" style="margin-top: 24px;">
+      <!-- ANALYTICS CARD -->
+      <div class="card" id="analyticsSummaryCard">
         <h2>Class Summary <span class="tag">Live Stats</span></h2>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
           <div style="background: var(--bg-input); padding: 16px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
@@ -1690,4 +1699,3 @@ loadStudent(currentIndex);
 </script>
 </body>
 </html>
-
