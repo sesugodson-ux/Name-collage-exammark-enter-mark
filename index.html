@@ -574,12 +574,11 @@
 <header class="masthead">
   <div class="crest-line">Bishop Heber College (Autonomous) · Tiruchirappalli-17</div>
   <h1>Internal Test Mark Entry</h1>
-  <div class="sub">Premium Dark Teal Dashboard</div>
+  <div class="sub">Smart Mark Ledger &amp; CSV</div>
 </header>
 
 <div class="wrap">
 
-  <!-- SETUP CARD -->
   <div class="card" id="setupCard">
     <h2>Exam Configuration <span class="tag" id="setupTag">EDIT ONCE</span></h2>
     <div id="setupForm">
@@ -599,16 +598,14 @@
         <button class="btn btn-reset" id="resetAllBtn">Reset Database</button>
       </div>
     </div>
-    <!-- Locked View -->
     <div id="setupLockedRow" style="display:none;"></div>
   </div>
 
-  <!-- STUDENT SWITCH BAR -->
+  <!-- Student Bar Card assigned an ID for auto-scrolling -->
   <div class="card" id="studentCardAnchor">
     <div id="studentBarWrap">
       <div id="studentBar">
         <div class="who">
-          <!-- STYLED ROLL NUMBER BADGE -->
           <span class="roll" id="curRoll">—</span>
           <span class="name" id="curName">—</span>
           
@@ -620,10 +617,8 @@
             Mark ABS
           </label>
         </div>
-        <!-- Custom Student Selector Button -->
         <button type="button" id="studentTriggerBtn" class="custom-select-btn" style="width: 300px;">Select Student ▼</button>
       </div>
-      <!-- PROGRESS BAR -->
       <div>
         <div class="progress-container">
           <div class="progress-fill" id="progressFill"></div>
@@ -634,7 +629,6 @@
   </div>
 
   <div class="split">
-    <!-- ENTRY -->
     <div>
       <div class="card">
         <h2>Part A &middot; MCQ <span class="tag">Q1–Q10 &middot; max 1</span></h2>
@@ -662,98 +656,99 @@
       </div>
     </div>
 
-    <!-- PREVIEW -->
     <div>
       <div class="card" id="previewCard">
         <h2>Marks Scored <span class="tag">Live Preview</span></h2>
         
-        <!-- FLAWLESS NESTED TABLE LAYOUT (Like Original Paper) -->
         <table class="replica">
           <thead>
             <tr>
-              <th style="width: 22%">SECTION</th>
-              <th style="width: 60%">MARKS SCORED</th>
-              <th style="width: 18%;">TOTAL</th>
+              <th style="width:22%">Section</th>
+              <th style="width:60%">Marks Scored</th>
+              <th style="width:18%;">Total</th>
             </tr>
           </thead>
           <tbody>
             
-            <!-- Part A -->
             <tr>
               <td class="partlabel">Part A</td>
               <td class="data-cell">
                 <div style="display:flex; align-items:center; justify-content:center; height:100%; font-weight:800; color:var(--accent); font-size:14px; padding: 12px;">MCQ Marks 1–10</div>
               </td>
-              <td class="total-col" id="sumA_tot">0</td>
+              <td class="val total-col" id="sumA_tot">0</td>
             </tr>
 
-            <!-- Part B -->
             <tr>
               <td class="partlabel row-no-bottom">Part B<br><span class="dim" style="font-size:11px;">(2 Marks)</span></td>
               <td class="data-cell">
-                <table class="inner-table">
-                  <tr>
-                    <th style="width:20%">11</th><th style="width:20%">12</th><th style="width:20%">13</th><th style="width:20%">14</th><th style="width:20%">15</th>
-                  </tr>
-                  <tr>
-                    <td id="pb11"></td><td id="pb12"></td><td id="pb13"></td><td id="pb14"></td><td id="pb15"></td>
-                  </tr>
-                </table>
+                <div class="data-grid-5">
+                  <div class="d-col"><div class="d-head">11</div><div class="d-val" id="pb11"></div></div>
+                  <div class="d-col"><div class="d-head">12</div><div class="d-val" id="pb12"></div></div>
+                  <div class="d-col"><div class="d-head">13</div><div class="d-val" id="pb13"></div></div>
+                  <div class="d-col"><div class="d-head">14</div><div class="d-val" id="pb14"></div></div>
+                  <div class="d-col"><div class="d-head">15</div><div class="d-val" id="pb15"></div></div>
+                </div>
               </td>
-              <td class="total-col" id="sumB">0</td>
+              <td class="val total-col" id="sumB">0</td>
             </tr>
 
-            <!-- Part C (No Empty Boxes - Flawless Split!) -->
+            <!-- PART C -->
             <tr>
-              <td class="partlabel row-no-bottom">Part C<br><span class="dim" style="font-size:11px;">(5 Marks)</span></td>
-              <td class="data-cell">
-                <table class="inner-table">
-                  <tr>
-                    <th style="width:25%">16</th><th style="width:25%">17</th><th style="width:25%">18</th><th style="width:25%">19</th>
-                  </tr>
-                  <tr>
-                    <td style="padding:0; vertical-align:top;">
-                      <div class="split-cell"><span class="lbl">a)</span> <span class="val" id="pca16"></span></div>
-                      <div class="split-cell" style="border-top:1px solid var(--line);"><span class="lbl">b)</span> <span class="val" id="pcb16"></span></div>
-                    </td>
-                    <td style="padding:0; vertical-align:top;">
-                      <div class="split-cell"><span class="lbl">a)</span> <span class="val" id="pca17"></span></div>
-                      <div class="split-cell" style="border-top:1px solid var(--line);"><span class="lbl">b)</span> <span class="val" id="pcb17"></span></div>
-                    </td>
-                    <td style="padding:0; vertical-align:top;">
-                      <div class="split-cell"><span class="lbl">a)</span> <span class="val" id="pca18"></span></div>
-                      <div class="split-cell" style="border-top:1px solid var(--line);"><span class="lbl">b)</span> <span class="val" id="pcb18"></span></div>
-                    </td>
-                    <td style="padding:0; vertical-align:top;">
-                      <div class="split-cell"><span class="lbl">a)</span> <span class="val" id="pca19"></span></div>
-                      <div class="split-cell" style="border-top:1px solid var(--line);"><span class="lbl">b)</span> <span class="val" id="pcb19"></span></div>
-                    </td>
-                  </tr>
-                </table>
+              <td class="partlabel row-no-bottom" style="padding: 0;">
+                <div style="display: flex; height: 100%; align-items: stretch;">
+                  <div style="flex: 1; padding: 10px 8px; display: flex; flex-direction: column; justify-content: center;">
+                    Part C<br><span class="dim" style="font-size:11px;">(5 Marks)</span>
+                  </div>
+                  <div style="width: 28px; display: flex; flex-direction: column; border-left: 1px solid var(--accent-light);">
+                    <div class="d-head" style="color: transparent; user-select: none;">#</div>
+                    <div style="flex: 1; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--accent-hover);">a)</div>
+                    <div style="flex: 1; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--accent-hover); border-top: 1px solid var(--line);">b)</div>
+                  </div>
+                </div>
               </td>
-              <td class="total-col" id="sumC">0</td>
+              <td class="data-cell">
+                <div class="data-grid-4">
+                  <div class="d-col">
+                    <div class="d-head">16</div>
+                    <div class="d-row"><span class="r-val" id="pca16"></span></div>
+                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-val" id="pcb16"></span></div>
+                  </div>
+                  <div class="d-col">
+                    <div class="d-head">17</div>
+                    <div class="d-row"><span class="r-val" id="pca17"></span></div>
+                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-val" id="pcb17"></span></div>
+                  </div>
+                  <div class="d-col">
+                    <div class="d-head">18</div>
+                    <div class="d-row"><span class="r-val" id="pca18"></span></div>
+                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-val" id="pcb18"></span></div>
+                  </div>
+                  <div class="d-col">
+                    <div class="d-head">19</div>
+                    <div class="d-row"><span class="r-val" id="pca19"></span></div>
+                    <div class="d-row" style="border-top:1px solid var(--line);"><span class="r-val" id="pcb19"></span></div>
+                  </div>
+                </div>
+              </td>
+              <td class="val total-col" id="sumC">0</td>
             </tr>
 
-            <!-- Part D -->
             <tr>
               <td class="partlabel row-no-bottom">Part D<br><span class="dim" style="font-size:11px;">(10 Marks)</span></td>
               <td class="data-cell">
-                <table class="inner-table">
-                  <tr>
-                    <th style="width:33.33%">20</th><th style="width:33.33%">21</th><th style="width:33.33%">22</th>
-                  </tr>
-                  <tr>
-                    <td id="pd20"></td><td id="pd21"></td><td id="pd22"></td>
-                  </tr>
-                </table>
+                <div class="data-grid-3">
+                  <div class="d-col"><div class="d-head">20</div><div class="d-val" id="pd20"></div></div>
+                  <div class="d-col"><div class="d-head">21</div><div class="d-val" id="pd21"></div></div>
+                  <div class="d-col"><div class="d-head">22</div><div class="d-val" id="pd22"></div></div>
+                </div>
               </td>
-              <td class="total-col" id="sumD">0</td>
+              <td class="val total-col" id="sumD">0</td>
             </tr>
 
-            <!-- Grand Total -->
+            <!-- Grand Total Row configured as focusable element for keyboard flow -->
             <tr>
               <td colspan="2" class="partlabel" style="text-align:right; font-size:16px;">Grand Total</td>
-              <td class="total-col grand-total" id="grandTotal" tabindex="0" style="outline: none; cursor: pointer;">0</td>
+              <td class="val total-col" id="grandTotal" tabindex="0" style="font-size:26px; outline: none; cursor: pointer;">0</td>
             </tr>
           </tbody>
         </table>
@@ -768,7 +763,7 @@
       </div>
 
       <!-- NEW ANALYTICS CARD (Added as requested) -->
-      <div class="card" id="analyticsSummaryCard" style="margin-top: 24px; display: none;">
+      <div class="card" id="analyticsSummaryCard" style="margin-top: 24px;">
         <h2>Class Summary <span class="tag">Live Stats</span></h2>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
           <div style="background: var(--bg-input); padding: 16px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
@@ -798,7 +793,6 @@
   </div>
 </div>
 
-<!-- CUSTOM MODAL OVERLAY -->
 <div id="uiModal" class="modal-overlay">
   <div class="modal-card">
     <div class="modal-header">
@@ -1101,6 +1095,10 @@ function renderSetup(){
 
     document.getElementById('resetAllBtnLocked').addEventListener('click', handleResetAll);
 
+    setTimeout(() => {
+      focusField(FOCUS_ORDER[0]);
+    }, 100);
+
   } else {
     document.getElementById('setupForm').style.display='block';
     document.getElementById('setupLockedRow').style.display='none';
@@ -1118,7 +1116,6 @@ document.getElementById('saveSetupBtn').addEventListener('click', ()=>{
   renderSetup();
 });
 renderSetup();
-
 
 /* ============================================================
    FIELD VALUE HELPERS & ABSENT LOGIC
@@ -1404,7 +1401,7 @@ function checkPartD() {
 }
 
 /* ============================================================
-   LIVE PREVIEW (EXACT REPLICA MAPPING)
+   LIVE PREVIEW (NEW FLEXBOX GRID - MATHEMATICALLY PERFECT)
    ============================================================ */
 function updatePreview(){
   const a = SIMPLE_FIELDS.slice(0,10).map(f=>getVal(f.id));
@@ -1416,10 +1413,8 @@ function updatePreview(){
   let sumB = 0;
   bIds.forEach(n => {
     let el = document.getElementById('pb'+n);
-    if (el) {
-        el.textContent = fmtMark('q'+n);
-        isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
-    }
+    el.textContent = fmtMark('q'+n);
+    isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
     sumB += getVal('q'+n);
   });
   document.getElementById('sumB').textContent = isCurrentAbsent ? 'ABS' : sumB;
@@ -1429,11 +1424,11 @@ function updatePreview(){
   CHOICE_QS.forEach(n => {
     let elA = document.getElementById('pca'+n);
     let elB = document.getElementById('pcb'+n);
-    if(elA) elA.textContent = fmtMark('q'+n+'a');
-    if(elB) elB.textContent = fmtMark('q'+n+'b');
+    elA.textContent = fmtMark('q'+n+'a');
+    elB.textContent = fmtMark('q'+n+'b');
     
-    if(elA) isCurrentAbsent ? elA.classList.add('absent-text') : elA.classList.remove('absent-text');
-    if(elB) isCurrentAbsent ? elB.classList.add('absent-text') : elB.classList.remove('absent-text');
+    isCurrentAbsent ? elA.classList.add('absent-text') : elA.classList.remove('absent-text');
+    isCurrentAbsent ? elB.classList.add('absent-text') : elB.classList.remove('absent-text');
 
     sumC += getVal('q'+n+'a') + getVal('q'+n+'b');
   });
@@ -1446,10 +1441,8 @@ function updatePreview(){
   let sumD = 0;
   dIds.forEach(n => {
     let el = document.getElementById('pd'+n);
-    if (el) {
-        el.textContent = fmtMark('q'+n);
-        isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
-    }
+    el.textContent = fmtMark('q'+n);
+    isCurrentAbsent ? el.classList.add('absent-text') : el.classList.remove('absent-text');
     sumD += getVal('q'+n);
   });
   document.getElementById('sumD').textContent = isCurrentAbsent ? 'ABS' : sumD;
@@ -1463,7 +1456,7 @@ function updatePreview(){
 }
 
 /* ============================================================
-   PROGRESS BAR & LIVE ANALYTICS (UPDATED FOR LAST STUDENT)
+   PROGRESS BAR & LIVE ANALYTICS (UPDATED)
    ============================================================ */
 function updateProgressAndAnalytics() {
   let gradedCount = 0;
@@ -1509,29 +1502,19 @@ function updateProgressAndAnalytics() {
   document.getElementById('progressText').textContent = `Graded: ${gradedCount} / ${totalStudents} (${pct}%)`;
 
   // Update new Analytics UI if it exists
-  const analyticsCard = document.getElementById('analyticsSummaryCard');
-  if (analyticsCard) {
-    if (document.getElementById('statPass')) {
-      document.getElementById('statPass').textContent = passCount;
-      document.getElementById('statFail').textContent = failCount;
-      document.getElementById('statAbs').textContent = absentCount;
-      
-      if (highestMark > -1) {
-        document.getElementById('statHighMark').textContent = highestMark;
-        let displayRolls = highestRolls.slice(0, 2).join(', ');
-        if (highestRolls.length > 2) displayRolls += ` (+${highestRolls.length - 2})`;
-        document.getElementById('statHighRoll').textContent = displayRolls;
-      } else {
-        document.getElementById('statHighMark').textContent = '—';
-        document.getElementById('statHighRoll').textContent = '—';
-      }
-    }
-
-    // ONLY SHOW ANALYTICS IF IT'S THE LAST STUDENT OR ALL ARE GRADED
-    if (currentIndex === totalStudents - 1 || gradedCount === totalStudents) {
-      analyticsCard.style.display = 'block';
+  if (document.getElementById('statPass')) {
+    document.getElementById('statPass').textContent = passCount;
+    document.getElementById('statFail').textContent = failCount;
+    document.getElementById('statAbs').textContent = absentCount;
+    
+    if (highestMark > -1) {
+      document.getElementById('statHighMark').textContent = highestMark;
+      let displayRolls = highestRolls.slice(0, 2).join(', ');
+      if (highestRolls.length > 2) displayRolls += ` (+${highestRolls.length - 2})`;
+      document.getElementById('statHighRoll').textContent = displayRolls;
     } else {
-      analyticsCard.style.display = 'none';
+      document.getElementById('statHighMark').textContent = '—';
+      document.getElementById('statHighRoll').textContent = '—';
     }
   }
 }
@@ -1707,3 +1690,4 @@ loadStudent(currentIndex);
 </script>
 </body>
 </html>
+
