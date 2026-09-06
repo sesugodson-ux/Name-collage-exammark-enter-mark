@@ -302,9 +302,15 @@
     gap:24px;
     align-items:start;
   }
+  .split > div:last-child {
+    position: sticky;
+    top: 20px;
+    align-self: start; 
+  }
   @media (max-width:920px){
     .split{grid-template-columns:1fr;}
     #setupGrid{grid-template-columns:repeat(2,1fr);}
+    .split > div:last-child { position: static; }
   }
 
   .qgrid{
@@ -385,7 +391,6 @@
   /* ============================================================
      REPLICA TABLE - FLAWLESS FLEXBOX GRID ALIGNMENT
      ============================================================ */
-  #previewCard{position:sticky;top:20px;}
   table.replica {
     width: 100%;
     border-collapse: collapse;
@@ -601,7 +606,6 @@
     <div id="setupLockedRow" style="display:none;"></div>
   </div>
 
-  <!-- Student Bar Card assigned an ID for auto-scrolling -->
   <div class="card" id="studentCardAnchor">
     <div id="studentBarWrap">
       <div id="studentBar">
@@ -692,7 +696,6 @@
               <td class="val total-col" id="sumB">0</td>
             </tr>
 
-            <!-- PART C -->
             <tr>
               <td class="partlabel row-no-bottom" style="padding: 0;">
                 <div style="display: flex; height: 100%; align-items: stretch;">
@@ -745,7 +748,6 @@
               <td class="val total-col" id="sumD">0</td>
             </tr>
 
-            <!-- Grand Total Row configured as focusable element for keyboard flow -->
             <tr>
               <td colspan="2" class="partlabel" style="text-align:right; font-size:16px;">Grand Total</td>
               <td class="val total-col" id="grandTotal" tabindex="0" style="font-size:26px; outline: none; cursor: pointer;">0</td>
@@ -761,39 +763,34 @@
           </span>
         </div>
       </div>
-
-      <!-- NEW ANALYTICS CARD (Added as requested) -->
-      <div class="card" id="analyticsSummaryCard" style="margin-top: 24px;">
-        <h2>Class Summary <span class="tag">Live Stats</span></h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-          <div style="background: var(--bg-input); padding: 16px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
-            <div style="font-size: 12px; font-weight: 800; color: var(--accent); margin-bottom: 4px;">PASSED</div>
-            <div id="statPass" style="font-size: 28px; font-weight: 900; color: var(--accent-hover);">0</div>
-          </div>
-          <div style="background: var(--bg-input); padding: 16px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
-            <div style="font-size: 12px; font-weight: 800; color: var(--accent); margin-bottom: 4px;">FAILED</div>
-            <div id="statFail" style="font-size: 28px; font-weight: 900; color: var(--error);">0</div>
-          </div>
-          <div style="background: var(--bg-input); padding: 16px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
-            <div style="font-size: 12px; font-weight: 800; color: var(--accent); margin-bottom: 4px;">HIGHEST MARK</div>
-            <div id="statHighMark" style="font-size: 24px; font-weight: 900; color: var(--accent-hover);">0</div>
-            <div id="statHighRoll" style="font-size: 11px; font-weight: 700; color: var(--ink-soft); margin-top: 2px;">—</div>
-          </div>
-          <div style="background: var(--bg-input); padding: 16px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
-            <div style="font-size: 12px; font-weight: 800; color: var(--accent); margin-bottom: 4px;">ABSENT</div>
-            <div id="statAbs" style="font-size: 28px; font-weight: 900; color: var(--error);">0</div>
-          </div>
-        </div>
-        <div style="margin-top: 12px; font-size: 11px; font-weight: 700; color: var(--ink-soft); text-align: center;">
-          * Pass mark is set to 24 / 60
-        </div>
+    </div>
+  </div> <div class="card" id="analyticsSummaryCard" style="display: none; margin-top: 24px;">
+    <h2 style="justify-content: center; font-size: 22px;">🎉 Class Grading Complete! <span class="tag" style="margin-left: 12px;">Final Stats</span></h2>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px;">
+      <div style="background: var(--bg-input); padding: 20px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
+        <div style="font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 8px;">PASSED</div>
+        <div id="statPass" style="font-size: 36px; font-weight: 900; color: var(--accent-hover);">0</div>
       </div>
-
+      <div style="background: var(--bg-input); padding: 20px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
+        <div style="font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 8px;">FAILED</div>
+        <div id="statFail" style="font-size: 36px; font-weight: 900; color: var(--error);">0</div>
+      </div>
+      <div style="background: var(--bg-input); padding: 20px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
+        <div style="font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 8px;">HIGHEST MARK</div>
+        <div id="statHighMark" style="font-size: 32px; font-weight: 900; color: var(--accent-hover);">0</div>
+        <div id="statHighRoll" style="font-size: 12px; font-weight: 700; color: var(--ink-soft); margin-top: 4px;">—</div>
+      </div>
+      <div style="background: var(--bg-input); padding: 20px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--line);">
+        <div style="font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 8px;">ABSENT</div>
+        <div id="statAbs" style="font-size: 36px; font-weight: 900; color: var(--error);">0</div>
+      </div>
+    </div>
+    <div style="margin-top: 16px; font-size: 12px; font-weight: 700; color: var(--ink-soft); text-align: center;">
+      * Pass mark is set to 24 / 60
     </div>
   </div>
-</div>
 
-<div id="uiModal" class="modal-overlay">
+</div> <div id="uiModal" class="modal-overlay">
   <div class="modal-card">
     <div class="modal-header">
       <h3 id="modalTitle">Select Option</h3>
@@ -1456,7 +1453,7 @@ function updatePreview(){
 }
 
 /* ============================================================
-   PROGRESS BAR & LIVE ANALYTICS (UPDATED)
+   PROGRESS BAR & LIVE ANALYTICS (UPDATED - SHOWN ONLY AT END)
    ============================================================ */
 function updateProgressAndAnalytics() {
   let gradedCount = 0;
@@ -1501,7 +1498,7 @@ function updateProgressAndAnalytics() {
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressText').textContent = `Graded: ${gradedCount} / ${totalStudents} (${pct}%)`;
 
-  // Update new Analytics UI if it exists
+  // Update Data in the Analytics UI
   if (document.getElementById('statPass')) {
     document.getElementById('statPass').textContent = passCount;
     document.getElementById('statFail').textContent = failCount;
@@ -1515,6 +1512,16 @@ function updateProgressAndAnalytics() {
     } else {
       document.getElementById('statHighMark').textContent = '—';
       document.getElementById('statHighRoll').textContent = '—';
+    }
+  }
+
+  // SHOW ONLY WHEN 100% DONE
+  const summaryCard = document.getElementById('analyticsSummaryCard');
+  if (summaryCard) {
+    if (gradedCount === totalStudents && totalStudents > 0) {
+      summaryCard.style.display = 'block';
+    } else {
+      summaryCard.style.display = 'none';
     }
   }
 }
@@ -1625,6 +1632,14 @@ document.getElementById('nextBtn').addEventListener('click', ()=>{
     currentIndex++;
     loadStudent(currentIndex);
     focusField(isCurrentAbsent ? null : FOCUS_ORDER[0]);
+  } else {
+    // If it's the last student, scroll to the bottom summary box automatically
+    setTimeout(() => {
+      const summaryCard = document.getElementById('analyticsSummaryCard');
+      if(summaryCard.style.display === 'block') {
+         summaryCard.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }
+    }, 100);
   }
 });
 document.getElementById('prevBtn').addEventListener('click', ()=>{
@@ -1690,4 +1705,3 @@ loadStudent(currentIndex);
 </script>
 </body>
 </html>
-
