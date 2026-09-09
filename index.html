@@ -523,7 +523,7 @@
     box-shadow: var(--shadow-modal);
     display: flex;
     flex-direction: column;
-    max-height: 80vh;
+    max-height: 85vh;
     transform: scale(0.95);
     transition: transform 0.2s ease;
   }
@@ -573,6 +573,18 @@
     color: var(--accent-hover);
     border-color: var(--accent);
   }
+
+  /* IMPORT MODAL SPECIFICS */
+  .prompt-box { background: var(--bg-input); padding: 12px; border-radius: 8px; border: 1px solid var(--line); margin-bottom: 8px; position: relative; }
+  .prompt-text { font-size: 11px; color: var(--ink-soft); font-family: monospace; line-height: 1.4; user-select: all; padding-right: 70px;}
+  .copy-btn { position: absolute; top: 12px; right: 12px; background: var(--accent); color: #fff; border: none; padding: 6px 10px; border-radius: 6px; font-size: 10px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+  .copy-btn:hover { background: var(--accent-hover); }
+  .import-textarea { width: 100%; height: 180px; padding: 12px; border: 2px solid var(--line); border-radius: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 13px; resize: none; background: #fff; color: var(--ink); white-space: pre; overflow-wrap: normal; overflow-x: auto; font-weight: 600;}
+  .import-textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-light); }
+  .warning-note { font-size: 11px; color: var(--error); font-weight: 700; margin: 4px 0 12px; display: flex; align-items: flex-start; gap: 6px; line-height: 1.4;}
+  .import-input { width: 100%; padding: 10px 12px; border: 2px solid var(--line); border-radius: 8px; margin-bottom: 12px; font-weight: 800; font-family: inherit; font-size: 14px;}
+  .import-input:focus { outline: none; border-color: var(--accent); background: #fff; box-shadow: 0 0 0 4px var(--accent-light); }
+
 /* ============================================================
    G S S CODE BERRY FOOTER 
    ============================================================ */
@@ -807,7 +819,7 @@
 
 </div> <!-- END OF WRAP -->
 
-<!-- G S S CODE BERRY FOOTER -->
+<!-- NORMAL MODAL UI -->
 <div id="uiModal" class="modal-overlay">
   <div class="modal-card">
     <div class="modal-header">
@@ -818,17 +830,46 @@
   </div>
 </div>
 
+<!-- NEW IMPORT MODAL UI -->
+<div id="importModal" class="modal-overlay">
+  <div class="modal-card" style="max-width: 500px;">
+    <div class="modal-header">
+      <h3>Import Custom Class</h3>
+      <span class="modal-close" id="importModalClose">&times;</span>
+    </div>
+    <div class="modal-body">
+      <input type="text" id="importClassName" class="import-input" placeholder="Enter Class Name (e.g. 1st Year BCA)">
+      
+      <div class="prompt-box">
+        <button class="copy-btn" id="copyPromptBtn">Copy Prompt</button>
+        <div class="prompt-text" id="promptText">I have a student nominal roll below. It contains Roll Numbers, Names, DOBs, and other unnecessary details. Please extract ONLY the Roll Number and Name. Format the output strictly line by line exactly like this: '&lt;Roll_Number&gt; &lt;Name&gt;'. Do not include commas, hyphens, bullet points, or any extra text. Here is the data:</div>
+      </div>
+
+      <textarea id="importData" class="import-textarea" placeholder="255113401 AALAN ASHNUWA V&#10;255113402 AATHAVAN A&#10;..."></textarea>
+      
+      <div class="warning-note">
+        <span>⚠️</span> <span>Note: Please verify the list visually and manually remove any 'Left Students' or dropouts before saving.</span>
+      </div>
+
+      <div style="display:flex; gap:12px;">
+        <button class="btn secondary" style="flex:1;" id="importCancelBtn">Cancel</button>
+        <button class="btn" style="flex:1;" id="importSaveBtn">Import & Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ============================================================
-   STATIC DATA (MULTIPLE CLASSES & SECTIONS)
+   STATIC DATA & DYNAMIC CUSTOM CLASSES
    ============================================================ */
-const CLASS_OPTIONS = [
+let CLASS_OPTIONS = [
   { id: "2nd_Year", label: "2nd Year BCA (D)" },
   { id: "3rd_Year", label: "3rd Year BCA (D)" },
   { id: "Web_Programming", label: "Web Programming (DSE)" }
 ];
 
-const CLASS_DATA = {
+let CLASS_DATA = {
   "2nd_Year": [
     ["255113401","AALAN ASHNUWA V"],["255113402","AATHAVAN A"],
     ["255113404","ABISHEK CS"],["255113405","ABISHEK SIRUS P"],["255113406","AHAJAS AHMED R"],
@@ -906,6 +947,13 @@ const CLASS_DATA = {
   ].map(([roll,name,sec])=>({roll,name,sec}))
 };
 
+// LOAD CUSTOM CLASSES FROM STORAGE
+let customClasses = JSON.parse(localStorage.getItem('markLedger_customClasses') || '{}');
+Object.keys(customClasses).forEach(key => {
+  CLASS_OPTIONS.push({ id: key, label: customClasses[key].label });
+  CLASS_DATA[key] = customClasses[key].students;
+});
+
 /* ============================================================
    STORAGE & STATE
    ============================================================ */
@@ -917,6 +965,7 @@ let config = JSON.parse(localStorage.getItem(LS_CONFIG) || 'null');
 let studentData = JSON.parse(localStorage.getItem(LS_DATA) || '{}');
 
 let activeClassKey = localStorage.getItem('markLedger_activeClass') || "2nd_Year";
+if (!CLASS_DATA[activeClassKey]) activeClassKey = CLASS_OPTIONS[0].id;
 let STUDENTS = CLASS_DATA[activeClassKey];
 
 let currentIndex = parseInt(localStorage.getItem(LS_INDEX) || '0', 10);
@@ -936,6 +985,7 @@ function handleResetAll() {
     localStorage.removeItem(LS_DATA);
     localStorage.removeItem(LS_INDEX);
     localStorage.removeItem('markLedger_activeClass');
+    localStorage.removeItem('markLedger_customClasses');
     window.location.reload();
   }
 }
@@ -985,12 +1035,28 @@ function openModal(type) {
       };
       modalList.appendChild(opt);
     });
+
+    // ADD IMPORT BUTTON HERE
+    const importOpt = document.createElement('div');
+    importOpt.className = 'modal-option';
+    importOpt.style.textAlign = 'center';
+    importOpt.style.background = 'var(--bg-input)';
+    importOpt.style.marginTop = '12px';
+    importOpt.style.border = '2px dashed var(--accent)';
+    importOpt.style.color = 'var(--accent)';
+    importOpt.innerHTML = '➕ Import Custom Class';
+    importOpt.onclick = () => {
+      closeModal();
+      document.getElementById('importModal').classList.add('active');
+    };
+    modalList.appendChild(importOpt);
+
   } else if (type === 'student') {
     modalTitle.textContent = "Jump to Student";
     STUDENTS.forEach((s, i) => {
       const opt = document.createElement('div');
       opt.className = 'modal-option' + (i === currentIndex ? ' selected' : '');
-      opt.textContent = `${s.roll} — ${s.name} (Sec: ${s.sec})`;
+      opt.textContent = `${s.roll} — ${s.name} (Sec: ${s.sec || '-'})`;
       opt.onclick = () => {
         saveCurrentStudent(true);
         hasUnsavedChanges = false;
@@ -1014,6 +1080,71 @@ modalClose.addEventListener('click', closeModal);
 uiModal.addEventListener('click', (e) => {
   if (e.target === uiModal) closeModal();
 });
+
+/* ============================================================
+   IMPORT MODAL LOGIC (NEW)
+   ============================================================ */
+const importModal = document.getElementById('importModal');
+document.getElementById('importModalClose').onclick = () => importModal.classList.remove('active');
+document.getElementById('importCancelBtn').onclick = () => importModal.classList.remove('active');
+
+document.getElementById('copyPromptBtn').onclick = () => {
+  navigator.clipboard.writeText(document.getElementById('promptText').innerText);
+  const btn = document.getElementById('copyPromptBtn');
+  btn.innerText = 'Copied!';
+  setTimeout(() => btn.innerText = 'Copy Prompt', 2000);
+};
+
+document.getElementById('importSaveBtn').onclick = () => {
+  const className = document.getElementById('importClassName').value.trim();
+  const rawData = document.getElementById('importData').value.trim();
+  
+  if (!className) return alert("Please enter a Custom Class Name.");
+  if (!rawData) return alert("Please paste the student data first.");
+
+  const lines = rawData.split('\n');
+  const newStudents = [];
+  
+  lines.forEach(line => {
+    const parts = line.trim().split(/\s+/); // Splits by space
+    if (parts.length >= 2) {
+      const roll = parts[0];
+      const name = parts.slice(1).join(' ');
+      newStudents.push({ roll: roll, name: name, sec: "-" });
+    }
+  });
+
+  if (newStudents.length === 0) return alert("Could not parse any students. Ensure the format is strictly 'Roll Number [Space] Name'.");
+
+  const classId = 'custom_' + Date.now();
+  
+  // Save to Custom Storage
+  customClasses[classId] = {
+    label: className,
+    students: newStudents
+  };
+  localStorage.setItem('markLedger_customClasses', JSON.stringify(customClasses));
+  
+  // Apply immediately to runtime
+  CLASS_OPTIONS.push({ id: classId, label: className });
+  CLASS_DATA[classId] = newStudents;
+  
+  // Auto-switch to newly imported class
+  activeClassKey = classId;
+  localStorage.setItem('markLedger_activeClass', activeClassKey);
+  STUDENTS = CLASS_DATA[activeClassKey];
+  currentIndex = 0;
+  
+  updateClassBtnText();
+  loadStudent(0);
+  if (config) renderSetup();
+  
+  // Cleanup modal
+  importModal.classList.remove('active');
+  document.getElementById('importClassName').value = '';
+  document.getElementById('importData').value = '';
+};
+
 
 /* ============================================================
    QUESTION FIELD DEFINITIONS
@@ -1566,7 +1697,7 @@ function resetFieldsToDefault(){
 function loadStudent(index){
   const s = STUDENTS[index];
   document.getElementById('curRoll').textContent = s.roll;
-  document.getElementById('curName').innerHTML = `${s.name} <span class="sec-badge">Sec: ${s.sec}</span>`;
+  document.getElementById('curName').innerHTML = `${s.name} <span class="sec-badge">Sec: ${s.sec || '-'}</span>`;
   updateStudentBtnText();
 
   resetFieldsToDefault();
@@ -1699,7 +1830,7 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
     }
     
     rows.push([
-      s.roll, s.name, s.sec, 
+      s.roll, s.name, s.sec || '-', 
       config?.semester||'', config?.paperCode||'', config?.exam||'', config?.batch||'', config?.course||'',
       ...qVals, total
     ]);
