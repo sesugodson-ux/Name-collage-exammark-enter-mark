@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Smart Mark Entry Dashboard — GSS CodeBerry</title>
+
+<!-- SheetJS Library for Excel/CSV Upload -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 <style>
   :root {
     /* Custom User Palette */
@@ -447,7 +451,10 @@
       <div style="font-size:12px; color:var(--accent); font-weight:800; margin-bottom:4px;">1. Name this Class</div>
       <input type="text" id="importClassName" class="import-input" placeholder="e.g. 1st Year BCA (A)">
       
-      <div style="font-size:12px; color:var(--accent); font-weight:800; margin-top:12px; margin-bottom:4px;">2. Paste Data (From Excel/PDF)</div>
+      <div style="font-size:12px; color:var(--accent); font-weight:800; margin-top:12px; margin-bottom:4px;">2. Upload Excel / CSV File</div>
+      <input type="file" id="fileUpload" accept=".csv, .xlsx, .xls" class="import-input" style="padding: 6px; cursor: pointer;">
+      
+      <div style="text-align: center; font-weight: 800; color: var(--ink-soft); margin: 4px 0;">(OR) Paste Data Manually</div>
       <textarea id="importData" class="import-textarea" placeholder="Paste strictly as:&#10;255113401 NAME ONE&#10;255113402 NAME TWO"></textarea>
       
       <button class="btn" style="width:100%; margin-top:12px;" id="btnPreviewImport">Preview Students &rarr;</button>
@@ -798,19 +805,52 @@ studentTriggerBtn.addEventListener('click', () => openModal('student'));
 document.getElementById('modalClose').onclick = () => uiModal.classList.remove('active');
 
 /* ============================================================
-   NEW IMPORT VERIFICATION LOGIC
+   NEW IMPORT VERIFICATION LOGIC & FILE UPLOAD
    ============================================================ */
 const importModal = document.getElementById('importModal');
 let tempImportedStudents = [];
 
 document.getElementById('importModalClose').onclick = () => importModal.classList.remove('active');
 
+// FILE UPLOAD PARSING USING SHEETJS
+document.getElementById('fileUpload').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const data = new Uint8Array(event.target.result);
+    const workbook = XLSX.read(data, {type: 'array'});
+    const firstSheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[firstSheetName];
+    
+    const excelData = XLSX.utils.sheet_to_json(worksheet, {header: 1});
+    let extractedText = '';
+    
+    excelData.forEach(row => {
+      if(row.length >= 2 && row[0] && row[1]) {
+        // Ensuring it only grabs rows where the first item is likely a Roll Number
+        extractedText += `${row[0]} ${row[1]}\n`;
+      }
+    });
+    
+    if(extractedText.trim() !== '') {
+      document.getElementById('importData').value = extractedText.trim();
+      alert("✅ Excel Data Extracted Successfully! Please review the data below.");
+    } else {
+      alert("❌ Could not find valid Roll Number and Name in the first two columns.");
+    }
+  };
+  reader.readAsArrayBuffer(file);
+});
+
+
 document.getElementById('btnPreviewImport').onclick = () => {
   const className = document.getElementById('importClassName').value.trim();
   const rawData = document.getElementById('importData').value.trim();
   
   if (!className) return alert("Please enter a Class Name.");
-  if (!rawData) return alert("Please paste the student data.");
+  if (!rawData) return alert("Please paste or upload the student data.");
 
   const lines = rawData.split('\n');
   tempImportedStudents = [];
@@ -875,6 +915,7 @@ document.getElementById('btnImportSave').onclick = () => {
   importModal.classList.remove('active');
   document.getElementById('importClassName').value = '';
   document.getElementById('importData').value = '';
+  document.getElementById('fileUpload').value = ''; // Reset file input
   document.getElementById('importStage2').classList.add('d-none');
   document.getElementById('importStage1').classList.remove('d-none');
 };
