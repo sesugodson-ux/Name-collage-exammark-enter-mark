@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* ---- Core palette (deep teal / slate ink / soft mint) ---- */
     --bg-body: #F4F8F7;
     --bg-card: #FFFFFF;
     --bg-input: #F7FAFA;
@@ -44,14 +43,10 @@
   }
 
   * { box-sizing: border-box; }
-
   html { -webkit-text-size-adjust: 100%; }
-
   body {
     margin: 0;
-    background:
-      radial-gradient(1100px 480px at 50% -180px, rgba(14,107,95,0.07), transparent 60%),
-      var(--bg-body);
+    background: radial-gradient(1100px 480px at 50% -180px, rgba(14,107,95,0.07), transparent 60%), var(--bg-body);
     color: var(--ink);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -62,10 +57,62 @@
   }
 
   ::selection { background: var(--accent-soft); color: var(--accent-ink); }
+  :focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
 
-  :focus-visible {
-    outline: 2px solid var(--accent-2);
-    outline-offset: 2px;
+  /* ============================================================
+     TOP NAVIGATION
+     ============================================================ */
+  .top-nav {
+    background: #ffffff;
+    border-bottom: 1px solid var(--line);
+    padding: 0 24px;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px -10px rgba(0,0,0,0.05);
+  }
+  .nav-content {
+    max-width: 1180px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-logo {
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--accent-ink);
+    letter-spacing: -0.01em;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 8px;
+  }
+  .nav-tab {
+    background: transparent;
+    border: none;
+    padding: 16px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+  .nav-tab:hover { color: var(--accent); }
+  .nav-tab.active { color: var(--accent); }
+  .nav-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
   }
 
   /* ============================================================
@@ -86,29 +133,75 @@
     pointer-events: none;
   }
   header.masthead .crest-line {
-    position: relative;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    color: rgba(255,255,255,0.72);
-    font-weight: 600;
+    position: relative; font-size: 12px; letter-spacing: 0.06em; color: rgba(255,255,255,0.72); font-weight: 600;
   }
   header.masthead h1 {
-    position: relative;
-    font-weight: 800;
-    font-size: 27px;
-    margin: 10px 0 5px;
-    letter-spacing: -0.02em;
-    color: #FFFFFF;
+    position: relative; font-weight: 800; font-size: 27px; margin: 10px 0 5px; letter-spacing: -0.02em; color: #FFFFFF;
   }
   header.masthead .sub {
-    position: relative;
-    font-size: 13.5px;
-    color: var(--accent-soft);
-    font-weight: 500;
-    opacity: 0.92;
+    position: relative; font-size: 13.5px; color: var(--accent-soft); font-weight: 500; opacity: 0.92;
   }
 
   .wrap { max-width: 1180px; margin: 0 auto; padding: 26px 20px 8px; flex: 1; width: 100%; }
+  .view-section { display: none; }
+  .view-section.active { display: block; animation: fadeIn 0.3s ease; }
+  
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ============================================================
+     DASHBOARD UI
+     ============================================================ */
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .dashboard-header h2 { font-size: 20px; font-weight: 800; color: var(--ink); margin: 0; }
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .exam-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 24px;
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .exam-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px -12px rgba(14, 107, 95, 0.2);
+  }
+  .exam-card-title { font-size: 17px; font-weight: 800; color: var(--ink); margin: 0 0 4px; }
+  .exam-card-sub { font-size: 13px; color: var(--ink-soft); font-weight: 600; margin: 0 0 16px; }
+  .exam-card-stats {
+    background: var(--bg-sunken);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border: 1px solid var(--line-soft);
+  }
+  .stat-item { text-align: center; }
+  .stat-val { font-size: 18px; font-weight: 800; color: var(--accent-hover); font-family: 'JetBrains Mono', monospace;}
+  .stat-lbl { font-size: 11px; font-weight: 700; color: var(--ink-faint); margin-top: 2px;}
+  .exam-card-actions { display: flex; gap: 8px; }
+  .exam-card-actions button {
+    flex: 1; padding: 10px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: 0.15s;
+  }
+  .btn-resume { background: var(--accent-soft); color: var(--accent-hover); border: 1.5px solid var(--accent-line); }
+  .btn-resume:hover { background: var(--accent-line); }
+  .btn-export-sm { background: var(--ink); color: #fff; }
+  .btn-export-sm:hover { background: #000; }
+  .btn-del { background: var(--error-soft); color: var(--error); border: 1.5px solid #FAD2D8; flex: 0.4; }
+  .btn-del:hover { background: #FAD2D8; }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--ink-soft); font-weight: 600; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px dashed var(--line); }
 
   /* ============================================================
      CARDS
@@ -144,143 +237,58 @@
 
   /* Setup grid */
   #setupGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .field-group label {
-    display: block;
-    font-size: 12px;
-    color: var(--ink-soft);
-    margin-bottom: 7px;
-    font-weight: 600;
-  }
+  .field-group label { display: block; font-size: 12px; color: var(--ink-soft); margin-bottom: 7px; font-weight: 600; }
   .field-group input {
-    width: 100%;
-    padding: 11px 13px;
-    border: 1.5px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: var(--bg-input);
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink);
+    width: 100%; padding: 11px 13px; border: 1.5px solid var(--line); border-radius: var(--radius-sm);
+    background: var(--bg-input); font-family: inherit; font-size: 14px; font-weight: 600; color: var(--ink);
     transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
   }
   .field-group input::placeholder { color: var(--ink-faint); font-weight: 500; }
   .field-group input:hover { border-color: var(--accent-line); }
-  .field-group input:focus {
-    outline: none;
-    border-color: var(--accent-2);
-    background: #fff;
-    box-shadow: var(--shadow-focus);
-  }
+  .field-group input:focus { outline: none; border-color: var(--accent-2); background: #fff; box-shadow: var(--shadow-focus); }
 
   /* CUSTOM SELECT BUTTONS */
   .custom-select-btn {
-    width: 100%;
-    text-align: left;
-    padding: 11px 14px;
-    border: 1.5px solid var(--accent-line);
-    border-radius: var(--radius-sm);
-    background: var(--accent-soft);
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--accent-hover);
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    transition: all .15s ease;
+    width: 100%; text-align: left; padding: 11px 14px; border: 1.5px solid var(--accent-line); border-radius: var(--radius-sm);
+    background: var(--accent-soft); font-family: inherit; font-size: 14px; font-weight: 700; color: var(--accent-hover);
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 10px; transition: all .15s ease;
   }
   .custom-select-btn:hover { background: #CDEDE5; border-color: var(--accent-2); }
   .custom-select-btn:active { transform: translateY(1px); }
 
   .btn {
-    border: none;
-    background: var(--accent);
-    color: #fff;
-    padding: 11px 22px;
-    font-size: 13.5px;
-    font-weight: 700;
-    border-radius: 10px;
-    cursor: pointer;
-    font-family: inherit;
-    box-shadow: var(--shadow-btn);
-    transition: background .15s ease, transform .1s ease, box-shadow .15s ease;
-    letter-spacing: -0.005em;
+    border: none; background: var(--accent); color: #fff; padding: 11px 22px; font-size: 13.5px;
+    font-weight: 700; border-radius: 10px; cursor: pointer; font-family: inherit; box-shadow: var(--shadow-btn);
+    transition: background .15s ease, transform .1s ease, box-shadow .15s ease; letter-spacing: -0.005em;
   }
   .btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
   .btn:active { transform: translateY(0); }
-
-  .btn.secondary {
-    background: var(--bg-sunken);
-    color: var(--accent-hover);
-    box-shadow: none;
-    border: 1.5px solid var(--line);
-  }
+  .btn.secondary { background: var(--bg-sunken); color: var(--accent-hover); box-shadow: none; border: 1.5px solid var(--line); }
   .btn.secondary:hover { background: var(--accent-soft); border-color: var(--accent-line); }
-
-  .btn.btn-reset { background: var(--error); box-shadow: var(--shadow-btn-red); }
-  .btn.btn-reset:hover { background: #B5233A; }
+  
+  .btn.btn-reset { background: var(--bg-sunken); color: var(--error); border: 1.5px solid #FAD2D8; box-shadow: none; }
+  .btn.btn-reset:hover { background: var(--error-soft); border-color: var(--error); }
   .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 
   /* Student switch bar */
   #studentBarWrap { display: flex; flex-direction: column; gap: 18px; }
   #studentBar { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
   #studentBar .who { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-
   #studentBar .who .roll {
-    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--accent-hover);
-    background: var(--accent-soft);
-    padding: 7px 12px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--accent-line);
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 700; font-size: 15px;
+    color: var(--accent-hover); background: var(--accent-soft); padding: 7px 12px; border-radius: var(--radius-sm); border: 1px solid var(--accent-line);
   }
-  #studentBar .who .name {
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.015em;
-    color: var(--ink);
-  }
-  .sec-badge {
-    font-size: 12px;
-    background: var(--ink);
-    color: #fff;
-    padding: 3px 9px;
-    border-radius: 20px;
-    font-weight: 700;
-    vertical-align: middle;
-    margin-left: 8px;
-    letter-spacing: 0.01em;
-  }
+  #studentBar .who .name { font-size: 22px; font-weight: 800; letter-spacing: -0.015em; color: var(--ink); }
+  .sec-badge { font-size: 12px; background: var(--ink); color: #fff; padding: 3px 9px; border-radius: 20px; font-weight: 700; vertical-align: middle; margin-left: 8px; letter-spacing: 0.01em; }
 
   .abs-toggle {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    background: #fff;
-    border: 1.5px solid var(--line);
-    color: var(--error);
-    padding: 7px 16px 7px 9px;
-    border-radius: 30px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    user-select: none;
-    transition: all .2s ease;
+    display: flex; align-items: center; gap: 9px; background: #fff; border: 1.5px solid var(--line); color: var(--error);
+    padding: 7px 16px 7px 9px; border-radius: 30px; font-size: 13px; font-weight: 700; cursor: pointer; user-select: none; transition: all .2s ease;
   }
   .toggle-switch { position: relative; display: inline-block; width: 34px; height: 19px; }
   .toggle-switch input { display: none; }
-  .toggle-slider {
-    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-    background-color: var(--line); transition: .25s; border-radius: 20px;
-  }
-  .toggle-slider:before {
-    position: absolute; content: ""; height: 15px; width: 15px; left: 2px; bottom: 2px;
-    background-color: #fff; transition: .25s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  }
+  .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--line); transition: .25s; border-radius: 20px; }
+  .toggle-slider:before { position: absolute; content: ""; height: 15px; width: 15px; left: 2px; bottom: 2px; background-color: #fff; transition: .25s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
   input:checked + .toggle-slider { background-color: var(--error); }
   input:checked + .toggle-slider:before { transform: translateX(15px); }
 
@@ -302,102 +310,39 @@
   .qgrid.cols3 { grid-template-columns: repeat(3, 1fr); }
 
   .qcell { position: relative; }
-  .qcell label {
-    display: block; text-align: center; font-size: 12.5px; font-weight: 700;
-    color: var(--ink-soft); margin-bottom: 7px; letter-spacing: 0.01em;
-  }
+  .qcell label { display: block; text-align: center; font-size: 12.5px; font-weight: 700; color: var(--ink-soft); margin-bottom: 7px; letter-spacing: 0.01em; }
   .qcell input {
     width: 100%; text-align: center; padding: 4px 2px; height: 50px;
-    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-weight: 700; font-size: 22px;
-    border: 1.5px solid var(--accent-line);
-    border-radius: 10px;
-    background: var(--accent-soft);
-    color: var(--accent-hover);
-    transition: all .15s ease;
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 700; font-size: 22px;
+    border: 1.5px solid var(--accent-line); border-radius: 10px; background: var(--accent-soft); color: var(--accent-hover); transition: all .15s ease;
   }
   .qcell input:hover { border-color: var(--accent-2); }
-  .qcell input:focus {
-    outline: none; background: #fff; border-color: var(--accent-2);
-    box-shadow: var(--shadow-focus);
-  }
-  .qcell input.locked, .qcell input:disabled {
-    background: var(--locked-bg); color: var(--ink-faint);
-    border: 1.5px dashed var(--line); font-weight: 600;
-  }
-  .qcell input.err {
-    background: var(--error); color: #fff;
-    border-color: var(--error);
-    box-shadow: 0 0 0 4px var(--error-soft);
-  }
-  .qcell .errmsg {
-    position: absolute; top: 100%; left: 0; right: 0;
-    font-size: 10.5px; color: var(--error); text-align: center; margin-top: 4px; font-weight: 700;
-  }
+  .qcell input:focus { outline: none; background: #fff; border-color: var(--accent-2); box-shadow: var(--shadow-focus); }
+  .qcell input.locked, .qcell input:disabled { background: var(--locked-bg); color: var(--ink-faint); border: 1.5px dashed var(--line); font-weight: 600; }
+  .qcell input.err { background: var(--error); color: #fff; border-color: var(--error); box-shadow: 0 0 0 4px var(--error-soft); }
+  .qcell .errmsg { position: absolute; top: 100%; left: 0; right: 0; font-size: 10.5px; color: var(--error); text-align: center; margin-top: 4px; font-weight: 700; }
   .choice-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
-  .choice-pair .sub {
-    font-size: 11px; color: var(--ink-faint); text-align: center; display: block;
-    font-weight: 700; margin-top: 4px; letter-spacing: 0.03em;
-  }
+  .choice-pair .sub { font-size: 11px; color: var(--ink-faint); text-align: center; display: block; font-weight: 700; margin-top: 4px; letter-spacing: 0.03em; }
 
   /* ============================================================
      REPLICA TABLE — LEDGER PREVIEW
      ============================================================ */
-  table.replica {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-    background: #fff;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    border-style: hidden;
-    box-shadow: 0 0 0 1.5px var(--line);
-  }
-  table.replica th, table.replica td {
-    border: 1px solid var(--line-soft);
-    text-align: center;
-    vertical-align: middle;
-  }
-  table.replica th {
-    background: var(--ink);
-    font-size: 12px;
-    font-weight: 700;
-    color: #fff;
-    padding: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  table.replica td.partlabel {
-    text-align: left;
-    font-weight: 700;
-    background: var(--bg-input);
-    font-size: 13.5px;
-    padding: 10px 14px;
-    color: var(--ink);
-    width: 22%;
-  }
+  table.replica { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; border-radius: var(--radius-md); overflow: hidden; border-style: hidden; box-shadow: 0 0 0 1.5px var(--line); }
+  table.replica th, table.replica td { border: 1px solid var(--line-soft); text-align: center; vertical-align: middle; }
+  table.replica th { background: var(--ink); font-size: 12px; font-weight: 700; color: #fff; padding: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+  table.replica td.partlabel { text-align: left; font-weight: 700; background: var(--bg-input); font-size: 13.5px; padding: 10px 14px; color: var(--ink); width: 22%; }
   table.replica td.data-cell { padding: 0; width: 60%; }
-  table.replica td.total-col {
-    background: var(--accent-soft);
-    color: var(--accent-ink);
-    font-weight: 800;
-    font-size: 22px;
-    width: 18%;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-  }
+  table.replica td.total-col { background: var(--accent-soft); color: var(--accent-ink); font-weight: 800; font-size: 22px; width: 18%; font-family: 'JetBrains Mono', ui-monospace, monospace; }
   table.replica .dim { color: var(--ink-faint); font-weight: 600; }
 
   .data-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); height: 100%; }
   .data-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); height: 100%; }
   .data-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); height: 100%; }
-
   .d-col { display: flex; flex-direction: column; border-right: 1px solid var(--line-soft); }
   .d-col:last-child { border-right: none; }
-
   .d-head { background: var(--bg-input); padding: 6px; font-size: 12px; font-weight: 700; color: var(--ink-soft); border-bottom: 1px solid var(--line-soft); text-align: center; }
   .d-val { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: var(--ink); padding: 10px 0; font-family: 'JetBrains Mono', ui-monospace, monospace; }
   .d-val.absent-text { color: var(--error); font-size: 16px; }
-
   .d-row { display: flex; flex: 1; align-items: stretch; }
   .r-lbl { background: var(--bg-input); width: 28px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--ink-soft); border-right: 1px solid var(--line-soft); }
   .r-val { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: var(--ink); padding: 8px 0; font-family: 'JetBrains Mono', ui-monospace, monospace; }
@@ -410,10 +355,7 @@
   .btn-export { background: var(--ink); box-shadow: 0 6px 16px -4px rgba(16, 27, 26, 0.35); }
   .btn-export:hover { background: #000; }
 
-  .savednote {
-    font-size: 13.5px; color: var(--accent-hover); font-weight: 700; opacity: 0;
-    transition: opacity .3s; display: flex; align-items: center; gap: 5px;
-  }
+  .savednote { font-size: 13.5px; color: var(--accent-hover); font-weight: 700; opacity: 0; transition: opacity .3s; display: flex; align-items: center; gap: 5px; }
   .savednote.show { opacity: 1; }
 
   #setupLockedRow { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 30px; font-size: 14px; }
@@ -424,23 +366,17 @@
      MODAL UI
      ============================================================ */
   .modal-overlay {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(8, 20, 19, 0.45);
-    backdrop-filter: blur(6px);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(8, 20, 19, 0.45); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
   }
   .modal-overlay.active { opacity: 1; pointer-events: auto; }
   .modal-card {
-    background: #fff; width: 90%; max-width: 440px; border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-modal); display: flex; flex-direction: column; max-height: 85vh;
-    transform: scale(0.96); transition: transform 0.2s ease;
-    border: 1px solid var(--line);
+    background: #fff; width: 90%; max-width: 440px; border-radius: var(--radius-lg); box-shadow: var(--shadow-modal);
+    display: flex; flex-direction: column; max-height: 85vh; transform: scale(0.96); transition: transform 0.2s ease; border: 1px solid var(--line);
   }
   .modal-overlay.active .modal-card { transform: scale(1); }
   .modal-header {
-    background: var(--ink); color: #fff; padding: 17px 22px;
-    border-top-left-radius: var(--radius-lg); border-top-right-radius: var(--radius-lg);
+    background: var(--ink); color: #fff; padding: 17px 22px; border-top-left-radius: var(--radius-lg); border-top-right-radius: var(--radius-lg);
     display: flex; justify-content: space-between; align-items: center;
   }
   .modal-header h3 { margin: 0; font-size: 16px; font-weight: 700; }
@@ -468,34 +404,24 @@
      MINIMAL FOOTER
      ============================================================ */
   .site-footer {
-    background: #0A1614;
-    padding: 20px 24px;
-    margin-top: 48px;
-    border-top: 1px solid rgba(255,255,255,0.06);
+    background: #0A1614; padding: 20px 24px; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.06);
   }
-  .footer-inner {
-    max-width: 1180px;
-    margin: 0 auto;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.45);
-    letter-spacing: 0.01em;
-  }
-  .footer-inner a {
-    color: #00E5FF;
-    text-decoration: none;
-    font-weight: 700;
-    transition: color .2s ease, text-shadow .2s ease;
-  }
-  .footer-inner a:hover,
-  .footer-inner a:focus-visible {
-    color: #6DF2FF;
-    text-shadow: 0 0 12px rgba(0, 229, 255, 0.55);
-  }
+  .footer-inner { max-width: 1180px; margin: 0 auto; text-align: center; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.45); letter-spacing: 0.01em; }
+  .footer-inner a { color: #00E5FF; text-decoration: none; font-weight: 700; transition: color .2s ease, text-shadow .2s ease; }
+  .footer-inner a:hover, .footer-inner a:focus-visible { color: #6DF2FF; text-shadow: 0 0 12px rgba(0, 229, 255, 0.55); }
 </style>
 </head>
 <body>
+
+<nav class="top-nav">
+  <div class="nav-content">
+    <div class="nav-logo">Ledger System</div>
+    <div class="nav-tabs">
+      <button id="navEntry" class="nav-tab active" onclick="switchTab('entry')">Mark Entry</button>
+      <button id="navDashboard" class="nav-tab" onclick="switchTab('dashboard')">Saved Records</button>
+    </div>
+  </div>
+</nav>
 
 <header class="masthead">
   <div class="crest-line">Bishop Heber College (Autonomous) · Tiruchirappalli-17</div>
@@ -503,7 +429,19 @@
   <div class="sub">Smart Mark Ledger &amp; CSV</div>
 </header>
 
-<div class="wrap">
+<!-- ================= DASHBOARD VIEW ================= -->
+<div id="viewDashboard" class="wrap view-section">
+  <div class="dashboard-header">
+    <h2>Saved Exam Records</h2>
+    <button class="btn" onclick="switchTab('entry')">+ New Entry</button>
+  </div>
+  <div id="dashboardGrid" class="dashboard-grid">
+    <!-- Exam cards injected here via JS -->
+  </div>
+</div>
+
+<!-- ================= MARK ENTRY VIEW ================= -->
+<div id="viewEntry" class="wrap view-section active">
 
   <div class="card" id="setupCard">
     <h2>Exam Configuration <span class="tag" id="setupTag">EDIT ONCE</span></h2>
@@ -520,8 +458,8 @@
         <div class="field-group"><label>Course Title</label><input id="cfgCourse" placeholder="e.g. Database Management System"></div>
       </div>
       <div style="margin-top:20px; display:flex; gap:12px;">
-        <button class="btn" id="saveSetupBtn">Save Setup</button>
-        <button class="btn btn-reset" id="resetAllBtn">Reset Database</button>
+        <button class="btn" id="saveSetupBtn">Start Entry / Save Setup</button>
+        <button class="btn btn-reset" id="clearEntryBtn">Clear Current Entry</button>
       </div>
     </div>
     <div id="setupLockedRow" style="display:none;"></div>
@@ -594,7 +532,6 @@
             </tr>
           </thead>
           <tbody>
-
             <tr>
               <td class="partlabel">Part A</td>
               <td class="data-cell">
@@ -602,7 +539,6 @@
               </td>
               <td class="val total-col" id="sumA_tot">0</td>
             </tr>
-
             <tr>
               <td class="partlabel row-no-bottom">Part B<br><span class="dim" style="font-size:11px;">(2 Marks)</span></td>
               <td class="data-cell">
@@ -616,7 +552,6 @@
               </td>
               <td class="val total-col" id="sumB">0</td>
             </tr>
-
             <tr>
               <td class="partlabel row-no-bottom" style="padding: 0;">
                 <div style="display: flex; height: 100%; align-items: stretch;">
@@ -656,7 +591,6 @@
               </td>
               <td class="val total-col" id="sumC">0</td>
             </tr>
-
             <tr>
               <td class="partlabel row-no-bottom">Part D<br><span class="dim" style="font-size:11px;">(10 Marks)</span></td>
               <td class="data-cell">
@@ -668,7 +602,6 @@
               </td>
               <td class="val total-col" id="sumD">0</td>
             </tr>
-
             <tr>
               <td colspan="2" class="partlabel" style="text-align:right; font-size:15px;">Grand Total</td>
               <td class="val total-col" id="grandTotal" tabindex="0" style="font-size:24px; outline: none; cursor: pointer;">0</td>
@@ -711,6 +644,9 @@
     <div style="margin-top: 16px; font-size: 11.5px; font-weight: 600; color: var(--ink-faint); text-align: center;">
       * Pass mark is set to 24 / 60
     </div>
+    <div style="display:flex; justify-content:center; margin-top: 24px;">
+      <button class="btn" id="finishExamBtn" style="padding: 14px 40px; font-size: 16px;">Save & Finish Exam to Dashboard</button>
+    </div>
   </div>
 
 </div> <!-- END OF WRAP -->
@@ -735,16 +671,16 @@
     </div>
     <div class="modal-body">
       
-      <!-- Added Flexbox for Class Name & Section -->
+      <!-- Flexbox for Class Name & Section -->
       <div style="display: flex; gap: 12px; margin-bottom: 12px;">
         <input type="text" id="importClassName" class="import-input" placeholder="Class Name (e.g. 1st Year BCA)" style="flex: 2; margin-bottom: 0;">
         <input type="text" id="importClassSec" class="import-input" placeholder="Sec (e.g. A)" style="flex: 1; margin-bottom: 0;">
       </div>
 
-      <!-- Added clear instruction for the Prompt -->
+      <!-- AI Prompt Helper Text -->
       <div style="font-size: 12.5px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">
-        AI Formatting Guide 
-        <span style="font-weight: 500; color: var(--ink-soft);">Copy the prompt below and paste it into any AI assistant along with your class nominal roll. The AI will perfectly format the data required for import.</span>
+        ✨ AI Formatting Guide: 
+        <span style="font-weight: 500; color: var(--ink-soft);">Copy the prompt below and paste it into any AI assistant along with your raw nominal roll. The AI will perfectly format the data required for import.</span>
       </div>
 
       <div class="prompt-box">
@@ -867,13 +803,16 @@ Object.keys(customClasses).forEach(key => {
 const LS_CONFIG = 'markLedger_config';
 const LS_DATA   = 'markLedger_studentData';
 const LS_INDEX  = 'markLedger_currentIndex';
+const LS_EXAMS  = 'markLedger_exams';
 
 let config = JSON.parse(localStorage.getItem(LS_CONFIG) || 'null');
 let studentData = JSON.parse(localStorage.getItem(LS_DATA) || '{}');
+let savedExams = JSON.parse(localStorage.getItem(LS_EXAMS) || '{}');
 
 let activeClassKey = localStorage.getItem('markLedger_activeClass') || "2nd_Year";
 if (!CLASS_DATA[activeClassKey]) activeClassKey = CLASS_OPTIONS[0].id;
 let STUDENTS = CLASS_DATA[activeClassKey];
+let activeExamId = localStorage.getItem('markLedger_activeExamId') || null;
 
 let currentIndex = parseInt(localStorage.getItem(LS_INDEX) || '0', 10);
 if (isNaN(currentIndex) || currentIndex < 0 || currentIndex >= STUDENTS.length) currentIndex = 0;
@@ -883,20 +822,160 @@ window.addEventListener('beforeunload', (e) => {
   if (hasUnsavedChanges) { e.preventDefault(); e.returnValue = ''; }
 });
 
-// Reset Logic
-function handleResetAll() {
-  const confirmMsg = "⚠️ WARNING: This will permanently delete ALL marks, setups, and student progress for EVERY class. Are you sure you want to start a fresh exam?";
-  if (confirm(confirmMsg)) {
-    hasUnsavedChanges = false;
-    localStorage.removeItem(LS_CONFIG);
-    localStorage.removeItem(LS_DATA);
-    localStorage.removeItem(LS_INDEX);
-    localStorage.removeItem('markLedger_activeClass');
-    localStorage.removeItem('markLedger_customClasses');
-    window.location.reload();
+/* ============================================================
+   SPA NAVIGATION LOGIC
+   ============================================================ */
+function switchTab(tabId) {
+  document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+  
+  if (tabId === 'entry') {
+    document.getElementById('navEntry').classList.add('active');
+    document.getElementById('viewEntry').classList.add('active');
+  } else if (tabId === 'dashboard') {
+    saveCurrentStudent(true); // Auto-save current progress
+    document.getElementById('navDashboard').classList.add('active');
+    document.getElementById('viewDashboard').classList.add('active');
+    renderDashboard();
   }
 }
-document.getElementById('resetAllBtn').addEventListener('click', handleResetAll);
+
+/* ============================================================
+   DASHBOARD LOGIC
+   ============================================================ */
+function renderDashboard() {
+  const grid = document.getElementById('dashboardGrid');
+  grid.innerHTML = '';
+  
+  const examIds = Object.keys(savedExams).sort((a,b) => b - a); // Newest first
+  
+  if (examIds.length === 0) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">No saved exams found. Start a new entry!</div>`;
+    return;
+  }
+  
+  examIds.forEach(id => {
+    const ex = savedExams[id];
+    const cnf = ex.config || {};
+    const marks = ex.marks || {};
+    const classLbl = CLASS_OPTIONS.find(c => c.id === ex.classKey)?.label || ex.classKey;
+    const gradedCount = Object.keys(marks).length;
+    
+    // Quick calculations for stats
+    let passCount = 0;
+    Object.values(marks).forEach(r => { if(r.total >= 24 && !r.isAbsent) passCount++; });
+    
+    const div = document.createElement('div');
+    div.className = 'exam-card';
+    div.innerHTML = `
+      <div>
+        <h3 class="exam-card-title">${cnf.exam || 'Untitled Exam'}</h3>
+        <p class="exam-card-sub">${classLbl} &middot; ${cnf.course || 'No Subject'}</p>
+        <div class="exam-card-stats">
+          <div class="stat-item"><div class="stat-val">${gradedCount}</div><div class="stat-lbl">Graded</div></div>
+          <div class="stat-item"><div class="stat-val" style="color:var(--accent);">${passCount}</div><div class="stat-lbl">Passed</div></div>
+        </div>
+      </div>
+      <div class="exam-card-actions">
+        <button class="btn-resume" onclick="resumeExam('${id}')">✏️ Edit</button>
+        <button class="btn-export-sm" onclick="exportSavedExam('${id}')">📥 CSV</button>
+        <button class="btn-del" onclick="deleteExam('${id}')">🗑️</button>
+      </div>
+    `;
+    grid.appendChild(div);
+  });
+}
+
+function resumeExam(id) {
+  const ex = savedExams[id];
+  if(!ex) return;
+  
+  // Load into active state
+  activeExamId = id;
+  localStorage.setItem('markLedger_activeExamId', activeExamId);
+  
+  config = ex.config;
+  localStorage.setItem(LS_CONFIG, JSON.stringify(config));
+  
+  studentData = ex.marks;
+  localStorage.setItem(LS_DATA, JSON.stringify(studentData));
+  
+  activeClassKey = ex.classKey;
+  localStorage.setItem('markLedger_activeClass', activeClassKey);
+  STUDENTS = CLASS_DATA[activeClassKey];
+  
+  currentIndex = 0;
+  localStorage.setItem(LS_INDEX, '0');
+  
+  updateClassBtnText();
+  renderSetup();
+  loadStudent(0);
+  switchTab('entry');
+}
+
+function deleteExam(id) {
+  if (confirm('Are you sure you want to permanently delete this exam record?')) {
+    delete savedExams[id];
+    localStorage.setItem(LS_EXAMS, JSON.stringify(savedExams));
+    if (activeExamId === id) {
+      document.getElementById('clearEntryBtn').click(); // wipe active if deleted
+    }
+    renderDashboard();
+  }
+}
+
+function exportSavedExam(id) {
+  const ex = savedExams[id];
+  const studList = CLASS_DATA[ex.classKey] || [];
+  generateCSVFile(studList, ex.marks, ex.config, ex.classKey);
+}
+
+document.getElementById('finishExamBtn').addEventListener('click', finalizeExam);
+
+function finalizeExam() {
+  if (!config) {
+    alert("Please Save Setup in Exam Configuration first!");
+    return;
+  }
+  saveCurrentStudent(true);
+  
+  const examId = activeExamId || Date.now().toString();
+  
+  savedExams[examId] = {
+    id: examId,
+    timestamp: Date.now(),
+    config: config,
+    classKey: activeClassKey,
+    marks: studentData
+  };
+  localStorage.setItem(LS_EXAMS, JSON.stringify(savedExams));
+  activeExamId = examId;
+  localStorage.setItem('markLedger_activeExamId', activeExamId);
+  
+  alert("🎉 Exam Successfully Saved to Dashboard!");
+  switchTab('dashboard');
+}
+
+// SAFE CLEAR CURRENT ENTRY
+document.getElementById('clearEntryBtn').addEventListener('click', () => {
+  const confirmMsg = "⚠️ This will clear the current mark entry screen. Saved Exams in the dashboard will NOT be deleted. Continue?";
+  if (confirm(confirmMsg)) {
+    hasUnsavedChanges = false;
+    config = null;
+    studentData = {};
+    activeExamId = null;
+    currentIndex = 0;
+    
+    localStorage.removeItem(LS_CONFIG);
+    localStorage.removeItem(LS_DATA);
+    localStorage.removeItem('markLedger_activeExamId');
+    localStorage.setItem(LS_INDEX, '0');
+    
+    renderSetup();
+    loadStudent(0);
+  }
+});
+
 
 /* ============================================================
    CUSTOM MODAL LOGIC (CLASS & STUDENT SELECTION)
@@ -908,7 +987,6 @@ const modalTitle = document.getElementById('modalTitle');
 const modalList = document.getElementById('modalList');
 const modalClose = document.getElementById('modalClose');
 
-// Init Button Text
 function updateClassBtnText() {
   const activeObj = CLASS_OPTIONS.find(c => c.id === activeClassKey);
   if(activeObj) classTriggerBtn.textContent = activeObj.label + ' ▼';
@@ -943,7 +1021,6 @@ function openModal(type) {
       modalList.appendChild(opt);
     });
 
-    // ADD IMPORT BUTTON HERE
     const importOpt = document.createElement('div');
     importOpt.className = 'modal-option';
     importOpt.style.textAlign = 'center';
@@ -989,7 +1066,7 @@ uiModal.addEventListener('click', (e) => {
 });
 
 /* ============================================================
-   IMPORT MODAL LOGIC (NEW)
+   IMPORT MODAL LOGIC 
    ============================================================ */
 const importModal = document.getElementById('importModal');
 document.getElementById('importModalClose').onclick = () => importModal.classList.remove('active');
@@ -1004,7 +1081,7 @@ document.getElementById('copyPromptBtn').onclick = () => {
 
 document.getElementById('importSaveBtn').onclick = () => {
   const className = document.getElementById('importClassName').value.trim();
-  const classSec = document.getElementById('importClassSec').value.trim() || "-"; // Get section input
+  const classSec = document.getElementById('importClassSec').value.trim() || "-";
   const rawData = document.getElementById('importData').value.trim();
 
   if (!className) return alert("Please enter a Custom Class Name.");
@@ -1018,7 +1095,6 @@ document.getElementById('importSaveBtn').onclick = () => {
     if (parts.length >= 2) {
       const roll = parts[0];
       const name = parts.slice(1).join(' ');
-      // Apply the user-defined section here instead of hardcoding "-"
       newStudents.push({ roll: roll, name: name, sec: classSec }); 
     }
   });
@@ -1028,7 +1104,7 @@ document.getElementById('importSaveBtn').onclick = () => {
   const classId = 'custom_' + Date.now();
 
   customClasses[classId] = {
-    label: className + (classSec !== "-" ? ` (${classSec})` : ""), // Add section to label
+    label: className + (classSec !== "-" ? ` (${classSec})` : ""),
     students: newStudents
   };
   localStorage.setItem('markLedger_customClasses', JSON.stringify(customClasses));
@@ -1047,7 +1123,7 @@ document.getElementById('importSaveBtn').onclick = () => {
 
   importModal.classList.remove('active');
   document.getElementById('importClassName').value = '';
-  document.getElementById('importClassSec').value = ''; // Reset section
+  document.getElementById('importClassSec').value = '';
   document.getElementById('importData').value = '';
 };
 
@@ -1129,7 +1205,6 @@ function renderSetup(){
       <div><span>Course Title</span><b>${config.course||'—'}</b></div>
       <div style="display:flex; gap:8px; margin-left:auto;">
         <button class="btn secondary" id="editSetupBtn" style="padding:8px 16px;font-size:12px;">Edit Setup</button>
-        <button class="btn btn-reset" id="resetAllBtnLocked" style="padding:8px 16px;font-size:12px;">Reset Database</button>
       </div>`;
     document.getElementById('setupTag').textContent = 'LOCKED';
 
@@ -1144,15 +1219,12 @@ function renderSetup(){
       document.getElementById('cfgCourse').value = config.course||'';
     });
 
-    document.getElementById('resetAllBtnLocked').addEventListener('click', handleResetAll);
-
-    setTimeout(() => {
-      focusField(FOCUS_ORDER[0]);
-    }, 100);
+    setTimeout(() => { focusField(FOCUS_ORDER[0]); }, 100);
 
   } else {
     document.getElementById('setupForm').style.display='block';
     document.getElementById('setupLockedRow').style.display='none';
+    document.getElementById('setupTag').textContent='EDIT ONCE';
   }
 }
 document.getElementById('saveSetupBtn').addEventListener('click', ()=>{
@@ -1256,7 +1328,7 @@ function validate(id){
 }
 
 /* ============================================================
-   FOCUS ADVANCE LOGIC WITH GRAND TOTAL JUMP
+   FOCUS ADVANCE LOGIC 
    ============================================================ */
 function focusField(id){
   const el = document.getElementById(id);
@@ -1279,11 +1351,8 @@ function jumpToNextAvailable(startIndex){
   }
   if (!found) {
     const grandTotalEl = document.getElementById('grandTotal');
-    if (grandTotalEl) {
-      grandTotalEl.focus();
-    } else {
-      document.getElementById('nextBtn').focus();
-    }
+    if (grandTotalEl) grandTotalEl.focus();
+    else document.getElementById('nextBtn').focus();
   }
 }
 
@@ -1296,55 +1365,32 @@ function advanceFrom(id){
     const bId = input.dataset.partner;
     const bInput = document.getElementById(bId);
     if (val > 0){
-      bInput.value = 0;
-      bInput.disabled = true;
-      bInput.classList.add('locked');
-      clearError(bId);
-      updatePreview();
-      jumpToNextAvailable(idx + 2);
+      bInput.value = 0; bInput.disabled = true; bInput.classList.add('locked'); clearError(bId);
+      updatePreview(); jumpToNextAvailable(idx + 2);
     } else {
-      bInput.disabled = false;
-      bInput.classList.remove('locked');
-      updatePreview();
-      focusField(bId);
+      bInput.disabled = false; bInput.classList.remove('locked');
+      updatePreview(); focusField(bId);
     }
     return;
   }
-
   if (/^q\d+b$/.test(id)){
     const aId = input.dataset.partner;
     const aInput = document.getElementById(aId);
-    if (val > 0){
-      aInput.value = 0;
-      aInput.disabled = true;
-      aInput.classList.add('locked');
-    }
-    updatePreview();
-    jumpToNextAvailable(idx + 1);
+    if (val > 0){ aInput.value = 0; aInput.disabled = true; aInput.classList.add('locked'); }
+    updatePreview(); jumpToNextAvailable(idx + 1);
     return;
   }
-
-  updatePreview();
-  jumpToNextAvailable(idx + 1);
+  updatePreview(); jumpToNextAvailable(idx + 1);
 }
 
 document.getElementById('grandTotal').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    document.getElementById('nextBtn').click();
-  }
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('nextBtn').click(); }
 });
 
-/* Attach listeners to every question input */
 ALL_Q_IDS.forEach((id, index) => {
   const input = document.getElementById(id);
-
-  input.addEventListener('focus', function() {
-    setTimeout(() => this.select(), 10);
-  });
-  input.addEventListener('click', function() {
-    this.select();
-  });
+  input.addEventListener('focus', function() { setTimeout(() => this.select(), 10); });
+  input.addEventListener('click', function() { this.select(); });
 
   input.addEventListener('keydown', (e) => {
     hasUnsavedChanges = true;
@@ -1361,16 +1407,11 @@ ALL_Q_IDS.forEach((id, index) => {
           if (prevEl && !prevEl.disabled) {
             focusField(ALL_Q_IDS[prevIdx]);
             prevEl.value = '0';
-
             if (/^q\d+[ab]$/.test(ALL_Q_IDS[prevIdx])) {
               let partnerId = prevEl.dataset.partner;
               let partnerEl = document.getElementById(partnerId);
-              if (partnerEl) {
-                partnerEl.disabled = false;
-                partnerEl.classList.remove('locked');
-              }
+              if (partnerEl) { partnerEl.disabled = false; partnerEl.classList.remove('locked'); }
             }
-
             clearError(ALL_Q_IDS[prevIdx]);
             updatePreview();
             break;
@@ -1380,20 +1421,14 @@ ALL_Q_IDS.forEach((id, index) => {
       }
     }
     else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-      e.preventDefault();
-      updatePreview();
-      jumpToNextAvailable(index + 1);
+      e.preventDefault(); updatePreview(); jumpToNextAvailable(index + 1);
     }
     else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      e.preventDefault();
-      updatePreview();
+      e.preventDefault(); updatePreview();
       let prevIdx = index - 1;
       while (prevIdx >= 0) {
         let prevEl = document.getElementById(ALL_Q_IDS[prevIdx]);
-        if (prevEl && !prevEl.disabled) {
-          focusField(ALL_Q_IDS[prevIdx]);
-          break;
-        }
+        if (prevEl && !prevEl.disabled) { focusField(ALL_Q_IDS[prevIdx]); break; }
         prevIdx--;
       }
     }
@@ -1407,8 +1442,6 @@ ALL_Q_IDS.forEach((id, index) => {
 
     if (validate(id)){
       updatePreview();
-
-      // Part D Rule: Except '1', any other valid digit (0, 2-9) auto-jumps instantly without needing Enter.
       if (max === 10) {
         let currentVal = input.value;
         if (currentVal !== '1' && currentVal !== '') {
@@ -1417,13 +1450,9 @@ ALL_Q_IDS.forEach((id, index) => {
           }
         }
       } else {
-        if (input.value.length >= maxLen && input.value !== ''){
-          advanceFrom(id);
-        }
+        if (input.value.length >= maxLen && input.value !== ''){ advanceFrom(id); }
       }
-    } else {
-      updatePreview();
-    }
+    } else { updatePreview(); }
   });
 
   input.addEventListener('blur', ()=>{ validate(id); updatePreview(); });
@@ -1440,19 +1469,15 @@ function checkPartD() {
   dIds.forEach(id => {
     let el = document.getElementById(id);
     if (attemptCount >= 2) {
-      if (getVal(id) === 0) {
-        el.disabled = true;
-        el.classList.add('locked');
-      }
+      if (getVal(id) === 0) { el.disabled = true; el.classList.add('locked'); }
     } else {
-      el.disabled = false;
-      el.classList.remove('locked');
+      el.disabled = false; el.classList.remove('locked');
     }
   });
 }
 
 /* ============================================================
-   LIVE PREVIEW (NEW FLEXBOX GRID - MATHEMATICALLY PERFECT)
+   LIVE PREVIEW
    ============================================================ */
 function updatePreview(){
   const a = SIMPLE_FIELDS.slice(0,10).map(f=>getVal(f.id));
@@ -1477,10 +1502,8 @@ function updatePreview(){
     let elB = document.getElementById('pcb'+n);
     elA.textContent = fmtMark('q'+n+'a');
     elB.textContent = fmtMark('q'+n+'b');
-
     isCurrentAbsent ? elA.classList.add('absent-text') : elA.classList.remove('absent-text');
     isCurrentAbsent ? elB.classList.add('absent-text') : elB.classList.remove('absent-text');
-
     sumC += getVal('q'+n+'a') + getVal('q'+n+'b');
   });
   document.getElementById('sumC').textContent = isCurrentAbsent ? 'ABS' : sumC;
@@ -1507,42 +1530,23 @@ function updatePreview(){
 }
 
 /* ============================================================
-   PROGRESS BAR & LIVE ANALYTICS (UPDATED - SHOWN ONLY AT END)
+   PROGRESS BAR & LIVE ANALYTICS 
    ============================================================ */
 function updateProgressAndAnalytics() {
-  let gradedCount = 0;
-  let passCount = 0;
-  let failCount = 0;
-  let absentCount = 0;
-  let highestMark = -1;
-  let highestRolls = [];
-
-  // Pass mark is set to 24 (40% out of 60)
+  let gradedCount = 0; let passCount = 0; let failCount = 0; let absentCount = 0;
+  let highestMark = -1; let highestRolls = [];
   const PASS_MARK = 24;
 
   STUDENTS.forEach(s => {
     const record = studentData[s.roll];
     if (record) {
       gradedCount++;
-      if (record.isAbsent) {
-        absentCount++;
-      } else {
+      if (record.isAbsent) { absentCount++; } 
+      else {
         const tot = record.total || 0;
-
-        // Pass/Fail check
-        if (tot >= PASS_MARK) {
-          passCount++;
-        } else {
-          failCount++;
-        }
-
-        // Highest mark check
-        if (tot > highestMark) {
-          highestMark = tot;
-          highestRolls = [s.roll];
-        } else if (tot === highestMark && tot > 0) {
-          highestRolls.push(s.roll);
-        }
+        if (tot >= PASS_MARK) passCount++; else failCount++;
+        if (tot > highestMark) { highestMark = tot; highestRolls = [s.roll]; } 
+        else if (tot === highestMark && tot > 0) { highestRolls.push(s.roll); }
       }
     }
   });
@@ -1552,12 +1556,10 @@ function updateProgressAndAnalytics() {
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressText').textContent = `Graded: ${gradedCount} / ${totalStudents} (${pct}%)`;
 
-  // Update Data in the Analytics UI
   if (document.getElementById('statPass')) {
     document.getElementById('statPass').textContent = passCount;
     document.getElementById('statFail').textContent = failCount;
     document.getElementById('statAbs').textContent = absentCount;
-
     if (highestMark > -1) {
       document.getElementById('statHighMark').textContent = highestMark;
       let displayRolls = highestRolls.slice(0, 2).join(', ');
@@ -1569,14 +1571,10 @@ function updateProgressAndAnalytics() {
     }
   }
 
-  // SHOW ONLY WHEN 100% DONE
   const summaryCard = document.getElementById('analyticsSummaryCard');
   if (summaryCard) {
-    if (gradedCount === totalStudents && totalStudents > 0) {
-      summaryCard.style.display = 'block';
-    } else {
-      summaryCard.style.display = 'none';
-    }
+    if (gradedCount === totalStudents && totalStudents > 0) { summaryCard.style.display = 'block'; } 
+    else { summaryCard.style.display = 'none'; }
   }
 }
 
@@ -1618,14 +1616,10 @@ function loadStudent(index){
 
     if (isCurrentAbsent) {
       ALL_Q_IDS.forEach(id => {
-        const input = document.getElementById(id);
-        input.disabled = true;
-        input.value = '';
+        const input = document.getElementById(id); input.disabled = true; input.value = '';
       });
     } else {
-      ALL_Q_IDS.forEach(id=>{
-        if (saved[id] !== undefined) setVal(id, saved[id]);
-      });
+      ALL_Q_IDS.forEach(id=>{ if (saved[id] !== undefined) setVal(id, saved[id]); });
       CHOICE_QS.forEach(n=>{
         const aId='q'+n+'a', bId='q'+n+'b';
         const aVal = getVal(aId), bVal = getVal(bId);
@@ -1643,22 +1637,16 @@ function loadStudent(index){
   document.getElementById('nextBtn').textContent = index===STUDENTS.length-1 ? 'Save & Finish' : 'Save & Next Student';
   localStorage.setItem(LS_INDEX, String(index));
 
-  // Smooth auto-scroll to the top student info anchor so roll number is clearly visible
   const studentAnchor = document.getElementById('studentCardAnchor');
-  if (studentAnchor) {
-    studentAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  if (studentAnchor) studentAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function saveCurrentStudent(silent = false){
   const s = STUDENTS[currentIndex];
   const record = { roll: s.roll, name: s.name, sec: s.sec, isAbsent: isCurrentAbsent };
 
-  if (!isCurrentAbsent) {
-    ALL_Q_IDS.forEach(id=>{ record[id] = getVal(id); });
-  } else {
-    ALL_Q_IDS.forEach(id=>{ record[id] = ''; });
-  }
+  if (!isCurrentAbsent) { ALL_Q_IDS.forEach(id=>{ record[id] = getVal(id); }); } 
+  else { ALL_Q_IDS.forEach(id=>{ record[id] = ''; }); }
 
   record.total = updatePreview();
   studentData[s.roll] = record;
@@ -1670,10 +1658,8 @@ function saveCurrentStudent(silent = false){
 }
 
 function flashSaved(){
-  const el = document.getElementById('savedNote');
-  el.classList.add('show');
-  clearTimeout(flashSaved._t);
-  flashSaved._t = setTimeout(()=>el.classList.remove('show'), 1400);
+  const el = document.getElementById('savedNote'); el.classList.add('show');
+  clearTimeout(flashSaved._t); flashSaved._t = setTimeout(()=>el.classList.remove('show'), 1400);
 }
 
 document.getElementById('nextBtn').addEventListener('click', ()=>{
@@ -1687,26 +1673,21 @@ document.getElementById('nextBtn').addEventListener('click', ()=>{
     loadStudent(currentIndex);
     focusField(isCurrentAbsent ? null : FOCUS_ORDER[0]);
   } else {
-    // If it's the last student, scroll to the bottom summary box automatically
     setTimeout(() => {
       const summaryCard = document.getElementById('analyticsSummaryCard');
-      if(summaryCard.style.display === 'block') {
-         summaryCard.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      }
+      if(summaryCard.style.display === 'block') { summaryCard.scrollIntoView({ behavior: 'smooth', block: 'end' }); }
     }, 100);
   }
 });
 document.getElementById('prevBtn').addEventListener('click', ()=>{
   saveCurrentStudent();
   if (currentIndex > 0){
-    currentIndex--;
-    loadStudent(currentIndex);
-    focusField(isCurrentAbsent ? null : FOCUS_ORDER[0]);
+    currentIndex--; loadStudent(currentIndex); focusField(isCurrentAbsent ? null : FOCUS_ORDER[0]);
   }
 });
 
 /* ============================================================
-   CSV EXPORT
+   CSV EXPORT FUNCTION 
    ============================================================ */
 function toCsvValue(v){
   const s = String(v ?? '');
@@ -1714,29 +1695,24 @@ function toCsvValue(v){
   return s;
 }
 
-document.getElementById('exportBtn').addEventListener('click', ()=>{
-  saveCurrentStudent(true);
-
+function generateCSVFile(studList, dataMarks, activeConf, classKey) {
   const qHeaders = ALL_Q_IDS.map(id => id.toUpperCase());
   const header = ['RollNo','Name','Section','Semester','PaperCode','Exam','Batch','Course', ...qHeaders, 'Total'];
   const rows = [header];
 
-  STUDENTS.forEach(s=>{
-    const rec = studentData[s.roll];
-
-    let qVals;
-    let total;
+  studList.forEach(s=>{
+    const rec = dataMarks[s.roll];
+    let qVals; let total;
+    
     if (rec && rec.isAbsent) {
-      qVals = ALL_Q_IDS.map(() => 'ABS');
-      total = 'ABS';
+      qVals = ALL_Q_IDS.map(() => 'ABS'); total = 'ABS';
     } else {
-      qVals = ALL_Q_IDS.map(id => rec ? (rec[id] || 0) : 0);
-      total = rec ? rec.total : 0;
+      qVals = ALL_Q_IDS.map(id => rec ? (rec[id] || 0) : 0); total = rec ? rec.total : 0;
     }
 
     rows.push([
       s.roll, s.name, s.sec || '-',
-      config?.semester||'', config?.paperCode||'', config?.exam||'', config?.batch||'', config?.course||'',
+      activeConf?.semester||'', activeConf?.paperCode||'', activeConf?.exam||'', activeConf?.batch||'', activeConf?.course||'',
       ...qVals, total
     ]);
   });
@@ -1745,11 +1721,16 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  const classNameForFile = activeClassKey.replace('_', '-');
-  const fname = `marks_${classNameForFile}_${(config?.paperCode||'export').replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.csv`;
+  const classNameForFile = classKey.replace('_', '-');
+  const fname = `marks_${classNameForFile}_${(activeConf?.paperCode||'export').replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.csv`;
   a.href = url; a.download = fname;
   document.body.appendChild(a); a.click(); a.remove();
   URL.revokeObjectURL(url);
+}
+
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  saveCurrentStudent(true);
+  generateCSVFile(STUDENTS, studentData, config, activeClassKey);
 });
 
 /* ============================================================
