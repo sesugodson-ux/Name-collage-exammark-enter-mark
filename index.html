@@ -734,7 +734,18 @@
       <span class="modal-close" id="importModalClose">&times;</span>
     </div>
     <div class="modal-body">
-      <input type="text" id="importClassName" class="import-input" placeholder="Enter Class Name (e.g. 1st Year BCA)">
+      
+      <!-- Added Flexbox for Class Name & Section -->
+      <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+        <input type="text" id="importClassName" class="import-input" placeholder="Class Name (e.g. 1st Year BCA)" style="flex: 2; margin-bottom: 0;">
+        <input type="text" id="importClassSec" class="import-input" placeholder="Sec (e.g. A)" style="flex: 1; margin-bottom: 0;">
+      </div>
+
+      <!-- Added clear instruction for the Prompt -->
+      <div style="font-size: 12.5px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">
+        🤖 AI Format Helper: 
+        <span style="font-weight: 500; color: var(--ink-soft);">Copy this prompt and paste it into ChatGPT along with your messy PDF text to clean it up before pasting below.</span>
+      </div>
 
       <div class="prompt-box">
         <button class="copy-btn" id="copyPromptBtn">Copy Prompt</button>
@@ -754,8 +765,6 @@
     </div>
   </div>
 </div>
-
-<script>
 /* ============================================================
    STATIC DATA & DYNAMIC CUSTOM CLASSES
    ============================================================ */
@@ -993,6 +1002,7 @@ document.getElementById('copyPromptBtn').onclick = () => {
 
 document.getElementById('importSaveBtn').onclick = () => {
   const className = document.getElementById('importClassName').value.trim();
+  const classSec = document.getElementById('importClassSec').value.trim() || "-"; // Get section input
   const rawData = document.getElementById('importData').value.trim();
 
   if (!className) return alert("Please enter a Custom Class Name.");
@@ -1002,11 +1012,12 @@ document.getElementById('importSaveBtn').onclick = () => {
   const newStudents = [];
 
   lines.forEach(line => {
-    const parts = line.trim().split(/\s+/); // Splits by space
+    const parts = line.trim().split(/\s+/);
     if (parts.length >= 2) {
       const roll = parts[0];
       const name = parts.slice(1).join(' ');
-      newStudents.push({ roll: roll, name: name, sec: "-" });
+      // Apply the user-defined section here instead of hardcoding "-"
+      newStudents.push({ roll: roll, name: name, sec: classSec }); 
     }
   });
 
@@ -1014,18 +1025,15 @@ document.getElementById('importSaveBtn').onclick = () => {
 
   const classId = 'custom_' + Date.now();
 
-  // Save to Custom Storage
   customClasses[classId] = {
-    label: className,
+    label: className + (classSec !== "-" ? ` (${classSec})` : ""), // Add section to label
     students: newStudents
   };
   localStorage.setItem('markLedger_customClasses', JSON.stringify(customClasses));
 
-  // Apply immediately to runtime
-  CLASS_OPTIONS.push({ id: classId, label: className });
+  CLASS_OPTIONS.push({ id: classId, label: customClasses[classId].label });
   CLASS_DATA[classId] = newStudents;
 
-  // Auto-switch to newly imported class
   activeClassKey = classId;
   localStorage.setItem('markLedger_activeClass', activeClassKey);
   STUDENTS = CLASS_DATA[activeClassKey];
@@ -1035,12 +1043,11 @@ document.getElementById('importSaveBtn').onclick = () => {
   loadStudent(0);
   if (config) renderSetup();
 
-  // Cleanup modal
   importModal.classList.remove('active');
   document.getElementById('importClassName').value = '';
+  document.getElementById('importClassSec').value = ''; // Reset section
   document.getElementById('importData').value = '';
 };
-
 
 /* ============================================================
    QUESTION FIELD DEFINITIONS
