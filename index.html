@@ -1020,7 +1020,7 @@ document.getElementById('importSaveBtn').onclick = () => {
       newStudents.push({ roll: roll, name: name, sec: classSec }); 
     }
   });
-
+ 
   if (newStudents.length === 0) return alert("Could not parse any students. Ensure the format is strictly 'Roll Number [Space] Name'.");
 
   const classId = 'custom_' + Date.now();
