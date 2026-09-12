@@ -765,6 +765,8 @@
     </div>
   </div>
 </div>
+
+<script>
 /* ============================================================
    STATIC DATA & DYNAMIC CUSTOM CLASSES
    ============================================================ */
@@ -816,7 +818,7 @@ let CLASS_DATA = {
     ["245113433","DHANUSH R"],["245113434","DHANUSH V"],["245113435","DHARANISVARAN S"],
     ["245113436","DHARSHAN SS"],["245113437","DHARSHITH B"],["245113438","DHARUN RAJ R"],
     ["245113439","DHARUN V"],["245113440","DHEENADHAYALAN M"],["245113441","DHIVAKAR S"],
-    ["245113442","DINESH A"],["245113443","DINESHKANNA T"],["245113444","DINESHKUMAR S I"],
+    ["245113442","DINES A"],["245113443","DINESHKANNA T"],["245113444","DINESHKUMAR S I"],
     ["245113446","EBINESH D"],["245113447","ELAYARAJA S"],["245113450","GODLIN REJO S C"],
     ["245113451","GOKUL M"],["245113452","GOKULKRISHNA M"],["245113453","GOTHAIESWAR N"],
     ["245113454","GOWTHAM R"],["245113455","GURUPRASATH K"],["245113456","GURUPRASATH M"],
@@ -1020,7 +1022,7 @@ document.getElementById('importSaveBtn').onclick = () => {
       newStudents.push({ roll: roll, name: name, sec: classSec }); 
     }
   });
- 
+
   if (newStudents.length === 0) return alert("Could not parse any students. Ensure the format is strictly 'Roll Number [Space] Name'.");
 
   const classId = 'custom_' + Date.now();
