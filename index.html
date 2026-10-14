@@ -6,7 +6,7 @@
 <title>BHC Mark Entry Ledger</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg-body: #F4F8F7;
@@ -113,6 +113,10 @@
     background: var(--accent);
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
+  }
+  .nav-help { color: var(--accent); }
+  @media (max-width: 600px) {
+    .nav-tab { padding: 16px 10px; font-size: 13px; }
   }
 
   /* ============================================================
@@ -470,6 +474,75 @@
   .import-input { width: 100%; padding: 11px 13px; border: 1.5px solid var(--line); border-radius: var(--radius-sm); margin-bottom: 12px; font-weight: 700; font-family: inherit; font-size: 14px; }
   .import-input:focus { outline: none; border-color: var(--accent-2); background: #fff; box-shadow: var(--shadow-focus); }
 
+  /* ===== How to Use (full page) ===== */
+  .guide-card { max-width: 860px; margin: 0 auto 20px; padding: 28px 32px 24px; }
+  .guide-card[lang="ta"] { font-family: 'Noto Sans Tamil', 'Inter', sans-serif; }
+  .guide-card[lang="ta"] .guide-list li { line-height: 1.9; }
+  .guide-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap; padding-bottom: 18px; border-bottom: 1px solid var(--line-soft);
+  }
+  .guide-head h2 { margin: 0; font-size: 22px; font-weight: 800; color: var(--ink); }
+  .lang-switch {
+    position: relative; display: grid; grid-template-columns: 1fr 1fr; width: 240px;
+    background: var(--bg-sunken); border: 1.5px solid var(--line);
+    border-radius: 30px; padding: 4px;
+  }
+  .lang-switch button {
+    position: relative; z-index: 1; background: transparent; border: none;
+    padding: 9px 14px; font-family: inherit; font-size: 14px; font-weight: 700;
+    color: var(--ink-soft); cursor: pointer; border-radius: 26px; transition: color .25s ease;
+  }
+  .lang-switch button.active { color: #fff; }
+  .lang-thumb {
+    position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px);
+    background: var(--accent); border-radius: 26px; box-shadow: var(--shadow-btn);
+    transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+  }
+  .lang-switch[data-lang="ta"] .lang-thumb { transform: translateX(100%); }
+  .guide-dots { display: flex; gap: 10px; justify-content: center; padding: 22px 0 0; }
+  .guide-dot {
+    width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--line);
+    background: #fff; color: var(--ink-soft); cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800; transition: all .2s ease;
+  }
+  .guide-dot:hover { border-color: var(--accent-2); }
+  .guide-dot.done { background: var(--accent-soft); color: var(--accent-hover); border-color: var(--accent-line); }
+  .guide-dot.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .guide-body { padding: 22px 0 10px; min-height: 320px; animation: fadeIn .25s ease; }
+  .guide-step-title { margin: 0 0 16px; font-size: 20px; font-weight: 800; color: var(--ink); }
+  .guide-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; counter-reset: g; }
+  .guide-list li {
+    position: relative; counter-increment: g; padding: 14px 16px 14px 52px;
+    background: var(--bg-input); border: 1px solid var(--line); border-radius: var(--radius-sm);
+    font-size: 15px; line-height: 1.65; color: var(--ink);
+  }
+  .guide-list li::before {
+    content: counter(g); position: absolute; left: 14px; top: 14px; width: 24px; height: 24px;
+    border-radius: 50%; background: var(--accent-soft); color: var(--accent-hover);
+    display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 800;
+  }
+  .guide-list b { color: var(--accent-hover); }
+  .guide-list code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 700;
+    background: var(--accent-soft); color: var(--accent-ink); border: 1px solid var(--accent-line);
+    padding: 2px 7px; border-radius: 6px; white-space: nowrap;
+  }
+  .chip { display: inline-block; width: 18px; height: 8px; border-radius: 3px; vertical-align: middle; margin: 0 2px; }
+  .chip.g { background: var(--accent); }
+  .chip.r { background: #F2A7B3; }
+  .chip.n { background: var(--line); }
+  .guide-footer {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding-top: 18px; margin-top: 10px; border-top: 1px solid var(--line-soft);
+  }
+  .guide-footer .btn { padding: 11px 22px; }
+  .guide-count { font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+  @media (max-width: 600px) {
+    .guide-card { padding: 20px 16px; }
+    .lang-switch { width: 100%; }
+  }
+
   /* ============================================================
      MINIMAL FOOTER
      ============================================================ */
@@ -489,6 +562,7 @@
     <div class="nav-tabs">
       <button id="navEntry" class="nav-tab active" onclick="switchTab('entry')">Mark Entry</button>
       <button id="navDashboard" class="nav-tab" onclick="switchTab('dashboard')">Saved Records</button>
+      <button id="navHelp" class="nav-tab nav-help" type="button" onclick="switchTab('help')">❓ How to Use</button>
     </div>
   </div>
 </nav>
@@ -733,6 +807,29 @@
 
 </div> <!-- END OF WRAP -->
 
+<!-- ================= HOW TO USE VIEW ================= -->
+<div id="viewHelp" class="wrap view-section">
+  <div class="card guide-card" id="guideCard" lang="en">
+    <div class="guide-head">
+      <h2 id="guideTitle">How to Use</h2>
+      <div class="lang-switch" id="langSwitch" data-lang="en">
+        <span class="lang-thumb"></span>
+        <button type="button" data-lang="en" class="active">English</button>
+        <button type="button" data-lang="ta">தமிழ்</button>
+      </div>
+    </div>
+
+    <div class="guide-dots" id="guideDots"></div>
+    <div class="guide-body" id="guideBody"></div>
+
+    <div class="guide-footer">
+      <button type="button" class="btn secondary" id="guidePrev"></button>
+      <span class="guide-count" id="guideCount"></span>
+      <button type="button" class="btn" id="guideNext"></button>
+    </div>
+  </div>
+</div>
+
 <!-- NORMAL MODAL UI -->
 <div id="uiModal" class="modal-overlay">
   <div class="modal-card">
@@ -915,11 +1012,17 @@ function switchTab(tabId) {
     document.getElementById('navEntry').classList.add('active');
     document.getElementById('viewEntry').classList.add('active');
   } else if (tabId === 'dashboard') {
-    saveCurrentStudent(true); // Auto-save current progress
+    saveIfChanged();
     document.getElementById('navDashboard').classList.add('active');
     document.getElementById('viewDashboard').classList.add('active');
     renderDashboard();
+  } else if (tabId === 'help') {
+    saveIfChanged();
+    document.getElementById('navHelp').classList.add('active');
+    document.getElementById('viewHelp').classList.add('active');
+    window.openGuide();
   }
+  window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
 /* ============================================================
@@ -1093,8 +1196,7 @@ function openModal(type) {
       opt.appendChild(labelSpan);
 
       opt.onclick = () => {
-        saveCurrentStudent(true);
-        hasUnsavedChanges = false;
+        saveIfChanged();
         activeClassKey = c.id;
         localStorage.setItem('markLedger_activeClass', activeClassKey);
         STUDENTS = CLASS_DATA[activeClassKey];
@@ -1165,8 +1267,7 @@ function openModal(type) {
       opt.className = 'modal-option' + (i === currentIndex ? ' selected' : '');
       opt.textContent = `${s.roll} — ${s.name} (Sec: ${s.sec || '-'})`;
       opt.onclick = () => {
-        saveCurrentStudent(true);
-        hasUnsavedChanges = false;
+        saveIfChanged();
         currentIndex = i;
         loadStudent(currentIndex);
         closeModal();
@@ -1560,7 +1661,7 @@ ALL_Q_IDS.forEach((id, index) => {
   input.addEventListener('click', function() { this.select(); });
 
   input.addEventListener('keydown', (e) => {
-    hasUnsavedChanges = true;
+    if (e.key === 'Enter' || e.key === 'Backspace') hasUnsavedChanges = true;
     if (e.key === 'Enter'){
       e.preventDefault();
       if (validate(id)) advanceFrom(id);
@@ -1854,6 +1955,21 @@ function saveCurrentStudent(silent = false){
   if(!silent) flashSaved();
 }
 
+function saveIfChanged() {
+  if (!hasUnsavedChanges) return false;
+
+  if (!isCurrentAbsent) {
+    const hasInvalid = ALL_Q_IDS.some(id => {
+      const input = document.getElementById(id);
+      return input && !input.disabled && !validate(id);
+    });
+    if (hasInvalid) return false;
+  }
+
+  saveCurrentStudent(true);
+  return true;
+}
+
 function flashSaved(){
   const el = document.getElementById('savedNote'); el.classList.add('show');
   clearTimeout(flashSaved._t); flashSaved._t = setTimeout(()=>el.classList.remove('show'), 1400);
@@ -1877,7 +1993,7 @@ document.getElementById('nextBtn').addEventListener('click', ()=>{
   }
 });
 document.getElementById('prevBtn').addEventListener('click', ()=>{
-  saveCurrentStudent();
+  if (saveIfChanged()) flashSaved();
   if (currentIndex > 0){
     currentIndex--; loadStudent(currentIndex); focusField(isCurrentAbsent ? null : FOCUS_ORDER[0]);
   }
@@ -1963,13 +2079,196 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
     const clickedIndex = parseInt(seg.dataset.index, 10);
     if (isNaN(clickedIndex) || clickedIndex === currentIndex) return;
 
-    const leaving = STUDENTS[currentIndex];
-    if (hasUnsavedChanges || studentData[leaving.roll]) saveCurrentStudent(true);
+    saveIfChanged();
 
-    hasUnsavedChanges = false;
     currentIndex = clickedIndex;
     loadStudent(currentIndex);
   });
+})();
+/* ============================================================
+   HOW TO USE — BILINGUAL GUIDE
+   ============================================================ */
+const GUIDE = {
+  en: {
+    title: 'How to Use',
+    prev: '← Back', next: 'Next →', done: 'Done ✓',
+    count: (n, t) => `Step ${n} of ${t}`,
+    steps: [
+      { title: 'Step 1: How to Import Student Data (Custom Class)', points: [
+        `Click the <b>Class / Group</b> button. At the bottom of the list, choose <b>➕ Import Custom Class</b>.`,
+        `Type the <b>Class Name</b> (for example <code>1st Year BCA</code>) and the <b>Sec</b> (for example <code>A</code>) in the two boxes at the top.`,
+        `Click the <b>Copy Prompt</b> button on the screen. This copies a ready-made instruction. Open any AI chat tool (such as ChatGPT or Gemini), paste the instruction, then paste your college <b>student nominal roll</b> below it and send. The AI will return a clean list for you.`,
+        `Copy the clean list (only <b>Roll Number</b> and <b>Name</b>) and paste it into the big text box. Each student must be on a separate line, like <code>255113401 AALAN ASHNUWA V</code>.`,
+        `Check the list carefully. Delete any <b>Left Students</b> (students who have left the college) before saving.`,
+        `Click <b>Import &amp; Save</b>. Your class is saved and selected automatically, ready for the next step.`
+      ]},
+      { title: 'Step 2: Exam Configuration & Setup', points: [
+        `Click the <b>Class / Group</b> button and choose the class you imported in Step 1. It appears in the list with the name you gave it.`,
+        `Fill in <b>Semester</b>, <b>Paper Code</b>, <b>Exam Name</b>, <b>Batch / Section</b> and <b>Course Title</b>. Text turns into CAPITAL letters automatically.`,
+        `All five fields are required. Any empty field turns red.`,
+        `Click <b>Start Entry / Save Setup</b>. The setup locks. Use <b>Edit Setup</b> if you need to change it later.`
+      ]},
+      { title: 'Step 3: Entering Marks (Parts A, B, C, D)', points: [
+        `Type the mark and press <b>Enter</b>. When a box is full, the cursor jumps to the next box by itself.`,
+        `<b>Part A:</b> Q1–Q10, max 1 each. <b>Part B:</b> Q11–Q15, max 2 each.`,
+        `<b>Part C:</b> Q16–Q19, answer either <b>(a)</b> or <b>(b)</b>, max 5. Entering a mark in (a) locks (b).`,
+        `<b>Part D:</b> Q20–Q22, any 2 only, max 10 each. After two are filled, the third locks.`,
+        `If a mark is above the maximum, a red error appears.`,
+        `The <b>Live Preview</b> on the right shows each part total and the <b>Grand Total</b> instantly.`,
+        `Click <b>Save &amp; Next Student</b> to save and move on.`
+      ]},
+      { title: 'Step 4: Marking Absent (Mark ABS) & Progress Bar', points: [
+        `Switch on <b>Mark ABS</b> next to the student's name. The mark boxes are disabled.`,
+        `After you click <b>Save &amp; Next Student</b>, <b>Previous</b>, or jump to another student, the student is saved and their progress bar box turns <b>soft red</b>.`,
+        `Colors: <span class="chip g"></span> marks entered, <span class="chip r"></span> absent, <span class="chip n"></span> not done yet.`,
+        `Absent students count as completed and show <b>ABS</b> in the CSV.`,
+        `Each box in the bar is one student. The small person icon shows the student you are on.`,
+        `On a computer, hover over a box to see the <b>last 2 digits</b> of that student's roll number.`,
+        `<b>Click any box</b> to jump straight to that student.`,
+        `<b>Click any box</b> to jump straight to that student. You can also use the <b>Select Student ▼</b> button to pick a student from the full list.`
+      ]},
+      { title: 'Step 5: Saving & Final CSV Export', points: [
+        `When every student has marks or ABS, the <b>Class Grading Complete!</b> card appears with Passed, Failed, Highest Mark and Absent counts (pass mark 24 / 60).`,
+        `Click <b>Export as CSV</b> to download the mark sheet.`,
+        `Click <b>Save &amp; Finish Exam to Dashboard</b> to store the exam in <b>Saved Records</b>, where you can Edit, CSV Export or Delete it later.`,
+        `Data is stored in this browser only. Do not clear browser data before exporting.`
+      ]}
+    ]
+  },
+  ta: {
+    title: 'எப்படி பயன்படுத்துவது',
+    prev: '← முந்தைய', next: 'அடுத்து →', done: 'முடிந்தது ✓',
+    count: (n, t) => `படி ${n} / ${t}`,
+    steps: [
+      { title: 'படி 1: மாணவர் தரவை எவ்வாறு சேர்ப்பது (Import Custom Class)', points: [
+        `<b>Class / Group</b> பொத்தானை அழுத்தவும். பட்டியலின் கீழே உள்ள <b>➕ Import Custom Class</b> என்பதைத் தேர்ந்தெடுக்கவும்.`,
+        `மேலே உள்ள இரண்டு பெட்டிகளில் <b>Class Name</b> (எ.கா. <code>1st Year BCA</code>) மற்றும் <b>Sec</b> (எ.கா. <code>A</code>) ஆகியவற்றை உள்ளிடவும்.`,
+        `திரையில் உள்ள <b>Copy Prompt</b> பொத்தானை அழுத்தவும். இது தயாராக உள்ள வழிமுறை உரையை நகலெடுக்கும். ஏதேனும் AI உரையாடல் கருவியைத் (ChatGPT, Gemini போன்றவை) திறந்து, அந்த உரையை ஒட்டி, அதன் கீழே உங்கள் கல்லூரியின் <b>மாணவர் பெயர்ப்பட்டியலை (nominal roll)</b> ஒட்டி அனுப்பவும். AI உங்களுக்குச் சுத்தமான பட்டியலைத் தரும்.`,
+        `அந்தச் சுத்தமான பட்டியலை (<b>பதிவு எண்</b> மற்றும் <b>பெயர்</b> மட்டும்) நகலெடுத்து பெரிய உரைப்பெட்டியில் ஒட்டவும். ஒவ்வொரு மாணவரும் தனித்தனி வரியில், <code>255113401 AALAN ASHNUWA V</code> போல இருக்க வேண்டும்.`,
+        `பட்டியலைக் கவனமாகப் பார்க்கவும். சேமிப்பதற்கு முன் <b>Left Students</b> (கல்லூரியை விட்டு நின்ற மாணவர்கள்) இருந்தால் அவர்களை நீக்கவும்.`,
+        `<b>Import &amp; Save</b> அழுத்தவும். உங்கள் வகுப்பு சேமிக்கப்பட்டு தானாகவே தேர்ந்தெடுக்கப்படும், அடுத்த படிக்குத் தயாராக இருக்கும்.`
+      ]},
+      { title: 'படி 2: தேர்வு அமைப்பு (Exam Configuration)', points: [
+        `<b>Class / Group</b> பொத்தானைத் தொட்டு, படி 1-இல் நீங்கள் சேர்த்த வகுப்பைத் தேர்ந்தெடுக்கவும். நீங்கள் கொடுத்த பெயருடன் அது பட்டியலில் இருக்கும்.`,
+        `<b>Semester</b>, <b>Paper Code</b>, <b>Exam Name</b>, <b>Batch / Section</b>, <b>Course Title</b> ஆகிய ஐந்தையும் நிரப்பவும். எழுத்துகள் தானாகவே பெரிய எழுத்துகளாக (CAPITAL) மாறும்.`,
+        `ஐந்து புலங்களும் கட்டாயம். காலியாக இருந்தால் அந்தப் புலம் சிவப்பு நிறமாகும்.`,
+        `<b>Start Entry / Save Setup</b> என்பதை அழுத்தவும். அமைப்பு பூட்டப்படும். பின்னர் மாற்ற வேண்டுமானால் <b>Edit Setup</b> அழுத்தவும்.`
+      ]},
+      { title: 'படி 3: மதிப்பெண்கள் உள்ளிடுதல் (Part A, B, C, D)', points: [
+        `மதிப்பெண்ணைத் தட்டச்சு செய்து <b>Enter</b> அழுத்தவும். பெட்டி நிரம்பியதும் தானாகவே அடுத்த பெட்டிக்குச் செல்லும்.`,
+        `<b>Part A:</b> கேள்வி 1–10, ஒவ்வொன்றுக்கும் அதிகபட்சம் 1. <b>Part B:</b> கேள்வி 11–15, ஒவ்வொன்றுக்கும் அதிகபட்சம் 2.`,
+        `<b>Part C:</b> கேள்வி 16–19, <b>(a)</b> அல்லது <b>(b)</b> ஏதேனும் ஒன்று மட்டும், அதிகபட்சம் 5. (a)-இல் மதிப்பெண் இட்டால் (b) பூட்டப்படும்.`,
+        `<b>Part D:</b> கேள்வி 20–22, ஏதேனும் இரண்டு மட்டும், ஒவ்வொன்றுக்கும் அதிகபட்சம் 10. இரண்டு நிரப்பியதும் மூன்றாவது பூட்டப்படும்.`,
+        `அதிகபட்ச மதிப்பெண்ணை விட அதிகமாக இட்டால் சிவப்பு எச்சரிக்கை தோன்றும்.`,
+        `வலது பக்கம் உள்ள <b>Live Preview</b>-இல் ஒவ்வொரு பகுதியின் மொத்தமும் <b>Grand Total</b>-உம் உடனே தெரியும்.`,
+        `<b>Save &amp; Next Student</b> அழுத்தினால் சேமிக்கப்பட்டு அடுத்த மாணவருக்குச் செல்லும்.`
+      ]},
+      { title: 'படி 4: வருகையின்மை குறித்தல் (Mark ABS) & முன்னேற்றப் பட்டை', points: [
+        `மாணவர் பெயருக்கு அருகில் உள்ள <b>Mark ABS</b> சுவிட்சை இயக்கவும். மதிப்பெண் பெட்டிகள் முடக்கப்படும்.`,
+        `<b>Save &amp; Next Student</b>, <b>Previous</b> அழுத்தியதும் அல்லது வேறு மாணவருக்குச் சென்றதும் அந்த மாணவர் சேமிக்கப்படுவார். முன்னேற்றப் பட்டையில் அவரது கட்டம் <b>மென்மையான சிவப்பு</b> நிறமாகும்.`,
+        `நிறங்கள்: <span class="chip g"></span> மதிப்பெண் இட்டவர், <span class="chip r"></span> வருகையின்மை, <span class="chip n"></span> இன்னும் செய்யாதவர்.`,
+        `வருகையின்மையும் முடிந்ததாகவே கணக்கிடப்படும். CSV-இல் <b>ABS</b> என்று வரும்.`,
+        `பட்டையில் உள்ள ஒவ்வொரு கட்டமும் ஒரு மாணவரைக் குறிக்கும். சிறிய ஆள் ஐகான் நீங்கள் இருக்கும் மாணவரைக் காட்டும்.`,
+        `கணினியில், ஒரு கட்டத்தின் மேல் மவுஸை வைத்தால் அந்த மாணவரின் பதிவு எண்ணின் <b>கடைசி 2 இலக்கங்கள்</b> தெரியும்.`,
+        `<b>எந்தக் கட்டத்தையும் கிளிக் செய்தால்</b> உடனே அந்த மாணவருக்குச் செல்லலாம். முழுப் பட்டியலிலிருந்து தேர்ந்தெடுக்க <b>Select Student ▼</b> பொத்தானையும் பயன்படுத்தலாம்.`
+      ]},
+      { title: 'படி 5: சேமித்தல் & CSV ஏற்றுமதி', points: [
+        `எல்லா மாணவர்களுக்கும் மதிப்பெண் அல்லது ABS இட்டு முடித்ததும் <b>Class Grading Complete!</b> அட்டை தோன்றும். அதில் தேர்ச்சி, தோல்வி, அதிகபட்ச மதிப்பெண், வருகையின்மை எண்ணிக்கை இருக்கும் (தேர்ச்சி மதிப்பெண் 24 / 60).`,
+        `மதிப்பெண் பட்டியலைப் பதிவிறக்க <b>Export as CSV</b> அழுத்தவும்.`,
+        `<b>Save &amp; Finish Exam to Dashboard</b> அழுத்தினால் தேர்வு <b>Saved Records</b>-இல் சேமிக்கப்படும். அங்கு Edit, CSV Export, Delete வசதிகள் உள்ளன.`,
+        `தரவு இந்த உலாவியில் (browser) மட்டுமே சேமிக்கப்படும். CSV எடுப்பதற்கு முன் browser data-வை அழிக்க வேண்டாம்.`
+      ]}
+    ]
+  }
+};
+
+(function () {
+  const card = document.getElementById('guideCard');
+  const sw = document.getElementById('langSwitch');
+  const dotsEl = document.getElementById('guideDots');
+  const bodyEl = document.getElementById('guideBody');
+  const prevBtn = document.getElementById('guidePrev');
+  const nextBtn = document.getElementById('guideNext');
+
+  let lang = 'en';
+  try { lang = localStorage.getItem('markLedger_guideLang') || 'en'; } catch (e) {}
+  if (!GUIDE[lang]) lang = 'en';
+  let step = 0;
+
+  function render() {
+    const g = GUIDE[lang];
+    const total = g.steps.length;
+    const s = g.steps[step];
+
+    card.lang = lang;
+    sw.dataset.lang = lang;
+    sw.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+    document.getElementById('guideTitle').textContent = g.title;
+
+    dotsEl.innerHTML = g.steps.map((_, i) =>
+      `<button type="button" class="guide-dot${i === step ? ' active' : i < step ? ' done' : ''}" data-step="${i}">${i + 1}</button>`
+    ).join('');
+
+    bodyEl.innerHTML =
+      `<h4 class="guide-step-title">${s.title}</h4>` +
+      `<ol class="guide-list">${s.points.map(p => `<li>${p}</li>`).join('')}</ol>`;
+    bodyEl.style.animation = 'none';
+    void bodyEl.offsetWidth;
+    bodyEl.style.animation = '';
+
+    prevBtn.textContent = g.prev;
+    prevBtn.disabled = step === 0;
+    nextBtn.textContent = step === total - 1 ? g.done : g.next;
+    document.getElementById('guideCount').textContent = g.count(step + 1, total);
+  }
+
+  window.openGuide = function () {
+    step = 0;
+    render();
+  };
+
+  sw.addEventListener('click', e => {
+    const b = e.target.closest('button[data-lang]');
+    if (!b || b.dataset.lang === lang) return;
+    lang = b.dataset.lang;
+    try { localStorage.setItem('markLedger_guideLang', lang); } catch (e) {}
+    render();
+  });
+
+  dotsEl.addEventListener('click', e => {
+    const d = e.target.closest('.guide-dot');
+    if (!d) return;
+    step = parseInt(d.dataset.step, 10);
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (step > 0) { step--; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  });
+  nextBtn.addEventListener('click', () => {
+    if (step < GUIDE[lang].steps.length - 1) {
+      step++;
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      switchTab('entry');
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('viewHelp').classList.contains('active')) return;
+    if (e.key === 'ArrowRight' && step < GUIDE[lang].steps.length - 1) {
+      step++;
+      render();
+    }
+    if (e.key === 'ArrowLeft' && step > 0) {
+      step--;
+      render();
+    }
+  });
+
+  render();
 })();
 loadStudent(currentIndex);
 </script>
