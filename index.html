@@ -310,13 +310,28 @@
   }
   .progress-seg {
     flex: 1 1 0; min-width: 0; height: 100%; background: var(--line);
-    border-radius: 3px; transition: background-color .3s ease, transform .25s ease;
+    border-radius: 3px; cursor: pointer;
+    transition: background-color .3s ease, transform .22s cubic-bezier(.34, 1.56, .64, 1);
   }
   .progress-seg.filled { background: var(--accent); }
   .progress-seg.absent { background: #F2A7B3; }
   .progress-seg.current { transform: scaleY(1.7); background: var(--accent-line); }
   .progress-seg.current.filled { background: var(--accent); }
   .progress-seg.current.absent { background: #E4768A; }
+  .progress-seg:hover { transform: scale(1.35, 2.1); z-index: 3; }
+  .progress-tooltip {
+    position: absolute; top: 0; left: 0; transform: translate(-50%, 4px);
+    background: var(--ink); color: #fff; font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 700; letter-spacing: .02em; padding: 4px 9px;
+    border-radius: 7px; white-space: nowrap; opacity: 0; pointer-events: none; z-index: 5;
+    transition: opacity .18s ease, transform .18s ease, left .15s ease;
+  }
+  .progress-tooltip.show { opacity: 1; transform: translate(-50%, 0); }
+  .progress-tooltip::after {
+    content: ''; position: absolute; bottom: -4px; left: calc(50% + var(--arrow-x, 0px));
+    width: 8px; height: 8px; background: var(--ink); border-radius: 1px;
+    transform: translateX(-50%) rotate(45deg);
+  }
   .progress-avatar {
     position: absolute; top: 0; left: 0; width: 26px; height: 26px; margin-left: -13px;
     display: flex; align-items: center; justify-content: center; background: var(--accent); color: #fff;
@@ -540,6 +555,7 @@
             </svg>
           </div>
           <div class="progress-container" id="progressTrack"></div>
+          <div class="progress-tooltip" id="progressTooltip" role="tooltip"></div>
         </div>
         <div class="progress-text" id="progressText">Graded: 0 / 0 (0%)</div>
       </div>
@@ -1698,7 +1714,7 @@ function updateProgressAndAnalytics() {
     seg.classList.toggle('filled', !!record && !isAbs);
     seg.classList.toggle('absent', isAbs);
     seg.classList.toggle('current', i === currentIndex);
-    seg.title = `${s.roll} — ${s.name}` + (isAbs ? ' (Absent)' : '');
+    seg.dataset.roll = s.roll;
 
     if (record) {
       gradedCount++;
@@ -1904,6 +1920,29 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
 /* ============================================================
    INIT
    ============================================================ */
+/* ===== Progress segment hover tooltip ===== */
+(function () {
+  const track = document.getElementById('progressTrack');
+  const tip = document.getElementById('progressTooltip');
+  const area = track.parentElement;
+
+  track.addEventListener('mouseover', (e) => {
+    const seg = e.target.closest('.progress-seg');
+    if (!seg) return;
+
+    tip.textContent = seg.dataset.roll || '';
+
+    const center = seg.offsetLeft + seg.offsetWidth / 2;
+    const half = tip.offsetWidth / 2;
+    const left = Math.min(Math.max(center, half), area.clientWidth - half);
+
+    tip.style.left = left + 'px';
+    tip.style.setProperty('--arrow-x', (center - left) + 'px');
+    tip.classList.add('show');
+  });
+
+  track.addEventListener('mouseleave', () => tip.classList.remove('show'));
+})();
 loadStudent(currentIndex);
 </script>
 
