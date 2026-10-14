@@ -294,9 +294,33 @@
   input:checked + .toggle-slider { background-color: var(--error); }
   input:checked + .toggle-slider:before { transform: translateX(15px); }
 
-  .progress-container { width: 100%; background: var(--line-soft); border-radius: 8px; height: 7px; overflow: hidden; }
-  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-2), var(--accent)); width: 0%; transition: width .5s ease-out; border-radius: 8px; }
+  .progress-wrap { width: 100%; }
+  .progress-track-area { position: relative; padding-top: 32px; }
+  .progress-container {
+    display: flex; gap: 2px; width: 100%; height: 10px; align-items: center;
+  }
+  .progress-seg {
+    flex: 1 1 0; min-width: 0; height: 100%; background: var(--line);
+    border-radius: 3px; transition: background-color .3s ease, transform .25s ease;
+  }
+  .progress-seg.filled { background: var(--accent); }
+  .progress-seg.current { transform: scaleY(1.7); background: var(--accent-line); }
+  .progress-seg.current.filled { background: var(--accent); }
+  .progress-avatar {
+    position: absolute; top: 0; left: 0; width: 26px; height: 26px; margin-left: -13px;
+    display: flex; align-items: center; justify-content: center; background: var(--accent); color: #fff;
+    border-radius: 50%; box-shadow: var(--shadow-btn); transition: left .45s cubic-bezier(.4, 0, .2, 1);
+    pointer-events: none; z-index: 2;
+  }
+  .progress-avatar::after {
+    content: ''; position: absolute; bottom: -3px; left: 50%; width: 8px; height: 8px;
+    background: var(--accent); border-radius: 1px; transform: translateX(-50%) rotate(45deg);
+  }
   .progress-text { font-size: 12.5px; color: var(--ink-soft); font-weight: 700; text-align: right; margin-top: 8px; }
+  @media (max-width: 600px) {
+    .progress-container { gap: 1px; }
+    .progress-seg { border-radius: 2px; }
+  }
 
   .split { display: grid; grid-template-columns: 1.15fr 1fr; gap: 20px; align-items: start; }
   .split > div:last-child { position: sticky; top: 20px; align-self: start; }
@@ -495,9 +519,15 @@
         </div>
         <button type="button" id="studentTriggerBtn" class="custom-select-btn" style="width: 300px;">Select Student ▼</button>
       </div>
-      <div>
-        <div class="progress-container">
-          <div class="progress-fill" id="progressFill"></div>
+      <div class="progress-wrap">
+        <div class="progress-track-area">
+          <div class="progress-avatar" id="progressAvatar" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="12" cy="8" r="4.5"/>
+              <path d="M3.5 21c0-4.7 3.8-8 8.5-8s8.5 3.3 8.5 8z"/>
+            </svg>
+          </div>
+          <div class="progress-container" id="progressTrack"></div>
         </div>
         <div class="progress-text" id="progressText">Graded: 0 / 0 (0%)</div>
       </div>
@@ -1106,6 +1136,11 @@ function openModal(type) {
     });
   }
   uiModal.classList.add('active');
+
+  const selectedEl = modalList.querySelector('.modal-option.selected');
+  if (selectedEl) {
+    selectedEl.scrollIntoView({ block: 'center', behavior: 'instant' });
+  }
 }
 
 function closeModal() {
@@ -1600,8 +1635,27 @@ function updateProgressAndAnalytics() {
   let highestMark = -1; let highestRolls = [];
   const PASS_MARK = 24;
 
-  STUDENTS.forEach(s => {
+  const total = STUDENTS.length;
+  const track = document.getElementById('progressTrack');
+  const avatar = document.getElementById('progressAvatar');
+
+  if (track.children.length !== total) {
+    track.innerHTML = '';
+    for (let i = 0; i < total; i++) {
+      const seg = document.createElement('div');
+      seg.className = 'progress-seg';
+      track.appendChild(seg);
+    }
+  }
+
+  STUDENTS.forEach((s, i) => {
     const record = studentData[s.roll];
+    const seg = track.children[i];
+
+    seg.classList.toggle('filled', !!record);
+    seg.classList.toggle('current', i === currentIndex);
+    seg.title = `${s.roll} — ${s.name}`;
+
     if (record) {
       gradedCount++;
       if (record.isAbsent) { absentCount++; } 
@@ -1614,10 +1668,17 @@ function updateProgressAndAnalytics() {
     }
   });
 
-  const totalStudents = STUDENTS.length;
-  const pct = totalStudents === 0 ? 0 : Math.round((gradedCount / totalStudents) * 100);
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressText').textContent = `Graded: ${gradedCount} / ${totalStudents} (${pct}%)`;
+  const firstRun = !updateProgressAndAnalytics._init;
+  if (firstRun) avatar.style.transition = 'none';
+  avatar.style.left = total ? ((currentIndex + 0.5) / total) * 100 + '%' : '0%';
+  if (firstRun) {
+    void avatar.offsetWidth;
+    avatar.style.transition = '';
+    updateProgressAndAnalytics._init = true;
+  }
+
+  const pct = total === 0 ? 0 : Math.round((gradedCount / total) * 100);
+  document.getElementById('progressText').textContent = `Graded: ${gradedCount} / ${total} (${pct}%)`;
 
   if (document.getElementById('statPass')) {
     document.getElementById('statPass').textContent = passCount;
@@ -1636,7 +1697,7 @@ function updateProgressAndAnalytics() {
 
   const summaryCard = document.getElementById('analyticsSummaryCard');
   if (summaryCard) {
-    if (gradedCount === totalStudents && totalStudents > 0) { summaryCard.style.display = 'block'; } 
+    if (gradedCount === total && total > 0) { summaryCard.style.display = 'block'; }
     else { summaryCard.style.display = 'none'; }
   }
 }
