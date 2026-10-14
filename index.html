@@ -404,6 +404,13 @@
   .navbtns .btn { flex: 1; text-align: center; padding: 14px; font-size: 14.5px; }
 
   #exportBar { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+  .roll-display { display: flex; flex-direction: column; gap: 3px; }
+  .roll-lbl { font-size: 11.5px; font-weight: 600; color: var(--ink-soft); }
+  .roll-val {
+    font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 18px; font-weight: 800;
+    color: var(--accent-hover); background: var(--accent-soft); border: 1px solid var(--accent-line);
+    padding: 6px 12px; border-radius: var(--radius-sm); letter-spacing: .02em;
+  }
   .btn-export { background: var(--ink); box-shadow: 0 6px 16px -4px rgba(16, 27, 26, 0.35); }
   .btn-export:hover { background: #000; }
 
@@ -681,7 +688,10 @@
         </table>
 
         <div id="exportBar">
-          <button class="btn btn-export" id="exportBtn">Export as CSV</button>
+          <div class="roll-display">
+            <span class="roll-lbl">Roll Number</span>
+            <span class="roll-val" id="previewRoll">—</span>
+          </div>
           <span class="savednote" id="savedNote">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
             Saved
@@ -715,8 +725,9 @@
     <div style="margin-top: 16px; font-size: 11.5px; font-weight: 600; color: var(--ink-faint); text-align: center;">
       * Pass mark is set to 24 / 60
     </div>
-    <div style="display:flex; justify-content:center; margin-top: 24px;">
-      <button class="btn" id="finishExamBtn" style="padding: 14px 40px; font-size: 16px;">Save & Finish Exam to Dashboard</button>
+    <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top: 24px;">
+      <button class="btn btn-export" id="exportBtn" style="padding: 14px 32px; font-size: 16px;">Export as CSV</button>
+      <button class="btn" id="finishExamBtn" style="padding: 14px 32px; font-size: 16px;">Save &amp; Finish Exam to Dashboard</button>
     </div>
   </div>
 
@@ -1715,6 +1726,7 @@ function updateProgressAndAnalytics() {
     seg.classList.toggle('absent', isAbs);
     seg.classList.toggle('current', i === currentIndex);
     seg.dataset.roll = s.roll;
+    seg.dataset.index = i;
 
     if (record) {
       gradedCount++;
@@ -1786,6 +1798,7 @@ function loadStudent(index){
   document.getElementById('curRoll').textContent = s.roll;
   document.getElementById('curName').innerHTML = `${s.name} <span class="sec-badge">Sec: ${s.sec || '-'}</span>`;
   updateStudentBtnText();
+  document.getElementById('previewRoll').textContent = s.roll;
 
   resetFieldsToDefault();
   const saved = studentData[s.roll];
@@ -1920,7 +1933,7 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
 /* ============================================================
    INIT
    ============================================================ */
-/* ===== Progress segment hover tooltip ===== */
+/* ===== Progress segment hover tooltip + click-to-jump ===== */
 (function () {
   const track = document.getElementById('progressTrack');
   const tip = document.getElementById('progressTooltip');
@@ -1930,7 +1943,7 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
     const seg = e.target.closest('.progress-seg');
     if (!seg) return;
 
-    tip.textContent = seg.dataset.roll || '';
+    tip.textContent = (seg.dataset.roll || '').slice(-2);
 
     const center = seg.offsetLeft + seg.offsetWidth / 2;
     const half = tip.offsetWidth / 2;
@@ -1942,6 +1955,21 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
   });
 
   track.addEventListener('mouseleave', () => tip.classList.remove('show'));
+
+  track.addEventListener('click', (e) => {
+    const seg = e.target.closest('.progress-seg');
+    if (!seg) return;
+
+    const clickedIndex = parseInt(seg.dataset.index, 10);
+    if (isNaN(clickedIndex) || clickedIndex === currentIndex) return;
+
+    const leaving = STUDENTS[currentIndex];
+    if (hasUnsavedChanges || studentData[leaving.roll]) saveCurrentStudent(true);
+
+    hasUnsavedChanges = false;
+    currentIndex = clickedIndex;
+    loadStudent(currentIndex);
+  });
 })();
 loadStudent(currentIndex);
 </script>
