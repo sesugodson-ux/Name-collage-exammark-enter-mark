@@ -246,6 +246,15 @@
   .field-group input::placeholder { color: var(--ink-faint); font-weight: 500; }
   .field-group input:hover { border-color: var(--accent-line); }
   .field-group input:focus { outline: none; border-color: var(--accent-2); background: #fff; box-shadow: var(--shadow-focus); }
+  .field-group input.invalid {
+    border-color: var(--error); background: var(--error-soft); box-shadow: 0 0 0 4px var(--error-soft);
+  }
+  .field-group input.invalid::placeholder { color: var(--error); opacity: .7; }
+  .setup-error {
+    display: none; margin-top: 16px; padding: 10px 14px; border-radius: var(--radius-sm);
+    background: var(--error-soft); border: 1.5px solid #FAD2D8; color: var(--error);
+    font-size: 13px; font-weight: 700;
+  }
   #setupGrid input { text-transform: uppercase; }
   #setupGrid input::placeholder { text-transform: none; }
 
@@ -304,8 +313,10 @@
     border-radius: 3px; transition: background-color .3s ease, transform .25s ease;
   }
   .progress-seg.filled { background: var(--accent); }
+  .progress-seg.absent { background: #F2A7B3; }
   .progress-seg.current { transform: scaleY(1.7); background: var(--accent-line); }
   .progress-seg.current.filled { background: var(--accent); }
+  .progress-seg.current.absent { background: #E4768A; }
   .progress-avatar {
     position: absolute; top: 0; left: 0; width: 26px; height: 26px; margin-left: -13px;
     display: flex; align-items: center; justify-content: center; background: var(--accent); color: #fff;
@@ -494,6 +505,7 @@
         <div class="field-group"><label>Batch / Section</label><input id="cfgBatch" placeholder="e.g. II-BCA D"></div>
         <div class="field-group"><label>Course Title</label><input id="cfgCourse" placeholder="e.g. Database Management System"></div>
       </div>
+      <div id="setupError" class="setup-error" role="alert"></div>
       <div style="margin-top:20px; display:flex; gap:12px;">
         <button class="btn" id="saveSetupBtn">Start Entry / Save Setup</button>
         <button class="btn btn-reset" id="clearEntryBtn">Clear Current Entry</button>
@@ -1316,14 +1328,44 @@ function renderSetup(){
     document.getElementById('setupTag').textContent='EDIT ONCE';
   }
 }
-document.getElementById('saveSetupBtn').addEventListener('click', ()=>{
-  config = {
-    semester: document.getElementById('cfgSemester').value.trim().toUpperCase(),
-    paperCode: document.getElementById('cfgPaperCode').value.trim().toUpperCase(),
-    exam: document.getElementById('cfgExam').value.trim().toUpperCase(),
-    batch: document.getElementById('cfgBatch').value.trim().toUpperCase(),
-    course: document.getElementById('cfgCourse').value.trim().toUpperCase(),
-  };
+const CFG_FIELDS = [
+  { id: 'cfgSemester', key: 'semester', label: 'Semester' },
+  { id: 'cfgPaperCode', key: 'paperCode', label: 'Paper Code' },
+  { id: 'cfgExam', key: 'exam', label: 'Exam Name' },
+  { id: 'cfgBatch', key: 'batch', label: 'Batch / Section' },
+  { id: 'cfgCourse', key: 'course', label: 'Course Title' },
+];
+
+CFG_FIELDS.forEach(f => {
+  document.getElementById(f.id).addEventListener('input', () => {
+    document.getElementById(f.id).classList.remove('invalid');
+    if (!document.querySelector('#setupGrid input.invalid')) {
+      document.getElementById('setupError').style.display = 'none';
+    }
+  });
+});
+
+document.getElementById('saveSetupBtn').addEventListener('click', () => {
+  const errBox = document.getElementById('setupError');
+  const missing = CFG_FIELDS.filter(f => !document.getElementById(f.id).value.trim());
+
+  CFG_FIELDS.forEach(f => {
+    document.getElementById(f.id).classList.toggle('invalid', missing.includes(f));
+  });
+
+  if (missing.length > 0) {
+    errBox.textContent = 'Please fill in: ' + missing.map(f => f.label).join(', ');
+    errBox.style.display = 'block';
+    document.getElementById(missing[0].id).focus();
+    return;
+  }
+
+  errBox.style.display = 'none';
+  config = {};
+  CFG_FIELDS.forEach(f => {
+    config[f.key] = document.getElementById(f.id).value.trim().toUpperCase();
+  });
+
   localStorage.setItem(LS_CONFIG, JSON.stringify(config));
   renderSetup();
 });
@@ -1651,10 +1693,12 @@ function updateProgressAndAnalytics() {
   STUDENTS.forEach((s, i) => {
     const record = studentData[s.roll];
     const seg = track.children[i];
+    const isAbs = !!(record && record.isAbsent);
 
-    seg.classList.toggle('filled', !!record);
+    seg.classList.toggle('filled', !!record && !isAbs);
+    seg.classList.toggle('absent', isAbs);
     seg.classList.toggle('current', i === currentIndex);
-    seg.title = `${s.roll} — ${s.name}`;
+    seg.title = `${s.roll} — ${s.name}` + (isAbs ? ' (Absent)' : '');
 
     if (record) {
       gradedCount++;
