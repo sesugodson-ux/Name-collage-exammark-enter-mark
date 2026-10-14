@@ -246,6 +246,8 @@
   .field-group input::placeholder { color: var(--ink-faint); font-weight: 500; }
   .field-group input:hover { border-color: var(--accent-line); }
   .field-group input:focus { outline: none; border-color: var(--accent-2); background: #fff; box-shadow: var(--shadow-focus); }
+  #setupGrid input { text-transform: uppercase; }
+  #setupGrid input::placeholder { text-transform: none; }
 
   /* CUSTOM SELECT BUTTONS */
   .custom-select-btn {
@@ -1264,11 +1266,11 @@ function renderSetup(){
       document.getElementById('setupForm').style.display='block';
       row.style.display='none';
       document.getElementById('setupTag').textContent='EDIT ONCE';
-      document.getElementById('cfgSemester').value = config.semester||'';
-      document.getElementById('cfgPaperCode').value = config.paperCode||'';
-      document.getElementById('cfgExam').value = config.exam||'';
-      document.getElementById('cfgBatch').value = config.batch||'';
-      document.getElementById('cfgCourse').value = config.course||'';
+      document.getElementById('cfgSemester').value = (config.semester||'').toUpperCase();
+      document.getElementById('cfgPaperCode').value = (config.paperCode||'').toUpperCase();
+      document.getElementById('cfgExam').value = (config.exam||'').toUpperCase();
+      document.getElementById('cfgBatch').value = (config.batch||'').toUpperCase();
+      document.getElementById('cfgCourse').value = (config.course||'').toUpperCase();
     });
 
     setTimeout(() => { focusField(FOCUS_ORDER[0]); }, 100);
@@ -1281,14 +1283,23 @@ function renderSetup(){
 }
 document.getElementById('saveSetupBtn').addEventListener('click', ()=>{
   config = {
-    semester: document.getElementById('cfgSemester').value.trim(),
-    paperCode: document.getElementById('cfgPaperCode').value.trim(),
-    exam: document.getElementById('cfgExam').value.trim(),
-    batch: document.getElementById('cfgBatch').value.trim(),
-    course: document.getElementById('cfgCourse').value.trim(),
+    semester: document.getElementById('cfgSemester').value.trim().toUpperCase(),
+    paperCode: document.getElementById('cfgPaperCode').value.trim().toUpperCase(),
+    exam: document.getElementById('cfgExam').value.trim().toUpperCase(),
+    batch: document.getElementById('cfgBatch').value.trim().toUpperCase(),
+    course: document.getElementById('cfgCourse').value.trim().toUpperCase(),
   };
   localStorage.setItem(LS_CONFIG, JSON.stringify(config));
   renderSetup();
+});
+['cfgSemester', 'cfgPaperCode', 'cfgExam', 'cfgBatch', 'cfgCourse'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => {
+    const start = el.selectionStart;
+    const end = el.selectionEnd;
+    el.value = el.value.toUpperCase();
+    el.setSelectionRange(start, end);
+  });
 });
 renderSetup();
 
