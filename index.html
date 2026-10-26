@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BHC Mark Entry Ledger</title>
 <link rel="icon" type="image/png" href="./logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,10 +45,6 @@
   }
 
   * { box-sizing: border-box; }
-  html, body {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-  }
   html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
@@ -2106,7 +2102,7 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
    ============================================================ */
 const GUIDE = {
   en: {
-    title: 'Help',
+    title: 'How to Use',
     prev: '← Back', next: 'Next →', done: 'Done ✓',
     count: (n, t) => `Step ${n} of ${t}`,
     steps: [
