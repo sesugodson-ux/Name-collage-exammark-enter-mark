@@ -310,27 +310,37 @@
   input:checked + .toggle-slider:before { transform: translateX(15px); }
 
   .progress-wrap { width: 100%; }
-  .progress-track-area { position: relative; padding-top: 32px; }
+  .progress-track-area { position: relative; padding-top: 52px; }
   .progress-container {
     display: flex; gap: 2px; width: 100%; height: 10px; align-items: center;
   }
   .progress-seg {
     flex: 1 1 0; min-width: 0; height: 100%; background: var(--line);
     border-radius: 3px; cursor: pointer;
-    transition: background-color .3s ease, transform .22s cubic-bezier(.34, 1.56, .64, 1);
+    transition: all .3s ease;
   }
   .progress-seg.filled { background: var(--accent); }
   .progress-seg.absent { background: #F2A7B3; }
   .progress-seg.current { transform: scaleY(1.7); background: var(--accent-line); }
   .progress-seg.current.filled { background: var(--accent); }
   .progress-seg.current.absent { background: #E4768A; }
-  .progress-seg:hover { transform: scale(1.35, 2.1); z-index: 3; }
+  @media (hover: hover) {
+    .progress-seg:hover,
+    .progress-seg.current:hover {
+      transform: translateY(-12px) scale(1.4, 2.2);
+      z-index: 4;
+      box-shadow: 0 0 0 2px rgba(125, 211, 252, 0.60),
+                  0 6px 18px 2px rgba(56, 189, 248, 0.65);
+    }
+    .progress-seg:not(.filled):not(.absent):hover { background: #BAE6FD; }
+  }
   .progress-tooltip {
     position: absolute; top: 0; left: 0; transform: translate(-50%, 4px);
     background: var(--ink); color: #fff; font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 12px; font-weight: 700; letter-spacing: .02em; padding: 4px 9px;
+    font-size: 13px; font-weight: 700; letter-spacing: .02em; padding: 5px 11px;
     border-radius: 7px; white-space: nowrap; opacity: 0; pointer-events: none; z-index: 5;
-    transition: opacity .18s ease, transform .18s ease, left .15s ease;
+    box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);
+    transition: opacity .3s ease, transform .3s ease, left .15s ease;
   }
   .progress-tooltip.show { opacity: 1; transform: translate(-50%, 0); }
   .progress-tooltip::after {
@@ -339,7 +349,7 @@
     transform: translateX(-50%) rotate(45deg);
   }
   .progress-avatar {
-    position: absolute; top: 0; left: 0; width: 26px; height: 26px; margin-left: -13px;
+    position: absolute; top: 20px; left: 0; width: 26px; height: 26px; margin-left: -13px;
     display: flex; align-items: center; justify-content: center; background: var(--accent); color: #fff;
     border-radius: 50%; box-shadow: var(--shadow-btn); transition: left .45s cubic-bezier(.4, 0, .2, 1);
     pointer-events: none; z-index: 2;
