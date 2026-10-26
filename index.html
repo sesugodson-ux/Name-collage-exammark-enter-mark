@@ -314,6 +314,10 @@
   .abs-toggle.half-toggle.on { background: var(--accent); border-color: var(--accent); color: #fff; }
   .half-toggle .toggle-slider { background-color: var(--accent-line); }
   .half-toggle input:checked + .toggle-slider { background-color: rgba(255,255,255,0.35); }
+  .abs-toggle.summary-toggle { color: var(--accent-hover); border-color: var(--accent-line); background: var(--accent-soft); }
+  .abs-toggle.summary-toggle.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .summary-toggle .toggle-slider { background-color: var(--accent-line); }
+  .summary-toggle input:checked + .toggle-slider { background-color: rgba(255,255,255,0.35); }
   .half-hint { display: none; font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
   .half-hint.show { display: block; }
  
@@ -634,7 +638,7 @@
     <div id="studentBarWrap">
       <div id="studentBar">
         <div class="who">
-          <span class="roll" id="curRoll">—</span>
+          <span class="roll" id="curRoll" onclick="openModal('student')" style="cursor:pointer;" title="Click to jump to a student">— ▼</span>
           <span class="name" id="curName">—</span>
  
           <label class="abs-toggle" id="absToggleContainer">
@@ -652,8 +656,15 @@
             </div>
             Allow Half Marks (0.5)
           </label>
+
+          <label class="abs-toggle summary-toggle" id="summaryToggleContainer">
+            <div class="toggle-switch">
+              <input type="checkbox" id="viewSummaryBtn" aria-label="Show class stats">
+              <span class="toggle-slider"></span>
+            </div>
+            Class Stats
+          </label>
         </div>
-        <button type="button" id="studentTriggerBtn" class="custom-select-btn" style="width: 300px;">Select Student ▼</button>
       </div>
       <span class="half-hint" id="halfHint">Smart auto-advance: jumps on the max mark or a .5 mark. For other whole numbers, press Enter or the arrow keys.</span>
       <div class="progress-wrap">
@@ -1149,6 +1160,19 @@ function exportSavedExam(id) {
 }
  
 document.getElementById('finishExamBtn').addEventListener('click', finalizeExam);
+const viewSummaryToggle = document.getElementById('viewSummaryBtn');
+const summaryToggleContainer = document.getElementById('summaryToggleContainer');
+viewSummaryToggle.addEventListener('change', () => {
+  const card = document.getElementById('analyticsSummaryCard');
+  const willShow = viewSummaryToggle.checked;
+
+  card.style.display = willShow ? 'block' : 'none';
+  summaryToggleContainer.classList.toggle('on', willShow);
+
+  if (willShow) {
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
  
 function finalizeExam() {
   if (!config) {
@@ -1199,7 +1223,6 @@ document.getElementById('clearEntryBtn').addEventListener('click', () => {
    CUSTOM MODAL LOGIC (CLASS & STUDENT SELECTION)
    ============================================================ */
 const classTriggerBtn = document.getElementById('classTriggerBtn');
-const studentTriggerBtn = document.getElementById('studentTriggerBtn');
 const uiModal = document.getElementById('uiModal');
 const modalTitle = document.getElementById('modalTitle');
 const modalList = document.getElementById('modalList');
@@ -1208,10 +1231,6 @@ const modalClose = document.getElementById('modalClose');
 function updateClassBtnText() {
   const activeObj = CLASS_OPTIONS.find(c => c.id === activeClassKey);
   if(activeObj) classTriggerBtn.textContent = activeObj.label + ' ▼';
-}
-function updateStudentBtnText() {
-  const s = STUDENTS[currentIndex];
-  studentTriggerBtn.textContent = `${s.roll} — ${s.name} ▼`;
 }
 updateClassBtnText();
  
@@ -1321,7 +1340,6 @@ function closeModal() {
 }
  
 classTriggerBtn.addEventListener('click', () => openModal('class'));
-studentTriggerBtn.addEventListener('click', () => openModal('student'));
 modalClose.addEventListener('click', closeModal);
 uiModal.addEventListener('click', (e) => {
   if (e.target === uiModal) closeModal();
@@ -2003,6 +2021,12 @@ function updateProgressAndAnalytics() {
   if (summaryCard) {
     if (gradedCount === total && total > 0) { summaryCard.style.display = 'block'; }
     else { summaryCard.style.display = 'none'; }
+
+    const summaryBtn = document.getElementById('viewSummaryBtn');
+    const isVisible = summaryCard.style.display === 'block';
+    if (summaryBtn) summaryBtn.checked = isVisible;
+    const summaryToggle = document.getElementById('summaryToggleContainer');
+    if (summaryToggle) summaryToggle.classList.toggle('on', isVisible);
   }
 }
  
@@ -2028,9 +2052,8 @@ function resetFieldsToDefault(){
 function loadStudent(index){
   hideHalfWarning();
   const s = STUDENTS[index];
-  document.getElementById('curRoll').textContent = s.roll;
+  document.getElementById('curRoll').textContent = `${s.roll} ▼`;
   document.getElementById('curName').innerHTML = `${s.name} <span class="sec-badge">Sec: ${s.sec || '-'}</span>`;
-  updateStudentBtnText();
   document.getElementById('previewRoll').textContent = s.roll;
  
   resetFieldsToDefault();
