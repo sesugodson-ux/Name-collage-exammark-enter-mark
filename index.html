@@ -789,6 +789,10 @@
             </tr>
           </tbody>
         </table>
+
+        <div id="halfMarkWarning" class="setup-error" role="alert" style="display:none; margin-top:14px;">
+          ⚠️ Total cannot be in half-marks (0.5). Please correct the marks.
+        </div>
  
         <div id="exportBar">
           <div class="roll-display">
@@ -1797,6 +1801,7 @@ ALL_Q_IDS.forEach((id, index) => {
  
   input.addEventListener('input', ()=>{
     hasUnsavedChanges = true;
+    hideHalfWarning();
     if (halfMode) {
       let cleaned = input.value.replace(/,/g, '.').replace(/[^\d.]/g, '');
       const dot = cleaned.indexOf('.');
@@ -2021,6 +2026,7 @@ function resetFieldsToDefault(){
 }
  
 function loadStudent(index){
+  hideHalfWarning();
   const s = STUDENTS[index];
   document.getElementById('curRoll').textContent = s.roll;
   document.getElementById('curName').innerHTML = `${s.name} <span class="sec-badge">Sec: ${s.sec || '-'}</span>`;
@@ -2101,12 +2107,29 @@ function flashSaved(){
   const el = document.getElementById('savedNote'); el.classList.add('show');
   clearTimeout(flashSaved._t); flashSaved._t = setTimeout(()=>el.classList.remove('show'), 1400);
 }
+
+function isHalfTotal(total) {
+  return typeof total === 'number' && Math.abs((total % 1) - 0.5) < 1e-9;
+}
+
+function showHalfWarning() {
+  document.getElementById('halfMarkWarning').style.display = 'block';
+}
+function hideHalfWarning() {
+  document.getElementById('halfMarkWarning').style.display = 'none';
+}
  
 document.getElementById('nextBtn').addEventListener('click', ()=>{
   if (!isCurrentAbsent) {
     const invalid = ALL_Q_IDS.find(id=>!validate(id));
     if (invalid){ focusField(invalid); return; }
   }
+  const total = updatePreview();
+  if (!isCurrentAbsent && isHalfTotal(total)) {
+    showHalfWarning();
+    return;
+  }
+  hideHalfWarning();
   saveCurrentStudent();
   if (currentIndex < STUDENTS.length-1){
     currentIndex++;
