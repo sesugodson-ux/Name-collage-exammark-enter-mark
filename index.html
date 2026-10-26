@@ -566,6 +566,160 @@
     .guide-card { padding: 20px 16px; }
     .lang-switch { width: 100%; }
   }
+
+  /* ============================================================
+     REPORT VIEW + PRINT
+     ============================================================ */
+  .report-section { margin-top: 26px; }
+  .report-toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap; margin-bottom: 12px;
+  }
+  .view-tabs {
+    display: inline-flex; background: var(--bg-sunken); border: 1.5px solid var(--line);
+    border-radius: 30px; padding: 4px; gap: 2px;
+  }
+  .view-tabs button {
+    border: none; background: transparent; font-family: inherit; font-size: 13px; font-weight: 700;
+    color: var(--ink-soft); padding: 8px 18px; border-radius: 26px; cursor: pointer; transition: all .2s ease;
+  }
+  .view-tabs button:hover { color: var(--accent); }
+  .view-tabs button.active { background: var(--accent); color: #fff; box-shadow: var(--shadow-btn); }
+  .report-count { font-size: 12.5px; font-weight: 700; color: var(--ink-soft); }
+  .report-table-wrap {
+    max-height: 460px; overflow: auto; border: 1.5px solid var(--line);
+    border-radius: var(--radius-md); background: #fff;
+  }
+  .report-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .report-table th, .report-table td {
+    border: 1px solid var(--line-soft); padding: 8px 10px; text-align: center; white-space: nowrap;
+  }
+  .report-table th {
+    background: var(--ink); color: #fff; font-size: 11.5px; font-weight: 700;
+    letter-spacing: .04em; position: sticky; top: 0; z-index: 2;
+  }
+  .report-table th small { display: block; font-weight: 600; opacity: .65; font-size: 10px; }
+  .report-table td.left { text-align: left; }
+  .report-table td.name { font-weight: 700; }
+  .report-table td.num, .report-table td.tot { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; }
+  .report-table td.tot { background: var(--accent-soft); color: var(--accent-ink); font-weight: 800; }
+  .report-table tbody tr:nth-child(even) td:not(.tot) { background: var(--bg-input); }
+  .report-table tbody tr:hover td:not(.tot) { background: var(--accent-soft); }
+  .report-table .fail { color: var(--error); }
+  .report-table .abs { color: var(--error); font-weight: 800; }
+  .report-table .pending { color: var(--ink-faint); }
+  .btn-pdf { background: var(--error); box-shadow: var(--shadow-btn-red); }
+  .btn-pdf:hover { background: #b9243b; }
+  @media (max-width: 600px) {
+    .view-tabs { width: 100%; }
+    .view-tabs button { flex: 1; padding: 8px 6px; }
+  }
+
+  /* ============================================================
+     PRINT / PDF - modern college report
+     ============================================================ */
+  #printReport { display: none; }
+  @media print {
+    .top-nav, .masthead, .navbtns, .abs-toggle, .toggle-switch, .view-tabs,
+    .modal-overlay, .site-footer, .guide-card, button {
+      display: none !important;
+    }
+    body > *:not(#printReport) { display: none !important; }
+
+    html, body {
+      background: #fff !important;
+      display: block !important;
+      min-height: 0 !important;
+      margin: 0; padding: 0;
+    }
+
+    #printReport {
+      display: block !important;
+      color: #2F403E;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 9.5pt;
+      line-height: 1.4;
+    }
+    #printReport, #printReport * {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      box-sizing: border-box;
+    }
+
+    .pr-head { text-align: center; padding-bottom: 6px; }
+    .pr-college {
+      font-size: 15pt; font-weight: 700; letter-spacing: -0.005em; color: #2F403E;
+    }
+    .pr-rule {
+      height: 2px; width: 56px; margin: 9px auto;
+      background: var(--accent-line); border-radius: 2px;
+    }
+    .pr-title { font-size: 11.5pt; font-weight: 600; color: #4A5E5C; }
+    .pr-sub {
+      margin-top: 3px; font-size: 8.5pt; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft);
+    }
+
+    .pr-meta {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 8px 18px; margin: 12px 0 14px; padding: 10px 14px;
+      background: var(--bg-body); border: 1px solid var(--line); border-radius: 8px;
+      break-inside: avoid;
+    }
+    .pr-meta-item span {
+      display: block; font-size: 7pt; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--ink-faint);
+    }
+    .pr-meta-item b {
+      display: block; margin-top: 1px; font-size: 9.5pt; font-weight: 600; color: #2F403E;
+    }
+    .pr-meta-item.wide { grid-column: span 2; }
+
+    #printReport table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+    #printReport thead { display: table-header-group; }
+    #printReport tr { break-inside: avoid; page-break-inside: avoid; }
+    #printReport th {
+      padding: 8px 6px; text-align: center;
+      font-size: 7.5pt; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--ink-soft); background: var(--bg-sunken);
+      border: none; border-bottom: 1px solid var(--line);
+    }
+    #printReport th small {
+      display: block; font-size: 6.5pt; font-weight: 500;
+      letter-spacing: 0; text-transform: none; color: var(--ink-faint);
+    }
+    #printReport td {
+      padding: 6px 6px; text-align: center; vertical-align: middle;
+      border: none; border-bottom: 1px solid var(--line-soft);
+    }
+    #printReport td.left { text-align: left; }
+    #printReport td.name { font-weight: 600; }
+    #printReport td.num {
+      font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500;
+    }
+    #printReport tbody tr:nth-child(even) td { background: #FAFCFC; }
+    #printReport td.tot {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-weight: 700; color: var(--accent-ink); background: var(--accent-soft) !important;
+    }
+    #printReport .fail { color: #C0485B; }
+    #printReport .abs { color: #C0485B; font-weight: 700; letter-spacing: 0.04em; }
+    #printReport .pending { color: var(--ink-faint); }
+
+    #printReport table.is-all { font-size: 7.5pt; }
+    #printReport table.is-all th { padding: 6px 2px; font-size: 7pt; }
+    #printReport table.is-all td { padding: 4px 2px; }
+
+    .pr-foot {
+      display: flex; justify-content: space-between; margin-top: 10px;
+      font-size: 7.5pt; font-weight: 500; color: var(--ink-faint);
+    }
+    .pr-sign { display: flex; justify-content: space-between; margin-top: 38px; break-inside: avoid; }
+    .pr-sign div {
+      width: 28%; padding-top: 5px; text-align: center;
+      border-top: 1px solid var(--line); font-size: 8pt; font-weight: 600; color: var(--ink-soft);
+    }
+  }
  
   /* ============================================================
      MINIMAL FOOTER
@@ -843,8 +997,22 @@
     <div style="margin-top: 16px; font-size: 11.5px; font-weight: 600; color: var(--ink-faint); text-align: center;">
       * Pass mark is set to 24 / 60
     </div>
+    <div class="report-section">
+      <div class="report-toolbar">
+        <div class="view-tabs" id="reportViewTabs" role="tablist" aria-label="Report view">
+          <button type="button" role="tab" data-view="all" class="active">All Questions</button>
+          <button type="button" role="tab" data-view="part">Part-wise</button>
+          <button type="button" role="tab" data-view="total">Grand Total</button>
+        </div>
+        <span class="report-count" id="reportCount"></span>
+      </div>
+      <div class="report-table-wrap">
+        <table class="report-table" id="reportTable"></table>
+      </div>
+    </div>
     <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top: 24px;">
       <button class="btn btn-export" id="exportBtn" style="padding: 14px 32px; font-size: 16px;">Export as CSV</button>
+      <button class="btn btn-pdf" id="exportPdfBtn" style="padding: 14px 32px; font-size: 16px;">Export as PDF</button>
       <button class="btn" id="finishExamBtn" style="padding: 14px 32px; font-size: 16px;">Save &amp; Finish Exam to Dashboard</button>
     </div>
   </div>
@@ -2027,6 +2195,8 @@ function updateProgressAndAnalytics() {
     const summaryToggle = document.getElementById('summaryToggleContainer');
     if (summaryToggle) summaryToggle.classList.toggle('on', isVisible);
   }
+
+  renderReportTable();
 }
  
 /* ============================================================
@@ -2217,7 +2387,198 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
   saveCurrentStudent(true);
   generateCSVFile(STUDENTS, studentData, config, activeClassKey);
 });
- 
+
+/* ============================================================
+   REPORT VIEW (All Questions / Part-wise / Grand Total) + PDF
+   ============================================================ */
+const LS_REPORT_VIEW = 'markLedger_reportView';
+let reportView = localStorage.getItem(LS_REPORT_VIEW) || 'all';
+if (!['all', 'part', 'total'].includes(reportView)) reportView = 'all';
+
+const REPORT_PASS_MARK = 24;
+const REPORT_VIEW_LABELS = { all: 'All Questions', part: 'Part-wise', total: 'Grand Total' };
+
+const escHtml = (value) => String(value ?? '').replace(/[&<>"']/g, character =>
+  ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
+
+function sumFields(record, ids) {
+  return ids.reduce((total, id) => total + (parseFloat(record[id]) || 0), 0);
+}
+
+function computeRow(student) {
+  const record = studentData[student.roll];
+  if (!record) return { student, status: 'pending' };
+  if (record.isAbsent) return { student, status: 'absent' };
+
+  const questionTotal = (number) =>
+    sumFields(record, ['q' + number, 'q' + number + 'a', 'q' + number + 'b']);
+  const perQuestion = Array.from({ length: 22 }, (_, index) => questionTotal(index + 1));
+  const sum = (from, to) => perQuestion.slice(from - 1, to).reduce((total, mark) => total + mark, 0);
+
+  return {
+    student,
+    status: 'graded',
+    perQuestion,
+    partA: sum(1, 10),
+    partB: sum(11, 15),
+    partC: sum(16, 19),
+    partD: sum(20, 22),
+    total: typeof record.total === 'number' ? record.total : sum(1, 22)
+  };
+}
+
+function buildReportTableHTML(view) {
+  const rows = STUDENTS.map(computeRow);
+  const showSerialNumber = view !== 'total';
+  const markCell = (row, value, className = 'num') => {
+    if (row.status === 'absent') return `<td class="${className} abs">ABS</td>`;
+    if (row.status === 'pending') return `<td class="${className} pending">—</td>`;
+    return `<td class="${className}">${value}</td>`;
+  };
+  const totalCell = (row) => {
+    if (row.status === 'absent') return '<td class="tot abs">ABS</td>';
+    if (row.status === 'pending') return '<td class="tot pending">—</td>';
+    return `<td class="tot ${row.total < REPORT_PASS_MARK ? 'fail' : ''}">${row.total}</td>`;
+  };
+
+  let head = '<tr>' + (showSerialNumber ? '<th>S.No</th>' : '') + '<th>Roll No</th><th>Name</th>';
+  if (view === 'all') {
+    for (let number = 1; number <= 22; number++) head += `<th>Q${number}</th>`;
+    head += '<th>Total<small>/ 60</small></th>';
+  } else if (view === 'part') {
+    head += '<th>Part A<small>/ 10</small></th><th>Part B<small>/ 10</small></th>' +
+      '<th>Part C<small>/ 20</small></th><th>Part D<small>/ 20</small></th><th>Total<small>/ 60</small></th>';
+  } else {
+    head += '<th>Grand Total<small>/ 60</small></th>';
+  }
+  head += '</tr>';
+
+  const body = rows.map((row, index) => {
+    let tr = '<tr>';
+    if (showSerialNumber) tr += `<td>${index + 1}</td>`;
+    tr += `<td class="num">${escHtml(row.student.roll)}</td><td class="left name">${escHtml(row.student.name)}</td>`;
+    if (view === 'all') {
+      for (let question = 0; question < 22; question++) {
+        tr += markCell(row, row.perQuestion ? row.perQuestion[question] : '');
+      }
+    } else if (view === 'part') {
+      tr += markCell(row, row.partA) + markCell(row, row.partB) +
+        markCell(row, row.partC) + markCell(row, row.partD);
+    }
+    tr += totalCell(row) + '</tr>';
+    return tr;
+  }).join('');
+
+  return { html: `<thead>${head}</thead><tbody>${body}</tbody>`, count: rows.length };
+}
+
+function renderReportTable() {
+  const table = document.getElementById('reportTable');
+  if (!table) return;
+  const { html, count } = buildReportTableHTML(reportView);
+  table.innerHTML = html;
+  table.className = 'report-table is-' + reportView;
+  document.getElementById('reportCount').textContent =
+    `${REPORT_VIEW_LABELS[reportView]} · ${count} students`;
+  document.querySelectorAll('#reportViewTabs button').forEach(button => {
+    const isSelected = button.dataset.view === reportView;
+    button.classList.toggle('active', isSelected);
+    button.setAttribute('aria-selected', String(isSelected));
+  });
+}
+
+document.getElementById('reportViewTabs').addEventListener('click', (event) => {
+  const target = event.target;
+  if (!(target instanceof Element)) return;
+  const button = target.closest('button[data-view]');
+  if (!button || button.dataset.view === reportView) return;
+  const selectedView = button.dataset.view;
+  if (!['all', 'part', 'total'].includes(selectedView)) return;
+  reportView = selectedView;
+  renderReportTable();
+  localStorage.setItem(LS_REPORT_VIEW, reportView);
+});
+
+/* ---------- Filename helper ---------- */
+function slugPart(value) {
+  return String(value || '')
+    .trim()
+    .replace(/[^A-Za-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+}
+
+function buildPdfFileName() {
+  const cfg = config || {};
+  const option = CLASS_OPTIONS.find(classOption => classOption.id === activeClassKey);
+  const classPart = activeClassKey.startsWith('custom_')
+    ? slugPart(option ? option.label : 'Class')
+    : slugPart(activeClassKey);
+
+  return [classPart, slugPart(cfg.paperCode), slugPart(cfg.exam), 'Marks']
+    .filter(Boolean)
+    .join('_');
+}
+
+/* ---------- PDF / Print ---------- */
+function exportReportPDF() {
+  saveCurrentStudent(true);
+  renderReportTable();
+
+  const cfg = config || {};
+  const classLabel = (CLASS_OPTIONS.find(classOption => classOption.id === activeClassKey) || {}).label || activeClassKey;
+  const { html } = buildReportTableHTML(reportView);
+  const dateString = new Date().toLocaleDateString('en-GB');
+
+  document.getElementById('printReport').innerHTML = `
+    <div class="pr-head">
+      <div class="pr-college">Bishop Heber College (Autonomous) &ndash; Tiruchirappalli-17</div>
+      <div class="pr-rule"></div>
+      <div class="pr-title">Internal Test Mark Statement</div>
+      <div class="pr-sub">${escHtml(cfg.exam || 'Internal Test')} &middot; ${REPORT_VIEW_LABELS[reportView]}</div>
+    </div>
+
+    <div class="pr-meta">
+      <div class="pr-meta-item"><span>Class</span><b>${escHtml(classLabel)}</b></div>
+      <div class="pr-meta-item"><span>Semester</span><b>${escHtml(cfg.semester || '—')}</b></div>
+      <div class="pr-meta-item"><span>Batch / Section</span><b>${escHtml(cfg.batch || '—')}</b></div>
+      <div class="pr-meta-item"><span>Paper Code</span><b>${escHtml(cfg.paperCode || '—')}</b></div>
+      <div class="pr-meta-item wide"><span>Course Title</span><b>${escHtml(cfg.course || '—')}</b></div>
+    </div>
+
+    <table class="is-${reportView}">${html}</table>
+
+    <div class="pr-foot">
+      <span>Pass mark: ${REPORT_PASS_MARK} / 60 &nbsp;&bull;&nbsp; Q16&ndash;Q19 show (a)+(b) combined</span>
+      <span>Printed on ${dateString}</span>
+    </div>
+
+    <div class="pr-sign">
+      <div>Course Faculty</div>
+      <div>Head of Department</div>
+      <div>Principal</div>
+    </div>`;
+
+  let pageStyle = document.getElementById('printPageStyle');
+  if (!pageStyle) {
+    pageStyle = document.createElement('style');
+    pageStyle.id = 'printPageStyle';
+    document.head.appendChild(pageStyle);
+  }
+  pageStyle.textContent = `@page { size: A4 ${reportView === 'all' ? 'landscape' : 'portrait'}; margin: 12mm 10mm; }`;
+
+  const oldTitle = document.title;
+  document.title = buildPdfFileName();
+
+  const cleanup = () => {
+    document.title = oldTitle;
+    document.getElementById('printReport').innerHTML = '';
+    window.removeEventListener('afterprint', cleanup);
+  };
+  window.addEventListener('afterprint', cleanup);
+  window.print();
+}
+document.getElementById('exportPdfBtn').addEventListener('click', exportReportPDF);
+
 /* ============================================================
    INIT
    ============================================================ */
@@ -2445,6 +2806,9 @@ const GUIDE = {
 loadStudent(currentIndex);
 </script>
  
+<!-- PRINT-ONLY REPORT (filled by JS) -->
+<div id="printReport"></div>
+
 <!-- MINIMAL FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
