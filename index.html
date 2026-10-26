@@ -931,8 +931,7 @@
    ============================================================ */
 let CLASS_OPTIONS = [
   { id: "2nd_Year", label: "2nd Year BCA (D)" },
-  { id: "3rd_Year", label: "3rd Year BCA (D)" },
-  { id: "Web_Programming", label: "Web Programming (DSE)" }
+  { id: "3rd_Year", label: "3rd Year BCA (D)" }
 ];
  
 let CLASS_DATA = {
@@ -1033,7 +1032,7 @@ let studentData = JSON.parse(localStorage.getItem(LS_DATA) || '{}');
 let savedExams = JSON.parse(localStorage.getItem(LS_EXAMS) || '{}');
  
 let activeClassKey = localStorage.getItem('markLedger_activeClass') || "2nd_Year";
-if (!CLASS_DATA[activeClassKey]) activeClassKey = CLASS_OPTIONS[0].id;
+if (!CLASS_OPTIONS.some(option => option.id === activeClassKey)) activeClassKey = CLASS_OPTIONS[0].id;
 let STUDENTS = CLASS_DATA[activeClassKey];
 let activeExamId = localStorage.getItem('markLedger_activeExamId') || null;
  
