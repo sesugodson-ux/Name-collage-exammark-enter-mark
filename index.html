@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 <style>
   :root {
     --bg-body: #F4F8F7;
@@ -605,8 +606,11 @@
   .report-table td.tot { background: var(--accent-soft); color: var(--accent-ink); font-weight: 800; }
   .report-table tbody tr:nth-child(even) td:not(.tot) { background: var(--bg-input); }
   .report-table tbody tr:hover td:not(.tot) { background: var(--accent-soft); }
-  .report-table .fail { color: var(--error); }
-  .report-table .abs { color: var(--error); font-weight: 800; }
+  .report-table td.abs, .report-table td.tot.abs { color: #D6304A; font-weight: 800; }
+  .report-table td.tot.fail { color: #D6304A; }
+  .report-table td.st { font-weight: 800; }
+  .report-table td.st-p { color: var(--accent); }
+  .report-table td.st-f, .report-table td.st-a { color: #D6304A; }
   .report-table .pending { color: var(--ink-faint); }
   .btn-pdf { background: var(--error); box-shadow: var(--shadow-btn-red); }
   .btn-pdf:hover { background: #b9243b; }
@@ -616,109 +620,79 @@
   }
 
   /* ============================================================
-     PRINT / PDF - modern college report
+     PDF REPORT (rendered off-screen by html2pdf)
      ============================================================ */
-  #printReport { display: none; }
-  @media print {
-    .top-nav, .masthead, .navbtns, .abs-toggle, .toggle-switch, .view-tabs,
-    .modal-overlay, .site-footer, .guide-card, button {
-      display: none !important;
-    }
-    body > *:not(#printReport) { display: none !important; }
+  #pdfStage { position: fixed; left: -10000px; top: 0; pointer-events: none; z-index: -1; }
 
-    html, body {
-      background: #fff !important;
-      display: block !important;
-      min-height: 0 !important;
-      margin: 0; padding: 0;
-    }
-
-    #printReport {
-      display: block !important;
-      color: #2F403E;
-      font-family: 'Inter', Arial, sans-serif;
-      font-size: 9.5pt;
-      line-height: 1.4;
-    }
-    #printReport, #printReport * {
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-      box-sizing: border-box;
-    }
-
-    .pr-head { text-align: center; padding-bottom: 6px; }
-    .pr-college {
-      font-size: 15pt; font-weight: 700; letter-spacing: -0.005em; color: #2F403E;
-    }
-    .pr-rule {
-      height: 2px; width: 56px; margin: 9px auto;
-      background: var(--accent-line); border-radius: 2px;
-    }
-    .pr-title { font-size: 11.5pt; font-weight: 600; color: #4A5E5C; }
-    .pr-sub {
-      margin-top: 3px; font-size: 8.5pt; font-weight: 500;
-      letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft);
-    }
-
-    .pr-meta {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 8px 18px; margin: 12px 0 14px; padding: 10px 14px;
-      background: var(--bg-body); border: 1px solid var(--line); border-radius: 8px;
-      break-inside: avoid;
-    }
-    .pr-meta-item span {
-      display: block; font-size: 7pt; font-weight: 600; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--ink-faint);
-    }
-    .pr-meta-item b {
-      display: block; margin-top: 1px; font-size: 9.5pt; font-weight: 600; color: #2F403E;
-    }
-    .pr-meta-item.wide { grid-column: span 2; }
-
-    #printReport table { width: 100%; border-collapse: collapse; font-size: 9pt; }
-    #printReport thead { display: table-header-group; }
-    #printReport tr { break-inside: avoid; page-break-inside: avoid; }
-    #printReport th {
-      padding: 8px 6px; text-align: center;
-      font-size: 7.5pt; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
-      color: var(--ink-soft); background: var(--bg-sunken);
-      border: none; border-bottom: 1px solid var(--line);
-    }
-    #printReport th small {
-      display: block; font-size: 6.5pt; font-weight: 500;
-      letter-spacing: 0; text-transform: none; color: var(--ink-faint);
-    }
-    #printReport td {
-      padding: 6px 6px; text-align: center; vertical-align: middle;
-      border: none; border-bottom: 1px solid var(--line-soft);
-    }
-    #printReport td.left { text-align: left; }
-    #printReport td.name { font-weight: 600; }
-    #printReport td.num {
-      font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500;
-    }
-    #printReport tbody tr:nth-child(even) td { background: #FAFCFC; }
-    #printReport td.tot {
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-weight: 700; color: var(--accent-ink); background: var(--accent-soft) !important;
-    }
-    #printReport .fail { color: #C0485B; }
-    #printReport .abs { color: #C0485B; font-weight: 700; letter-spacing: 0.04em; }
-    #printReport .pending { color: var(--ink-faint); }
-
-    #printReport table.is-all { font-size: 7.5pt; }
-    #printReport table.is-all th { padding: 6px 2px; font-size: 7pt; }
-    #printReport table.is-all td { padding: 4px 2px; }
-
-    .pr-foot {
-      display: flex; justify-content: space-between; margin-top: 10px;
-      font-size: 7.5pt; font-weight: 500; color: var(--ink-faint);
-    }
-    .pr-sign { display: flex; justify-content: space-between; margin-top: 38px; break-inside: avoid; }
-    .pr-sign div {
-      width: 28%; padding-top: 5px; text-align: center;
-      border-top: 1px solid var(--line); font-size: 8pt; font-weight: 600; color: var(--ink-soft);
-    }
+  .report-doc {
+    display: flex; flex-direction: column;
+    background: #fff; color: #2F403E; box-sizing: border-box;
+    font-family: 'Inter', Arial, sans-serif; font-size: 9.5pt; line-height: 1.4;
+  }
+  .report-doc *, .report-doc *::before, .report-doc *::after { box-sizing: border-box; }
+  .report-doc .pr-head { text-align: center; padding-bottom: 6px; }
+  .report-doc .pr-college { font-size: 15pt; font-weight: 700; color: #2F403E; }
+  .report-doc .pr-rule {
+    height: 2px; width: 56px; margin: 9px auto; background: var(--accent-line); border-radius: 2px;
+  }
+  .report-doc .pr-title { font-size: 11.5pt; font-weight: 600; color: #4A5E5C; }
+  .report-doc .pr-sub {
+    margin-top: 3px; font-size: 8.5pt; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .report-doc .pr-meta {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 18px;
+    margin: 12px 0 14px; padding: 10px 14px;
+    background: var(--bg-body); border: 1px solid var(--line); border-radius: 8px;
+  }
+  .report-doc .pr-meta-item span {
+    display: block; font-size: 7pt; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-faint);
+  }
+  .report-doc .pr-meta-item b {
+    display: block; margin-top: 1px; font-size: 9.5pt; font-weight: 600; color: #2F403E;
+  }
+  .report-doc .pr-meta-item.wide { grid-column: span 2; }
+  .report-doc table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+  .report-doc th {
+    padding: 8px 6px; text-align: center; font-size: 7.5pt; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--ink-soft); background: var(--bg-sunken);
+    border: none; border-bottom: 1px solid var(--line);
+  }
+  .report-doc th small {
+    display: block; font-size: 6.5pt; font-weight: 500;
+    letter-spacing: 0; text-transform: none; color: var(--ink-faint);
+  }
+  .report-doc td {
+    padding: 6px 6px; text-align: center; vertical-align: middle;
+    border: none; border-bottom: 1px solid var(--line-soft);
+  }
+  .report-doc td.left { text-align: left; }
+  .report-doc td.name { font-weight: 600; }
+  .report-doc td.num { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; }
+  .report-doc tbody tr:nth-child(even) td { background: #FAFCFC; }
+  .report-doc td.tot {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 700; color: var(--accent-ink); background: var(--accent-soft) !important;
+  }
+  .report-doc td.abs, .report-doc td.tot.abs { color: #D6304A; font-weight: 800; letter-spacing: 0.04em; }
+  .report-doc td.fail, .report-doc td.tot.fail { color: #D6304A; }
+  .report-doc td.st { font-weight: 800; width: 34px; }
+  .report-doc td.st-p { color: #0E6B5F; }
+  .report-doc td.st-f { color: #D6304A; }
+  .report-doc td.st-a { color: #D6304A; font-weight: 800; }
+  .report-doc .pending { color: var(--ink-faint); }
+  .report-doc table.is-all { font-size: 7.5pt; }
+  .report-doc table.is-all th { padding: 6px 2px; font-size: 7pt; }
+  .report-doc table.is-all td { padding: 4px 2px; }
+  .report-doc .pr-sign {
+    display: flex; justify-content: space-between;
+    margin-top: auto; padding-top: 48px;
+  }
+  .report-doc .pr-sign div {
+    width: 38%; padding-top: 6px; text-align: center;
+    border-top: 1px solid var(--line); font-size: 8pt; font-weight: 600; color: var(--ink-soft);
   }
  
   /* ============================================================
@@ -2349,6 +2323,34 @@ function toCsvValue(v){
   if (/[",\n]/.test(s)) return '"' + s.replace(/"/g,'""') + '"';
   return s;
 }
+
+/* ---------- Shared filename: [Class]_[Section]_[COURSE]_[EXAM]_marks ---------- */
+function cleanPart(value, upper = false) {
+  const part = String(value || '')
+    .trim()
+    .replace(/[^A-Za-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+  return upper ? part.toUpperCase() : part;
+}
+
+function buildExportFileName(studList, conf, classKey) {
+  const cfg = conf || {};
+  const option = CLASS_OPTIONS.find(classOption => classOption.id === classKey);
+  const classRaw = String(classKey).startsWith('custom_')
+    ? (option ? option.label : 'Class').replace(/\s*\([^)]*\)\s*$/, '')
+    : classKey;
+  const sections = [...new Set((studList || [])
+    .map(student => student.sec)
+    .filter(section => section && section !== '-'))].join('-');
+
+  return [
+    cleanPart(classRaw),
+    cleanPart(sections),
+    cleanPart(cfg.course, true),
+    cleanPart(cfg.exam, true),
+    'marks'
+  ].filter(Boolean).join('_');
+}
  
 function generateCSVFile(studList, dataMarks, activeConf, classKey) {
   const qHeaders = ALL_Q_IDS.map(id => id.toUpperCase());
@@ -2376,9 +2378,8 @@ function generateCSVFile(studList, dataMarks, activeConf, classKey) {
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  const classNameForFile = classKey.replace('_', '-');
-  const fname = `marks_${classNameForFile}_${(activeConf?.paperCode||'export').replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.csv`;
-  a.href = url; a.download = fname;
+  a.href = url;
+  a.download = buildExportFileName(studList, activeConf, classKey) + '.csv';
   document.body.appendChild(a); a.click(); a.remove();
   URL.revokeObjectURL(url);
 }
@@ -2430,6 +2431,7 @@ function computeRow(student) {
 function buildReportTableHTML(view) {
   const rows = STUDENTS.map(computeRow);
   const showSerialNumber = view !== 'total';
+
   const markCell = (row, value, className = 'num') => {
     if (row.status === 'absent') return `<td class="${className} abs">ABS</td>`;
     if (row.status === 'pending') return `<td class="${className} pending">—</td>`;
@@ -2441,7 +2443,16 @@ function buildReportTableHTML(view) {
     return `<td class="tot ${row.total < REPORT_PASS_MARK ? 'fail' : ''}">${row.total}</td>`;
   };
 
-  let head = '<tr>' + (showSerialNumber ? '<th>S.No</th>' : '') + '<th>Roll No</th><th>Name</th>';
+  const statusCell = (row) => {
+    if (row.status === 'absent') return '<td class="st st-a">-</td>';
+    if (row.status === 'pending') return '<td class="st pending">—</td>';
+    return row.total >= REPORT_PASS_MARK
+      ? '<td class="st st-p">P</td>'
+      : '<td class="st st-f">F</td>';
+  };
+
+  let head = '<tr>' + (showSerialNumber ? '<th>S.No</th>' : '') +
+    '<th>Roll No</th><th>Name</th><th>P/F</th>';
   if (view === 'all') {
     for (let number = 1; number <= 22; number++) head += `<th>Q${number}</th>`;
     head += '<th>Total<small>/ 60</small></th>';
@@ -2456,7 +2467,9 @@ function buildReportTableHTML(view) {
   const body = rows.map((row, index) => {
     let tr = '<tr>';
     if (showSerialNumber) tr += `<td>${index + 1}</td>`;
-    tr += `<td class="num">${escHtml(row.student.roll)}</td><td class="left name">${escHtml(row.student.name)}</td>`;
+    tr += `<td class="num">${escHtml(row.student.roll)}</td>` +
+      `<td class="left name">${escHtml(row.student.name)}</td>` +
+      statusCell(row);
     if (view === 'all') {
       for (let question = 0; question < 22; question++) {
         tr += markCell(row, row.perQuestion ? row.perQuestion[question] : '');
@@ -2499,37 +2512,14 @@ document.getElementById('reportViewTabs').addEventListener('click', (event) => {
   localStorage.setItem(LS_REPORT_VIEW, reportView);
 });
 
-/* ---------- Filename helper ---------- */
-function slugPart(value) {
-  return String(value || '')
-    .trim()
-    .replace(/[^A-Za-z0-9]+/g, '_')
-    .replace(/^_+|_+$/g, '');
-}
-
-function buildPdfFileName() {
-  const cfg = config || {};
-  const option = CLASS_OPTIONS.find(classOption => classOption.id === activeClassKey);
-  const classPart = activeClassKey.startsWith('custom_')
-    ? slugPart(option ? option.label : 'Class')
-    : slugPart(activeClassKey);
-
-  return [classPart, slugPart(cfg.paperCode), slugPart(cfg.exam), 'Marks']
-    .filter(Boolean)
-    .join('_');
-}
-
-/* ---------- PDF / Print ---------- */
-function exportReportPDF() {
-  saveCurrentStudent(true);
-  renderReportTable();
-
+/* ---------- PDF (html2pdf) ---------- */
+function buildReportDocHTML(widthPx) {
   const cfg = config || {};
   const classLabel = (CLASS_OPTIONS.find(classOption => classOption.id === activeClassKey) || {}).label || activeClassKey;
   const { html } = buildReportTableHTML(reportView);
-  const dateString = new Date().toLocaleDateString('en-GB');
 
-  document.getElementById('printReport').innerHTML = `
+  return `
+  <div class="report-doc" style="width:${widthPx}px;">
     <div class="pr-head">
       <div class="pr-college">Bishop Heber College (Autonomous) &ndash; Tiruchirappalli-17</div>
       <div class="pr-rule"></div>
@@ -2547,37 +2537,79 @@ function exportReportPDF() {
 
     <table class="is-${reportView}">${html}</table>
 
-    <div class="pr-foot">
-      <span>Pass mark: ${REPORT_PASS_MARK} / 60 &nbsp;&bull;&nbsp; Q16&ndash;Q19 show (a)+(b) combined</span>
-      <span>Printed on ${dateString}</span>
-    </div>
-
     <div class="pr-sign">
       <div>Course Faculty</div>
       <div>Head of Department</div>
-      <div>Principal</div>
-    </div>`;
-
-  let pageStyle = document.getElementById('printPageStyle');
-  if (!pageStyle) {
-    pageStyle = document.createElement('style');
-    pageStyle.id = 'printPageStyle';
-    document.head.appendChild(pageStyle);
-  }
-  pageStyle.textContent = `@page { size: A4 ${reportView === 'all' ? 'landscape' : 'portrait'}; margin: 12mm 10mm; }`;
-
-  const oldTitle = document.title;
-  document.title = buildPdfFileName();
-
-  const cleanup = () => {
-    document.title = oldTitle;
-    document.getElementById('printReport').innerHTML = '';
-    window.removeEventListener('afterprint', cleanup);
-  };
-  window.addEventListener('afterprint', cleanup);
-  window.print();
+    </div>
+  </div>`;
 }
-document.getElementById('exportPdfBtn').addEventListener('click', exportReportPDF);
+
+function padReportToPageBottom(element, landscape, widthPx) {
+  const contentWidth = landscape ? 277 : 190;
+  const contentHeight = (landscape ? 210 : 297) - 12 - 16;
+  const pageHeightPx = contentHeight * (widthPx / contentWidth);
+  const pages = Math.max(1, Math.ceil(element.offsetHeight / pageHeightPx));
+  element.style.minHeight = (pages * pageHeightPx - 6) + 'px';
+}
+
+function exportAsPDF() {
+  if (typeof html2pdf === 'undefined') {
+    alert('PDF library could not be loaded. Please check your internet connection and reload the page.');
+    return;
+  }
+
+  saveCurrentStudent(true);
+  renderReportTable();
+
+  const landscape = reportView === 'all';
+  const widthPx = landscape ? 1047 : 718;
+  const stage = document.getElementById('pdfStage');
+  stage.innerHTML = buildReportDocHTML(widthPx);
+  const element = stage.firstElementChild;
+  padReportToPageBottom(element, landscape, widthPx);
+
+  const filename = buildExportFileName(STUDENTS, config, activeClassKey) + '.pdf';
+  const button = document.getElementById('exportPdfBtn');
+  const buttonText = button.textContent;
+  button.disabled = true;
+  button.textContent = 'Generating PDF…';
+
+  let finished = false;
+  const done = () => {
+    if (finished) return;
+    finished = true;
+    stage.innerHTML = '';
+    button.disabled = false;
+    button.textContent = buttonText;
+  };
+
+  const options = {
+    margin: [12, 10, 16, 10],
+    filename,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', scrollY: 0 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: landscape ? 'landscape' : 'portrait' },
+    pagebreak: { mode: ['css', 'legacy'], avoid: ['tr', '.pr-meta', '.pr-sign'] }
+  };
+
+  html2pdf().set(options).from(element).toPdf().get('pdf').then(pdf => {
+    const pageCount = pdf.getNumberOfPages();
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(8);
+    pdf.setTextColor(147, 165, 163);
+    for (let page = 1; page <= pageCount; page++) {
+      pdf.setPage(page);
+      pdf.text('Managed by GOCIA', pageWidth - 10, pageHeight - 7, { align: 'right' });
+    }
+  }).save().then(done).catch(error => {
+    console.error('PDF export failed:', error);
+    alert('Could not generate the PDF. Please try again.');
+    done();
+  });
+}
+document.getElementById('exportPdfBtn').addEventListener('click', exportAsPDF);
 
 /* ============================================================
    INIT
@@ -2806,8 +2838,8 @@ const GUIDE = {
 loadStudent(currentIndex);
 </script>
  
-<!-- PRINT-ONLY REPORT (filled by JS) -->
-<div id="printReport"></div>
+<!-- OFF-SCREEN STAGE FOR PDF GENERATION -->
+<div id="pdfStage" aria-hidden="true"></div>
 
 <!-- MINIMAL FOOTER -->
 <footer class="site-footer">
