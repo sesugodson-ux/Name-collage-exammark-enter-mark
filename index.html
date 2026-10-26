@@ -1,3 +1,7 @@
+Claude
+
+
+Index · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,34 +20,34 @@
     --bg-sunken: #EEF5F4;
     --line: #E1EBE9;
     --line-soft: #EBF2F1;
-
+ 
     --ink: #101B1A;
     --ink-soft: #5C7472;
     --ink-faint: #93A5A3;
-
+ 
     --accent: #0E6B5F;
     --accent-2: #12897A;
     --accent-soft: #DFF2EE;
     --accent-line: #BEE3DB;
     --accent-hover: #094F46;
     --accent-ink: #08423B;
-
+ 
     --error: #D6304A;
     --error-soft: #FBE7EA;
     --locked-bg: #EEF3F2;
-
+ 
     --radius-sm: 8px;
     
     --radius-md: 12px;
     --radius-lg: 18px;
-
+ 
     --shadow-card: 0 1px 2px rgba(16, 27, 26, 0.04), 0 8px 24px -12px rgba(14, 107, 95, 0.14);
     --shadow-btn: 0 6px 16px -4px rgba(14, 107, 95, 0.38);
     --shadow-btn-red: 0 6px 16px -4px rgba(214, 48, 74, 0.32);
     --shadow-modal: 0 24px 64px -12px rgba(8, 20, 19, 0.35);
     --shadow-focus: 0 0 0 4px var(--accent-soft);
   }
-
+ 
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body {
@@ -57,10 +61,10 @@
     display: flex;
     flex-direction: column;
   }
-
+ 
   ::selection { background: var(--accent-soft); color: var(--accent-ink); }
   :focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
-
+ 
   /* ============================================================
      TOP NAVIGATION
      ============================================================ */
@@ -120,7 +124,7 @@
   @media (max-width: 600px) {
     .nav-tab { padding: 16px 10px; font-size: 13px; }
   }
-
+ 
   /* ============================================================
      MASTHEAD
      ============================================================ */
@@ -147,13 +151,13 @@
   header.masthead .sub {
     position: relative; font-size: 13.5px; color: var(--accent-soft); font-weight: 500; opacity: 0.92;
   }
-
+ 
   .wrap { max-width: 1180px; margin: 0 auto; padding: 26px 20px 8px; flex: 1; width: 100%; }
   .view-section { display: none; }
   .view-section.active { display: block; animation: fadeIn 0.3s ease; }
   
   @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
+ 
   /* ============================================================
      DASHBOARD UI
      ============================================================ */
@@ -208,7 +212,7 @@
   .btn-del { background: var(--error-soft); color: var(--error); border: 1.5px solid #FAD2D8; flex: 0.4; }
   .btn-del:hover { background: #FAD2D8; }
   .empty-state { text-align: center; padding: 60px 20px; color: var(--ink-soft); font-weight: 600; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px dashed var(--line); }
-
+ 
   /* ============================================================
      CARDS
      ============================================================ */
@@ -240,7 +244,7 @@
     border-radius: 20px;
     letter-spacing: 0.01em;
   }
-
+ 
   /* Setup grid */
   #setupGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .field-group label { display: block; font-size: 12px; color: var(--ink-soft); margin-bottom: 7px; font-weight: 600; }
@@ -263,7 +267,7 @@
   }
   #setupGrid input { text-transform: uppercase; }
   #setupGrid input::placeholder { text-transform: none; }
-
+ 
   /* CUSTOM SELECT BUTTONS */
   .custom-select-btn {
     width: 100%; text-align: left; padding: 11px 14px; border: 1.5px solid var(--accent-line); border-radius: var(--radius-sm);
@@ -272,7 +276,7 @@
   }
   .custom-select-btn:hover { background: #CDEDE5; border-color: var(--accent-2); }
   .custom-select-btn:active { transform: translateY(1px); }
-
+ 
   .btn {
     border: none; background: var(--accent); color: #fff; padding: 11px 22px; font-size: 13.5px;
     font-weight: 700; border-radius: 10px; cursor: pointer; font-family: inherit; box-shadow: var(--shadow-btn);
@@ -286,7 +290,7 @@
   .btn.btn-reset { background: var(--bg-sunken); color: var(--error); border: 1.5px solid #FAD2D8; box-shadow: none; }
   .btn.btn-reset:hover { background: var(--error-soft); border-color: var(--error); }
   .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
-
+ 
   /* Student switch bar */
   #studentBarWrap { display: flex; flex-direction: column; gap: 18px; }
   #studentBar { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
@@ -297,7 +301,7 @@
   }
   #studentBar .who .name { font-size: 22px; font-weight: 800; letter-spacing: -0.015em; color: var(--ink); }
   .sec-badge { font-size: 12px; background: var(--ink); color: #fff; padding: 3px 9px; border-radius: 20px; font-weight: 700; vertical-align: middle; margin-left: 8px; letter-spacing: 0.01em; }
-
+ 
   .abs-toggle {
     display: flex; align-items: center; gap: 9px; background: #fff; border: 1.5px solid var(--line); color: var(--error);
     padding: 7px 16px 7px 9px; border-radius: 30px; font-size: 13px; font-weight: 700; cursor: pointer; user-select: none; transition: all .2s ease;
@@ -308,7 +312,15 @@
   .toggle-slider:before { position: absolute; content: ""; height: 15px; width: 15px; left: 2px; bottom: 2px; background-color: #fff; transition: .25s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
   input:checked + .toggle-slider { background-color: var(--error); }
   input:checked + .toggle-slider:before { transform: translateX(15px); }
-
+ 
+  /* Half Marks toggle (sits beside Mark ABS) */
+  .abs-toggle.half-toggle { color: var(--accent-hover); border-color: var(--accent-line); background: var(--accent-soft); }
+  .abs-toggle.half-toggle.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .half-toggle .toggle-slider { background-color: var(--accent-line); }
+  .half-toggle input:checked + .toggle-slider { background-color: rgba(255,255,255,0.35); }
+  .half-hint { display: none; font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
+  .half-hint.show { display: block; }
+ 
   .progress-wrap { width: 100%; }
   .progress-track-area { position: relative; padding-top: 52px; }
   .progress-container {
@@ -363,7 +375,7 @@
     .progress-container { gap: 1px; }
     .progress-seg { border-radius: 2px; }
   }
-
+ 
   .split { display: grid; grid-template-columns: 1.15fr 1fr; gap: 20px; align-items: start; }
   .split > div:last-child { position: sticky; top: 20px; align-self: start; }
   @media (max-width: 920px) {
@@ -371,12 +383,12 @@
     #setupGrid { grid-template-columns: repeat(2, 1fr); }
     .split > div:last-child { position: static; }
   }
-
+ 
   .qgrid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
   .qgrid.cols10 { grid-template-columns: repeat(10, 1fr); }
   .qgrid.cols4 { grid-template-columns: repeat(4, 1fr); }
   .qgrid.cols3 { grid-template-columns: repeat(3, 1fr); }
-
+ 
   .qcell { position: relative; }
   .qcell label { display: block; text-align: center; font-size: 12.5px; font-weight: 700; color: var(--ink-soft); margin-bottom: 7px; letter-spacing: 0.01em; }
   .qcell input {
@@ -391,7 +403,7 @@
   .qcell .errmsg { position: absolute; top: 100%; left: 0; right: 0; font-size: 10.5px; color: var(--error); text-align: center; margin-top: 4px; font-weight: 700; }
   .choice-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
   .choice-pair .sub { font-size: 11px; color: var(--ink-faint); text-align: center; display: block; font-weight: 700; margin-top: 4px; letter-spacing: 0.03em; }
-
+ 
   /* ============================================================
      REPLICA TABLE — LEDGER PREVIEW
      ============================================================ */
@@ -402,7 +414,7 @@
   table.replica td.data-cell { padding: 0; width: 60%; }
   table.replica td.total-col { background: var(--accent-soft); color: var(--accent-ink); font-weight: 800; font-size: 22px; width: 18%; font-family: 'JetBrains Mono', ui-monospace, monospace; }
   table.replica .dim { color: var(--ink-faint); font-weight: 600; }
-
+ 
   .data-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); height: 100%; }
   .data-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); height: 100%; }
   .data-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); height: 100%; }
@@ -415,10 +427,10 @@
   .r-lbl { background: var(--bg-input); width: 28px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--ink-soft); border-right: 1px solid var(--line-soft); }
   .r-val { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: var(--ink); padding: 8px 0; font-family: 'JetBrains Mono', ui-monospace, monospace; }
   .r-val.absent-text { color: var(--error); font-size: 15px; }
-
+ 
   .navbtns { display: flex; gap: 12px; justify-content: space-between; margin-top: 20px; }
   .navbtns .btn { flex: 1; text-align: center; padding: 14px; font-size: 14.5px; }
-
+ 
   #exportBar { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
   .roll-display { display: flex; flex-direction: column; gap: 3px; }
   .roll-lbl { font-size: 11.5px; font-weight: 600; color: var(--ink-soft); }
@@ -429,14 +441,14 @@
   }
   .btn-export { background: var(--ink); box-shadow: 0 6px 16px -4px rgba(16, 27, 26, 0.35); }
   .btn-export:hover { background: #000; }
-
+ 
   .savednote { font-size: 13.5px; color: var(--accent-hover); font-weight: 700; opacity: 0; transition: opacity .3s; display: flex; align-items: center; gap: 5px; }
   .savednote.show { opacity: 1; }
-
+ 
   #setupLockedRow { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 30px; font-size: 14px; }
   #setupLockedRow div span { color: var(--ink-soft); font-size: 11.5px; display: block; margin-bottom: 4px; font-weight: 600; }
   #setupLockedRow div b { font-weight: 700; font-size: 15px; color: var(--ink); }
-
+ 
   /* ============================================================
      MODAL UI
      ============================================================ */
@@ -475,7 +487,7 @@
   .delete-class-btn:hover { color: var(--error); background: var(--error-soft); }
   .modal-option:hover { background: var(--bg-input); }
   .modal-option.selected { background: var(--accent-soft); color: var(--accent-hover); border-color: var(--accent-line); }
-
+ 
   .prompt-box { background: var(--bg-input); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--line); margin-bottom: 8px; position: relative; }
   .prompt-text { font-size: 11px; color: var(--ink-soft); font-family: 'JetBrains Mono', monospace; line-height: 1.45; user-select: all; padding-right: 70px; }
   .copy-btn { position: absolute; top: 12px; right: 12px; background: var(--accent); color: #fff; border: none; padding: 6px 10px; border-radius: 6px; font-size: 10px; cursor: pointer; font-weight: 700; transition: 0.2s; }
@@ -485,7 +497,7 @@
   .warning-note { font-size: 11.5px; color: var(--error); font-weight: 600; margin: 4px 0 12px; display: flex; align-items: flex-start; gap: 6px; line-height: 1.45; }
   .import-input { width: 100%; padding: 11px 13px; border: 1.5px solid var(--line); border-radius: var(--radius-sm); margin-bottom: 12px; font-weight: 700; font-family: inherit; font-size: 14px; }
   .import-input:focus { outline: none; border-color: var(--accent-2); background: #fff; box-shadow: var(--shadow-focus); }
-
+ 
   /* ===== How to Use (full page) ===== */
   .guide-card { max-width: 860px; margin: 0 auto 20px; padding: 28px 32px 24px; }
   .guide-card[lang="ta"] { font-family: 'Noto Sans Tamil', 'Inter', sans-serif; }
@@ -554,7 +566,7 @@
     .guide-card { padding: 20px 16px; }
     .lang-switch { width: 100%; }
   }
-
+ 
   /* ============================================================
      MINIMAL FOOTER
      ============================================================ */
@@ -567,7 +579,7 @@
 </style>
 </head>
 <body>
-
+ 
 <nav class="top-nav">
   <div class="nav-content">
     <div class="nav-logo">Ledger System</div>
@@ -578,13 +590,13 @@
     </div>
   </div>
 </nav>
-
+ 
 <header class="masthead">
   <div class="crest-line">Bishop Heber College (Autonomous) · Tiruchirappalli-17</div>
   <h1>Internal Test Mark Entry</h1>
   <div class="sub">Smart Mark Ledger &amp; CSV</div>
 </header>
-
+ 
 <!-- ================= DASHBOARD VIEW ================= -->
 <div id="viewDashboard" class="wrap view-section">
   <div class="dashboard-header">
@@ -595,10 +607,10 @@
     <!-- Exam cards injected here via JS -->
   </div>
 </div>
-
+ 
 <!-- ================= MARK ENTRY VIEW ================= -->
 <div id="viewEntry" class="wrap view-section active">
-
+ 
   <div class="card" id="setupCard">
     <h2>Exam Configuration <span class="tag" id="setupTag">EDIT ONCE</span></h2>
     <div id="setupForm">
@@ -621,14 +633,14 @@
     </div>
     <div id="setupLockedRow" style="display:none;"></div>
   </div>
-
+ 
   <div class="card" id="studentCardAnchor">
     <div id="studentBarWrap">
       <div id="studentBar">
         <div class="who">
           <span class="roll" id="curRoll">—</span>
           <span class="name" id="curName">—</span>
-
+ 
           <label class="abs-toggle" id="absToggleContainer">
             <div class="toggle-switch">
               <input type="checkbox" id="absentToggle">
@@ -636,9 +648,18 @@
             </div>
             Mark ABS
           </label>
+ 
+          <label class="abs-toggle half-toggle" id="halfToggleContainer">
+            <div class="toggle-switch">
+              <input type="checkbox" id="halfToggle">
+              <span class="toggle-slider"></span>
+            </div>
+            Allow Half Marks (0.5)
+          </label>
         </div>
         <button type="button" id="studentTriggerBtn" class="custom-select-btn" style="width: 300px;">Select Student ▼</button>
       </div>
+      <span class="half-hint" id="halfHint">Smart auto-advance: jumps on the max mark or a .5 mark. For other whole numbers, press Enter or the arrow keys.</span>
       <div class="progress-wrap">
         <div class="progress-track-area">
           <div class="progress-avatar" id="progressAvatar" aria-hidden="true">
@@ -654,39 +675,39 @@
       </div>
     </div>
   </div>
-
+ 
   <div class="split">
     <div>
       <div class="card">
         <h2>Part A &middot; MCQ <span class="tag">Q1–Q10 &middot; max 1</span></h2>
         <div class="qgrid cols10" id="partA"></div>
       </div>
-
+ 
       <div class="card">
         <h2>Part B <span class="tag">Q11–Q15 &middot; max 2</span></h2>
         <div class="qgrid" id="partB"></div>
       </div>
-
+ 
       <div class="card">
         <h2>Part C — either / or <span class="tag">Q16–Q19 &middot; max 5</span></h2>
         <div class="qgrid cols4" id="partC"></div>
       </div>
-
+ 
       <div class="card">
         <h2>Part D <span class="tag">Q20–Q22 &middot; Any 2 &middot; max 10</span></h2>
         <div class="qgrid cols3" id="partD"></div>
       </div>
-
+ 
       <div class="navbtns">
         <button class="btn secondary" id="prevBtn">&larr; Previous Student</button>
         <button class="btn" id="nextBtn">Save &amp; Next Student &rarr;</button>
       </div>
     </div>
-
+ 
     <div>
       <div class="card" id="previewCard">
         <h2>Marks Scored <span class="tag">Live Preview</span></h2>
-
+ 
         <table class="replica">
           <thead>
             <tr>
@@ -772,7 +793,7 @@
             </tr>
           </tbody>
         </table>
-
+ 
         <div id="exportBar">
           <div class="roll-display">
             <span class="roll-lbl">Roll Number</span>
@@ -786,7 +807,7 @@
       </div>
     </div>
   </div> <!-- end split -->
-
+ 
   <div class="card" id="analyticsSummaryCard" style="display: none; margin-top: 24px;">
     <h2 style="justify-content: center; font-size: 20px;"> Class Grading Complete! <span class="tag" style="margin-left: 12px;">Final Stats</span></h2>
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px;">
@@ -816,9 +837,9 @@
       <button class="btn" id="finishExamBtn" style="padding: 14px 32px; font-size: 16px;">Save &amp; Finish Exam to Dashboard</button>
     </div>
   </div>
-
+ 
 </div> <!-- END OF WRAP -->
-
+ 
 <!-- ================= HOW TO USE VIEW ================= -->
 <div id="viewHelp" class="wrap view-section">
   <div class="card guide-card" id="guideCard" lang="en">
@@ -830,10 +851,10 @@
         <button type="button" data-lang="ta">தமிழ்</button>
       </div>
     </div>
-
+ 
     <div class="guide-dots" id="guideDots"></div>
     <div class="guide-body" id="guideBody"></div>
-
+ 
     <div class="guide-footer">
       <button type="button" class="btn secondary" id="guidePrev"></button>
       <span class="guide-count" id="guideCount"></span>
@@ -841,7 +862,7 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- NORMAL MODAL UI -->
 <div id="uiModal" class="modal-overlay">
   <div class="modal-card">
@@ -852,7 +873,7 @@
     <div class="modal-body" id="modalList"></div>
   </div>
 </div>
-
+ 
 <!-- IMPORT MODAL UI -->
 <div id="importModal" class="modal-overlay">
   <div class="modal-card" style="max-width: 500px;">
@@ -867,24 +888,24 @@
         <input type="text" id="importClassName" class="import-input" placeholder="Class Name (e.g. 1st Year BCA)" style="flex: 2; margin-bottom: 0;">
         <input type="text" id="importClassSec" class="import-input" placeholder="Sec (e.g. A)" style="flex: 1; margin-bottom: 0;">
       </div>
-
+ 
       <!-- AI Prompt Helper Text -->
       <div style="font-size: 12.5px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">
          AI Formatting Guide: 
         <span style="font-weight: 500; color: var(--ink-soft);">Copy the prompt below and paste it into any AI assistant along with your class nominal roll. The AI will perfectly format the data required for import.</span>
       </div>
-
+ 
       <div class="prompt-box">
         <button class="copy-btn" id="copyPromptBtn">Copy Prompt</button>
         <div class="prompt-text" id="promptText">I have a student nominal roll below. It contains Roll Numbers, Names, DOBs, and other unnecessary details. Please extract ONLY the Roll Number and Name. Format the output strictly line by line exactly like this: '&lt;Roll_Number&gt; &lt;Name&gt;'. Do not include commas, hyphens, bullet points, or any extra text. Here is the data:</div>
       </div>
-
+ 
       <textarea id="importData" class="import-textarea" placeholder="255113401 AALAN ASHNUWA V&#10;255113402 AATHAVAN A&#10;..."></textarea>
-
+ 
       <div class="warning-note">
         <span>⚠️</span> <span>Note: Please verify the list visually and manually remove any 'Left Students' or dropouts before saving.</span>
       </div>
-
+ 
       <div style="display:flex; gap:12px;">
         <button class="btn secondary" style="flex:1;" id="importCancelBtn">Cancel</button>
         <button class="btn" style="flex:1;" id="importSaveBtn">Import & Save</button>
@@ -892,7 +913,7 @@
     </div>
   </div>
 </div>
-
+ 
 <script>
 /* ============================================================
    STATIC DATA & DYNAMIC CUSTOM CLASSES
@@ -902,7 +923,7 @@ let CLASS_OPTIONS = [
   { id: "3rd_Year", label: "3rd Year BCA (D)" },
   { id: "Web_Programming", label: "Web Programming (DSE)" }
 ];
-
+ 
 let CLASS_DATA = {
   "2nd_Year": [
     ["255113401","AALAN ASHNUWA V"],["255113402","AATHAVAN A"],
@@ -930,7 +951,7 @@ let CLASS_DATA = {
     ["255113469","IYYAPPAN M"],["255113470","JAGAN S"],["255113472","BOOPALAN G"],
     ["255113473","AKHILAN P"]
   ].map(([roll,name])=>({roll,name, sec:"D"})),
-
+ 
   "3rd_Year": [
     ["215113212","AKASH S R"],["245113401","AAKASH G"],["245113402","AATHARSH S"],
     ["245113403","ABISHEK K"],["245113404","AHAMED ZAMEER S"],["245113406","AKILAN A"],
@@ -951,7 +972,7 @@ let CLASS_DATA = {
     ["245113454","GOWTHAM R"],["245113455","GURUPRASATH K"],["245113456","GURUPRASATH M"],
     ["245113459","KAVISURYA N"],["245113460","ABDUL MUQSITH A"]
   ].map(([roll,name])=>({roll,name, sec:"D"})),
-
+ 
   "Web_Programming": [
     ["255113213","BHAOMI RANJITHA U","B"],["255113214","DANYA B","B"],["255113218","DHARSHINI S","B"],
     ["255113228","HAIFA M","B"],["255113230","HARINEE R","B"],["255113232","HARINI S","B"],
@@ -980,14 +1001,14 @@ let CLASS_DATA = {
     ["255113660","VISHAL U","F"],["255113664","YADAV SRIHARI S","F"]
   ].map(([roll,name,sec])=>({roll,name,sec}))
 };
-
+ 
 // LOAD CUSTOM CLASSES FROM STORAGE
 let customClasses = JSON.parse(localStorage.getItem('markLedger_customClasses') || '{}');
 Object.keys(customClasses).forEach(key => {
   CLASS_OPTIONS.push({ id: key, label: customClasses[key].label });
   CLASS_DATA[key] = customClasses[key].students;
 });
-
+ 
 /* ============================================================
    STORAGE & STATE
    ============================================================ */
@@ -995,24 +1016,24 @@ const LS_CONFIG = 'markLedger_config';
 const LS_DATA   = 'markLedger_studentData';
 const LS_INDEX  = 'markLedger_currentIndex';
 const LS_EXAMS  = 'markLedger_exams';
-
+ 
 let config = JSON.parse(localStorage.getItem(LS_CONFIG) || 'null');
 let studentData = JSON.parse(localStorage.getItem(LS_DATA) || '{}');
 let savedExams = JSON.parse(localStorage.getItem(LS_EXAMS) || '{}');
-
+ 
 let activeClassKey = localStorage.getItem('markLedger_activeClass') || "2nd_Year";
 if (!CLASS_DATA[activeClassKey]) activeClassKey = CLASS_OPTIONS[0].id;
 let STUDENTS = CLASS_DATA[activeClassKey];
 let activeExamId = localStorage.getItem('markLedger_activeExamId') || null;
-
+ 
 let currentIndex = parseInt(localStorage.getItem(LS_INDEX) || '0', 10);
 if (isNaN(currentIndex) || currentIndex < 0 || currentIndex >= STUDENTS.length) currentIndex = 0;
-
+ 
 let hasUnsavedChanges = false;
 window.addEventListener('beforeunload', (e) => {
   if (hasUnsavedChanges) { e.preventDefault(); e.returnValue = ''; }
 });
-
+ 
 /* ============================================================
    SPA NAVIGATION LOGIC
    ============================================================ */
@@ -1036,7 +1057,7 @@ function switchTab(tabId) {
   }
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
-
+ 
 /* ============================================================
    DASHBOARD LOGIC
    ============================================================ */
@@ -1082,7 +1103,7 @@ function renderDashboard() {
     grid.appendChild(div);
   });
 }
-
+ 
 function resumeExam(id) {
   const ex = savedExams[id];
   if(!ex) return;
@@ -1109,7 +1130,7 @@ function resumeExam(id) {
   loadStudent(0);
   switchTab('entry');
 }
-
+ 
 function deleteExam(id) {
   if (confirm('Are you sure you want to permanently delete this exam record?')) {
     delete savedExams[id];
@@ -1120,15 +1141,15 @@ function deleteExam(id) {
     renderDashboard();
   }
 }
-
+ 
 function exportSavedExam(id) {
   const ex = savedExams[id];
   const studList = CLASS_DATA[ex.classKey] || [];
   generateCSVFile(studList, ex.marks, ex.config, ex.classKey);
 }
-
+ 
 document.getElementById('finishExamBtn').addEventListener('click', finalizeExam);
-
+ 
 function finalizeExam() {
   if (!config) {
     alert("Please Save Setup in Exam Configuration first!");
@@ -1152,7 +1173,7 @@ function finalizeExam() {
   alert("🎉 Exam Successfully Saved to Dashboard!");
   switchTab('dashboard');
 }
-
+ 
 // SAFE CLEAR CURRENT ENTRY
 document.getElementById('clearEntryBtn').addEventListener('click', () => {
   const confirmMsg = "⚠️ This will clear the current mark entry screen. Saved Exams in the dashboard will NOT be deleted. Continue?";
@@ -1172,8 +1193,8 @@ document.getElementById('clearEntryBtn').addEventListener('click', () => {
     loadStudent(0);
   }
 });
-
-
+ 
+ 
 /* ============================================================
    CUSTOM MODAL LOGIC (CLASS & STUDENT SELECTION)
    ============================================================ */
@@ -1183,7 +1204,7 @@ const uiModal = document.getElementById('uiModal');
 const modalTitle = document.getElementById('modalTitle');
 const modalList = document.getElementById('modalList');
 const modalClose = document.getElementById('modalClose');
-
+ 
 function updateClassBtnText() {
   const activeObj = CLASS_OPTIONS.find(c => c.id === activeClassKey);
   if(activeObj) classTriggerBtn.textContent = activeObj.label + ' ▼';
@@ -1193,10 +1214,10 @@ function updateStudentBtnText() {
   studentTriggerBtn.textContent = `${s.roll} — ${s.name} ▼`;
 }
 updateClassBtnText();
-
+ 
 function openModal(type) {
   modalList.innerHTML = '';
-
+ 
   if (type === 'class') {
     modalTitle.textContent = "Select Class / Group";
     CLASS_OPTIONS.forEach(c => {
@@ -1206,7 +1227,7 @@ function openModal(type) {
       labelSpan.className = 'modal-option-label';
       labelSpan.textContent = c.label;
       opt.appendChild(labelSpan);
-
+ 
       opt.onclick = () => {
         saveIfChanged();
         activeClassKey = c.id;
@@ -1218,27 +1239,27 @@ function openModal(type) {
         if (config) renderSetup();
         closeModal();
       };
-
+ 
       if (c.id.startsWith('custom_')) {
         const delBtn = document.createElement('button');
         delBtn.type = 'button';
         delBtn.className = 'delete-class-btn';
         delBtn.innerHTML = '&times;';
         delBtn.title = 'Delete custom class';
-
+ 
         delBtn.onclick = (e) => {
           e.stopPropagation();
           const confirmMsg = `Are you sure you want to permanently delete "${c.label}"? This cannot be undone.`;
           if (!confirm(confirmMsg)) return;
-
+ 
           delete customClasses[c.id];
           localStorage.setItem('markLedger_customClasses', JSON.stringify(customClasses));
-
+ 
           const idx = CLASS_OPTIONS.findIndex(opt2 => opt2.id === c.id);
           if (idx !== -1) CLASS_OPTIONS.splice(idx, 1);
-
+ 
           delete CLASS_DATA[c.id];
-
+ 
           if (activeClassKey === c.id) {
             activeClassKey = CLASS_OPTIONS[0].id;
             localStorage.setItem('markLedger_activeClass', activeClassKey);
@@ -1248,16 +1269,16 @@ function openModal(type) {
             loadStudent(0);
             if (config) renderSetup();
           }
-
+ 
           openModal('class');
         };
-
+ 
         opt.appendChild(delBtn);
       }
-
+ 
       modalList.appendChild(opt);
     });
-
+ 
     const importOpt = document.createElement('div');
     importOpt.className = 'modal-option';
     importOpt.style.textAlign = 'center';
@@ -1271,7 +1292,7 @@ function openModal(type) {
       document.getElementById('importModal').classList.add('active');
     };
     modalList.appendChild(importOpt);
-
+ 
   } else if (type === 'student') {
     modalTitle.textContent = "Jump to Student";
     STUDENTS.forEach((s, i) => {
@@ -1288,49 +1309,49 @@ function openModal(type) {
     });
   }
   uiModal.classList.add('active');
-
+ 
   const selectedEl = modalList.querySelector('.modal-option.selected');
   if (selectedEl) {
     selectedEl.scrollIntoView({ block: 'center', behavior: 'instant' });
   }
 }
-
+ 
 function closeModal() {
   uiModal.classList.remove('active');
 }
-
+ 
 classTriggerBtn.addEventListener('click', () => openModal('class'));
 studentTriggerBtn.addEventListener('click', () => openModal('student'));
 modalClose.addEventListener('click', closeModal);
 uiModal.addEventListener('click', (e) => {
   if (e.target === uiModal) closeModal();
 });
-
+ 
 /* ============================================================
    IMPORT MODAL LOGIC 
    ============================================================ */
 const importModal = document.getElementById('importModal');
 document.getElementById('importModalClose').onclick = () => importModal.classList.remove('active');
 document.getElementById('importCancelBtn').onclick = () => importModal.classList.remove('active');
-
+ 
 document.getElementById('copyPromptBtn').onclick = () => {
   navigator.clipboard.writeText(document.getElementById('promptText').innerText);
   const btn = document.getElementById('copyPromptBtn');
   btn.innerText = 'Copied!';
   setTimeout(() => btn.innerText = 'Copy Prompt', 2000);
 };
-
+ 
 document.getElementById('importSaveBtn').onclick = () => {
   const className = document.getElementById('importClassName').value.trim();
   const classSec = document.getElementById('importClassSec').value.trim() || "-";
   const rawData = document.getElementById('importData').value.trim();
-
+ 
   if (!className) return alert("Please enter a Custom Class Name.");
   if (!rawData) return alert("Please paste the student data first.");
-
+ 
   const lines = rawData.split('\n');
   const newStudents = [];
-
+ 
   lines.forEach(line => {
     const parts = line.trim().split(/\s+/);
     if (parts.length >= 2) {
@@ -1339,35 +1360,35 @@ document.getElementById('importSaveBtn').onclick = () => {
       newStudents.push({ roll: roll, name: name, sec: classSec }); 
     }
   });
-
+ 
   if (newStudents.length === 0) return alert("Could not parse any students. Ensure the format is strictly 'Roll Number [Space] Name'.");
-
+ 
   const classId = 'custom_' + Date.now();
-
+ 
   customClasses[classId] = {
     label: className + (classSec !== "-" ? ` (${classSec})` : ""),
     students: newStudents
   };
   localStorage.setItem('markLedger_customClasses', JSON.stringify(customClasses));
-
+ 
   CLASS_OPTIONS.push({ id: classId, label: customClasses[classId].label });
   CLASS_DATA[classId] = newStudents;
-
+ 
   activeClassKey = classId;
   localStorage.setItem('markLedger_activeClass', activeClassKey);
   STUDENTS = CLASS_DATA[activeClassKey];
   currentIndex = 0;
-
+ 
   updateClassBtnText();
   loadStudent(0);
   if (config) renderSetup();
-
+ 
   importModal.classList.remove('active');
   document.getElementById('importClassName').value = '';
   document.getElementById('importClassSec').value = '';
   document.getElementById('importData').value = '';
 };
-
+ 
 /* ============================================================
    QUESTION FIELD DEFINITIONS
    ============================================================ */
@@ -1377,19 +1398,19 @@ const SIMPLE_FIELDS = [
 ];
 const CHOICE_QS = [16,17,18,19];
 const PART_D_FIELDS = [20,21,22].map(n=>({id:'q'+n, max:10}));
-
+ 
 const FOCUS_ORDER = [
   ...SIMPLE_FIELDS.map(f=>f.id),
   ...CHOICE_QS.flatMap(n=>['q'+n+'a','q'+n+'b']),
   ...PART_D_FIELDS.map(f=>f.id)
 ];
-
+ 
 const MAX_LOOKUP = {};
 SIMPLE_FIELDS.forEach(f=>MAX_LOOKUP[f.id]=f.max);
 CHOICE_QS.forEach(n=>{MAX_LOOKUP['q'+n+'a']=5; MAX_LOOKUP['q'+n+'b']=5;});
 PART_D_FIELDS.forEach(f=>MAX_LOOKUP[f.id]=f.max);
 const ALL_Q_IDS = FOCUS_ORDER;
-
+ 
 /* ============================================================
    BUILD STATIC DOM
    ============================================================ */
@@ -1404,7 +1425,7 @@ function buildSimpleCell(id, max){
 document.getElementById('partA').append(...SIMPLE_FIELDS.slice(0,10).map(f=>buildSimpleCell(f.id,f.max)));
 document.getElementById('partB').append(...SIMPLE_FIELDS.slice(10,15).map(f=>buildSimpleCell(f.id,f.max)));
 document.getElementById('partD').append(...PART_D_FIELDS.map(f=>buildSimpleCell(f.id,f.max)));
-
+ 
 const partCEl = document.getElementById('partC');
 CHOICE_QS.forEach(n=>{
   const wrap = document.createElement('div');
@@ -1424,7 +1445,7 @@ CHOICE_QS.forEach(n=>{
     <div class="errmsg" id="q${n}a-err"></div>`;
   partCEl.appendChild(wrap);
 });
-
+ 
 /* ============================================================
    SETUP CARD
    ============================================================ */
@@ -1433,10 +1454,10 @@ function renderSetup(){
     document.getElementById('setupForm').style.display='none';
     const row = document.getElementById('setupLockedRow');
     row.style.display='flex';
-
+ 
     const activeObj = CLASS_OPTIONS.find(c => c.id === activeClassKey);
     const classLabel = activeObj ? activeObj.label : activeClassKey;
-
+ 
     row.innerHTML = `
       <div><span>Class / Group</span><b style="color:var(--accent);">${classLabel}</b></div>
       <div><span>Semester</span><b>${config.semester||'—'}</b></div>
@@ -1448,7 +1469,7 @@ function renderSetup(){
         <button class="btn secondary" id="editSetupBtn" style="padding:8px 16px;font-size:12px;">Edit Setup</button>
       </div>`;
     document.getElementById('setupTag').textContent = 'LOCKED';
-
+ 
     document.getElementById('editSetupBtn').addEventListener('click', ()=>{
       document.getElementById('setupForm').style.display='block';
       row.style.display='none';
@@ -1459,9 +1480,9 @@ function renderSetup(){
       document.getElementById('cfgBatch').value = (config.batch||'').toUpperCase();
       document.getElementById('cfgCourse').value = (config.course||'').toUpperCase();
     });
-
+ 
     setTimeout(() => { focusField(FOCUS_ORDER[0]); }, 100);
-
+ 
   } else {
     document.getElementById('setupForm').style.display='block';
     document.getElementById('setupLockedRow').style.display='none';
@@ -1475,7 +1496,7 @@ const CFG_FIELDS = [
   { id: 'cfgBatch', key: 'batch', label: 'Batch / Section' },
   { id: 'cfgCourse', key: 'course', label: 'Course Title' },
 ];
-
+ 
 CFG_FIELDS.forEach(f => {
   document.getElementById(f.id).addEventListener('input', () => {
     document.getElementById(f.id).classList.remove('invalid');
@@ -1484,28 +1505,28 @@ CFG_FIELDS.forEach(f => {
     }
   });
 });
-
+ 
 document.getElementById('saveSetupBtn').addEventListener('click', () => {
   const errBox = document.getElementById('setupError');
   const missing = CFG_FIELDS.filter(f => !document.getElementById(f.id).value.trim());
-
+ 
   CFG_FIELDS.forEach(f => {
     document.getElementById(f.id).classList.toggle('invalid', missing.includes(f));
   });
-
+ 
   if (missing.length > 0) {
     errBox.textContent = 'Please fill in: ' + missing.map(f => f.label).join(', ');
     errBox.style.display = 'block';
     document.getElementById(missing[0].id).focus();
     return;
   }
-
+ 
   errBox.style.display = 'none';
   config = {};
   CFG_FIELDS.forEach(f => {
     config[f.key] = document.getElementById(f.id).value.trim().toUpperCase();
   });
-
+ 
   localStorage.setItem(LS_CONFIG, JSON.stringify(config));
   renderSetup();
 });
@@ -1519,18 +1540,18 @@ document.getElementById('saveSetupBtn').addEventListener('click', () => {
   });
 });
 renderSetup();
-
+ 
 /* ============================================================
    FIELD VALUE HELPERS & ABSENT LOGIC
    ============================================================ */
 const absToggle = document.getElementById('absentToggle');
 const absToggleContainer = document.getElementById('absToggleContainer');
 let isCurrentAbsent = false;
-
+ 
 absToggle.addEventListener('change', (e) => {
   hasUnsavedChanges = true;
   isCurrentAbsent = e.target.checked;
-
+ 
   if(isCurrentAbsent) {
     absToggleContainer.style.background = 'var(--error)';
     absToggleContainer.style.borderColor = 'var(--error)';
@@ -1540,7 +1561,7 @@ absToggle.addEventListener('change', (e) => {
     absToggleContainer.style.borderColor = 'var(--error)';
     absToggleContainer.style.color = 'var(--error)';
   }
-
+ 
   ALL_Q_IDS.forEach(id => {
     const input = document.getElementById(id);
     if (isCurrentAbsent) {
@@ -1554,23 +1575,85 @@ absToggle.addEventListener('change', (e) => {
   if (!isCurrentAbsent) checkPartD();
   updatePreview();
 });
-
+ 
+/* ===== HALF MARKS MODE ===== */
+const LS_HALF = 'markLedger_halfMode';
+const halfToggle = document.getElementById('halfToggle');
+const halfToggleContainer = document.getElementById('halfToggleContainer');
+const halfHint = document.getElementById('halfHint');
+let halfMode = false;
+try { halfMode = localStorage.getItem(LS_HALF) === '1'; } catch (e) {}
+ 
+function applyHalfMode(on) {
+  halfMode = on;
+  halfToggle.checked = on;
+  halfToggleContainer.classList.toggle('on', on);
+  halfHint.classList.toggle('show', on);
+  ALL_Q_IDS.forEach(id => {
+    const input = document.getElementById(id);
+    const max = parseInt(input.dataset.max, 10);
+    input.maxLength = on ? 4 : String(max).length;
+    input.inputMode = on ? 'decimal' : 'numeric';
+  });
+  try { localStorage.setItem(LS_HALF, on ? '1' : '0'); } catch (e) {}
+}
+ 
+halfToggle.addEventListener('change', (e) => {
+  applyHalfMode(e.target.checked);
+  ALL_Q_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && !el.disabled) validate(id);
+  });
+  updatePreview();
+});
+ 
+function tidyHalf(id) {
+  if (!halfMode) return;
+  const el = document.getElementById(id);
+  let v = el.value;
+  if (v === '') return;
+  if (v === '.') v = '0';
+  else if (v.startsWith('.')) v = '0' + v;
+  else if (v.endsWith('.')) v = v.slice(0, -1);
+  el.value = v;
+}
+ 
+function syncChoiceLocks() {
+  if (isCurrentAbsent) return;
+  CHOICE_QS.forEach(n => {
+    const a = document.getElementById('q' + n + 'a');
+    const b = document.getElementById('q' + n + 'b');
+    const av = getVal(a.id), bv = getVal(b.id);
+    if (av > 0) {
+      b.value = '0'; b.disabled = true; b.classList.add('locked'); b.classList.remove('err');
+      a.disabled = false; a.classList.remove('locked');
+    } else if (bv > 0) {
+      a.value = '0'; a.disabled = true; a.classList.add('locked'); a.classList.remove('err');
+      b.disabled = false; b.classList.remove('locked');
+    } else {
+      a.disabled = false; b.disabled = false;
+      a.classList.remove('locked'); b.classList.remove('locked');
+    }
+  });
+}
+applyHalfMode(halfMode);
+ 
 function getVal(id){
   if (isCurrentAbsent) return 0;
-  const v = parseInt(document.getElementById(id).value, 10);
+  const v = parseFloat(document.getElementById(id).value);
   return isNaN(v) ? 0 : v;
 }
 function setVal(id, v){
   document.getElementById(id).value = (v === '' && !isCurrentAbsent) ? '0' : v;
 }
-
+ 
 function fmtMark(id) {
   if (isCurrentAbsent) return '';
   const el = document.getElementById(id);
   if (!el || el.disabled || el.classList.contains('locked')) return '';
-  return el.value === '' ? '' : el.value;
+  return el.value === '' ? '' : String(getVal(id));
 }
-
+ 
 function errBoxIdFor(id){
   if (document.getElementById(id+'-err')) return id+'-err';
   const m = id.match(/^q(\d+)[ab]$/);
@@ -1588,17 +1671,18 @@ function clearError(id){
   const box = document.getElementById(errBoxIdFor(id));
   if (box) box.textContent = '';
 }
-
+ 
 function validate(id){
   if (isCurrentAbsent) return true;
   const input = document.getElementById(id);
   const max = parseInt(input.dataset.max, 10);
   const raw = input.value.trim();
-  const v = raw === '' ? 0 : parseInt(raw, 10);
-  if (isNaN(v) || v < 0 || raw !== '' && !/^\d+$/.test(raw)) {
-    showError(id, `Enter a valid number`);
+  const pattern = halfMode ? /^(\d+(\.5?)?|\.5?)$/ : /^\d+$/;
+  if (raw !== '' && !pattern.test(raw)) {
+    showError(id, halfMode ? 'Use x.5 only' : 'Enter a valid number');
     return false;
   }
+  const v = raw === '' ? 0 : (parseFloat(raw) || 0);
   if (v > max) {
     showError(id, `Max is ${max}`);
     return false;
@@ -1606,7 +1690,7 @@ function validate(id){
   clearError(id);
   return true;
 }
-
+ 
 /* ============================================================
    FOCUS ADVANCE LOGIC 
    ============================================================ */
@@ -1614,7 +1698,7 @@ function focusField(id){
   const el = document.getElementById(id);
   if (el && !el.disabled){ el.focus(); el.select(); }
 }
-
+ 
 function jumpToNextAvailable(startIndex){
   if (isCurrentAbsent) {
     document.getElementById('nextBtn').focus();
@@ -1635,12 +1719,12 @@ function jumpToNextAvailable(startIndex){
     else document.getElementById('nextBtn').focus();
   }
 }
-
+ 
 function advanceFrom(id){
   const idx = FOCUS_ORDER.indexOf(id);
   const input = document.getElementById(id);
   const val = getVal(id);
-
+ 
   if (/^q\d+a$/.test(id)){
     const bId = input.dataset.partner;
     const bInput = document.getElementById(bId);
@@ -1662,20 +1746,21 @@ function advanceFrom(id){
   }
   updatePreview(); jumpToNextAvailable(idx + 1);
 }
-
+ 
 document.getElementById('grandTotal').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { e.preventDefault(); document.getElementById('nextBtn').click(); }
 });
-
+ 
 ALL_Q_IDS.forEach((id, index) => {
   const input = document.getElementById(id);
   input.addEventListener('focus', function() { setTimeout(() => this.select(), 10); });
   input.addEventListener('click', function() { this.select(); });
-
+ 
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === 'Backspace') hasUnsavedChanges = true;
     if (e.key === 'Enter'){
       e.preventDefault();
+      tidyHalf(id);
       if (validate(id)) advanceFrom(id);
     }
     else if (e.key === 'Backspace') {
@@ -1713,15 +1798,47 @@ ALL_Q_IDS.forEach((id, index) => {
       }
     }
   });
-
+ 
   input.addEventListener('input', ()=>{
     hasUnsavedChanges = true;
-    input.value = input.value.replace(/[^\d]/g,'');
+    if (halfMode) {
+      let cleaned = input.value.replace(/,/g, '.').replace(/[^\d.]/g, '');
+      const dot = cleaned.indexOf('.');
+      if (dot !== -1) cleaned = cleaned.slice(0, dot + 1) + cleaned.slice(dot + 1).replace(/\./g, '');
+      input.value = cleaned;
+    } else {
+      input.value = input.value.replace(/[^\d]/g,'');
+    }
     const max = parseInt(input.dataset.max,10);
     const maxLen = String(max).length;
-
+ 
     if (validate(id)){
       updatePreview();
+ 
+      /* ---------- SMART AUTO-ADVANCE (Half Marks ON) ---------- */
+      if (halfMode) {
+        const v = input.value;
+        if (v === '') return;
+ 
+        // Rule 3: a complete half mark (0.5, 1.5, 4.5, or ".5") -> advance instantly
+        if (/\.5$/.test(v)) {
+          tidyHalf(id);          // ".5" -> "0.5"
+          advanceFrom(id);
+          return;
+        }
+ 
+        // Rule 2: the absolute max for this field (whole number) -> advance instantly
+        if (/^\d+$/.test(v) && parseFloat(v) === max) {
+          advanceFrom(id);
+          return;
+        }
+ 
+        // Rule 4: any other whole number below max (or a trailing "x.") -> WAIT.
+        // The user may still type ".5"; otherwise they press Enter / arrow keys.
+        return;
+      }
+ 
+      /* ---------- STANDARD AUTO-ADVANCE (Half Marks OFF) ---------- */
       if (max === 10) {
         let currentVal = input.value;
         if (currentVal !== '1' && currentVal !== '') {
@@ -1734,10 +1851,10 @@ ALL_Q_IDS.forEach((id, index) => {
       }
     } else { updatePreview(); }
   });
-
-  input.addEventListener('blur', ()=>{ validate(id); updatePreview(); });
+ 
+  input.addEventListener('blur', ()=>{ tidyHalf(id); validate(id); updatePreview(); });
 });
-
+ 
 /* ============================================================
    PART D "ANY 2" LOCKING LOGIC
    ============================================================ */
@@ -1745,7 +1862,7 @@ function checkPartD() {
   if (isCurrentAbsent) return;
   const dIds = ['q20', 'q21', 'q22'];
   let attemptCount = dIds.filter(id => getVal(id) > 0).length;
-
+ 
   dIds.forEach(id => {
     let el = document.getElementById(id);
     if (attemptCount >= 2) {
@@ -1755,16 +1872,17 @@ function checkPartD() {
     }
   });
 }
-
+ 
 /* ============================================================
    LIVE PREVIEW
    ============================================================ */
 function updatePreview(){
+  syncChoiceLocks();
   const a = SIMPLE_FIELDS.slice(0,10).map(f=>getVal(f.id));
   const sumA = a.reduce((x,y)=>x+y,0);
   document.getElementById('sumA_tot').textContent = isCurrentAbsent ? 'ABS' : String(sumA).padStart(2, '0');
   isCurrentAbsent ? document.getElementById('sumA_tot').classList.add('absent-text') : document.getElementById('sumA_tot').classList.remove('absent-text');
-
+ 
   const bIds = [11, 12, 13, 14, 15];
   let sumB = 0;
   bIds.forEach(n => {
@@ -1775,7 +1893,7 @@ function updatePreview(){
   });
   document.getElementById('sumB').textContent = isCurrentAbsent ? 'ABS' : sumB;
   isCurrentAbsent ? document.getElementById('sumB').classList.add('absent-text') : document.getElementById('sumB').classList.remove('absent-text');
-
+ 
   let sumC = 0;
   CHOICE_QS.forEach(n => {
     let elA = document.getElementById('pca'+n);
@@ -1788,9 +1906,9 @@ function updatePreview(){
   });
   document.getElementById('sumC').textContent = isCurrentAbsent ? 'ABS' : sumC;
   isCurrentAbsent ? document.getElementById('sumC').classList.add('absent-text') : document.getElementById('sumC').classList.remove('absent-text');
-
+ 
   checkPartD();
-
+ 
   const dIds = [20, 21, 22];
   let sumD = 0;
   dIds.forEach(n => {
@@ -1801,14 +1919,14 @@ function updatePreview(){
   });
   document.getElementById('sumD').textContent = isCurrentAbsent ? 'ABS' : sumD;
   isCurrentAbsent ? document.getElementById('sumD').classList.add('absent-text') : document.getElementById('sumD').classList.remove('absent-text');
-
+ 
   const grand = sumA + sumB + sumC + sumD;
   document.getElementById('grandTotal').textContent = isCurrentAbsent ? 'ABS' : grand;
   isCurrentAbsent ? document.getElementById('grandTotal').classList.add('absent-text') : document.getElementById('grandTotal').classList.remove('absent-text');
-
+ 
   return isCurrentAbsent ? 'ABS' : grand;
 }
-
+ 
 /* ============================================================
    PROGRESS BAR & LIVE ANALYTICS 
    ============================================================ */
@@ -1816,11 +1934,11 @@ function updateProgressAndAnalytics() {
   let gradedCount = 0; let passCount = 0; let failCount = 0; let absentCount = 0;
   let highestMark = -1; let highestRolls = [];
   const PASS_MARK = 24;
-
+ 
   const total = STUDENTS.length;
   const track = document.getElementById('progressTrack');
   const avatar = document.getElementById('progressAvatar');
-
+ 
   if (track.children.length !== total) {
     track.innerHTML = '';
     for (let i = 0; i < total; i++) {
@@ -1829,18 +1947,18 @@ function updateProgressAndAnalytics() {
       track.appendChild(seg);
     }
   }
-
+ 
   STUDENTS.forEach((s, i) => {
     const record = studentData[s.roll];
     const seg = track.children[i];
     const isAbs = !!(record && record.isAbsent);
-
+ 
     seg.classList.toggle('filled', !!record && !isAbs);
     seg.classList.toggle('absent', isAbs);
     seg.classList.toggle('current', i === currentIndex);
     seg.dataset.roll = s.roll;
     seg.dataset.index = i;
-
+ 
     if (record) {
       gradedCount++;
       if (record.isAbsent) { absentCount++; } 
@@ -1852,7 +1970,7 @@ function updateProgressAndAnalytics() {
       }
     }
   });
-
+ 
   const firstRun = !updateProgressAndAnalytics._init;
   if (firstRun) avatar.style.transition = 'none';
   avatar.style.left = total ? ((currentIndex + 0.5) / total) * 100 + '%' : '0%';
@@ -1861,10 +1979,10 @@ function updateProgressAndAnalytics() {
     avatar.style.transition = '';
     updateProgressAndAnalytics._init = true;
   }
-
+ 
   const pct = total === 0 ? 0 : Math.round((gradedCount / total) * 100);
   document.getElementById('progressText').textContent = `Graded: ${gradedCount} / ${total} (${pct}%)`;
-
+ 
   if (document.getElementById('statPass')) {
     document.getElementById('statPass').textContent = passCount;
     document.getElementById('statFail').textContent = failCount;
@@ -1879,14 +1997,14 @@ function updateProgressAndAnalytics() {
       document.getElementById('statHighRoll').textContent = '—';
     }
   }
-
+ 
   const summaryCard = document.getElementById('analyticsSummaryCard');
   if (summaryCard) {
     if (gradedCount === total && total > 0) { summaryCard.style.display = 'block'; }
     else { summaryCard.style.display = 'none'; }
   }
 }
-
+ 
 /* ============================================================
    STUDENT LOAD / SAVE
    ============================================================ */
@@ -1896,7 +2014,7 @@ function resetFieldsToDefault(){
   absToggleContainer.style.background = '#fff';
   absToggleContainer.style.borderColor = 'var(--error)';
   absToggleContainer.style.color = 'var(--error)';
-
+ 
   ALL_Q_IDS.forEach(id=>{
     const input = document.getElementById(id);
     input.value = '0';
@@ -1905,31 +2023,32 @@ function resetFieldsToDefault(){
     clearError(id);
   });
 }
-
+ 
 function loadStudent(index){
   const s = STUDENTS[index];
   document.getElementById('curRoll').textContent = s.roll;
   document.getElementById('curName').innerHTML = `${s.name} <span class="sec-badge">Sec: ${s.sec || '-'}</span>`;
   updateStudentBtnText();
   document.getElementById('previewRoll').textContent = s.roll;
-
+ 
   resetFieldsToDefault();
   const saved = studentData[s.roll];
   if (saved){
     isCurrentAbsent = !!saved.isAbsent;
     absToggle.checked = isCurrentAbsent;
-
+ 
     if(isCurrentAbsent) {
       absToggleContainer.style.background = 'var(--error)';
       absToggleContainer.style.color = '#fff';
     }
-
+ 
     if (isCurrentAbsent) {
       ALL_Q_IDS.forEach(id => {
         const input = document.getElementById(id); input.disabled = true; input.value = '';
       });
     } else {
       ALL_Q_IDS.forEach(id=>{ if (saved[id] !== undefined) setVal(id, saved[id]); });
+      if (!halfMode && ALL_Q_IDS.some(id => !Number.isInteger(getVal(id)))) applyHalfMode(true);
       CHOICE_QS.forEach(n=>{
         const aId='q'+n+'a', bId='q'+n+'b';
         const aVal = getVal(aId), bVal = getVal(bId);
@@ -1939,37 +2058,37 @@ function loadStudent(index){
       });
     }
   }
-
+ 
   hasUnsavedChanges = false;
   updatePreview();
   updateProgressAndAnalytics();
   document.getElementById('prevBtn').disabled = index===0;
   document.getElementById('nextBtn').textContent = index===STUDENTS.length-1 ? 'Save & Finish' : 'Save & Next Student';
   localStorage.setItem(LS_INDEX, String(index));
-
+ 
   const studentAnchor = document.getElementById('studentCardAnchor');
   if (studentAnchor) studentAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
-
+ 
 function saveCurrentStudent(silent = false){
   const s = STUDENTS[currentIndex];
   const record = { roll: s.roll, name: s.name, sec: s.sec, isAbsent: isCurrentAbsent };
-
+ 
   if (!isCurrentAbsent) { ALL_Q_IDS.forEach(id=>{ record[id] = getVal(id); }); } 
   else { ALL_Q_IDS.forEach(id=>{ record[id] = ''; }); }
-
+ 
   record.total = updatePreview();
   studentData[s.roll] = record;
   localStorage.setItem(LS_DATA, JSON.stringify(studentData));
-
+ 
   hasUnsavedChanges = false;
   updateProgressAndAnalytics();
   if(!silent) flashSaved();
 }
-
+ 
 function saveIfChanged() {
   if (!hasUnsavedChanges) return false;
-
+ 
   if (!isCurrentAbsent) {
     const hasInvalid = ALL_Q_IDS.some(id => {
       const input = document.getElementById(id);
@@ -1977,16 +2096,16 @@ function saveIfChanged() {
     });
     if (hasInvalid) return false;
   }
-
+ 
   saveCurrentStudent(true);
   return true;
 }
-
+ 
 function flashSaved(){
   const el = document.getElementById('savedNote'); el.classList.add('show');
   clearTimeout(flashSaved._t); flashSaved._t = setTimeout(()=>el.classList.remove('show'), 1400);
 }
-
+ 
 document.getElementById('nextBtn').addEventListener('click', ()=>{
   if (!isCurrentAbsent) {
     const invalid = ALL_Q_IDS.find(id=>!validate(id));
@@ -2010,7 +2129,7 @@ document.getElementById('prevBtn').addEventListener('click', ()=>{
     currentIndex--; loadStudent(currentIndex); focusField(isCurrentAbsent ? null : FOCUS_ORDER[0]);
   }
 });
-
+ 
 /* ============================================================
    CSV EXPORT FUNCTION 
    ============================================================ */
@@ -2019,12 +2138,12 @@ function toCsvValue(v){
   if (/[",\n]/.test(s)) return '"' + s.replace(/"/g,'""') + '"';
   return s;
 }
-
+ 
 function generateCSVFile(studList, dataMarks, activeConf, classKey) {
   const qHeaders = ALL_Q_IDS.map(id => id.toUpperCase());
   const header = ['RollNo','Name','Section','Semester','PaperCode','Exam','Batch','Course', ...qHeaders, 'Total'];
   const rows = [header];
-
+ 
   studList.forEach(s=>{
     const rec = dataMarks[s.roll];
     let qVals; let total;
@@ -2034,14 +2153,14 @@ function generateCSVFile(studList, dataMarks, activeConf, classKey) {
     } else {
       qVals = ALL_Q_IDS.map(id => rec ? (rec[id] || 0) : 0); total = rec ? rec.total : 0;
     }
-
+ 
     rows.push([
       s.roll, s.name, s.sec || '-',
       activeConf?.semester||'', activeConf?.paperCode||'', activeConf?.exam||'', activeConf?.batch||'', activeConf?.course||'',
       ...qVals, total
     ]);
   });
-
+ 
   const csv = rows.map(r=>r.map(toCsvValue).join(',')).join('\r\n');
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
@@ -2052,12 +2171,12 @@ function generateCSVFile(studList, dataMarks, activeConf, classKey) {
   document.body.appendChild(a); a.click(); a.remove();
   URL.revokeObjectURL(url);
 }
-
+ 
 document.getElementById('exportBtn').addEventListener('click', ()=>{
   saveCurrentStudent(true);
   generateCSVFile(STUDENTS, studentData, config, activeClassKey);
 });
-
+ 
 /* ============================================================
    INIT
    ============================================================ */
@@ -2066,33 +2185,33 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
   const track = document.getElementById('progressTrack');
   const tip = document.getElementById('progressTooltip');
   const area = track.parentElement;
-
+ 
   track.addEventListener('mouseover', (e) => {
     const seg = e.target.closest('.progress-seg');
     if (!seg) return;
-
+ 
     tip.textContent = (seg.dataset.roll || '').slice(-2);
-
+ 
     const center = seg.offsetLeft + seg.offsetWidth / 2;
     const half = tip.offsetWidth / 2;
     const left = Math.min(Math.max(center, half), area.clientWidth - half);
-
+ 
     tip.style.left = left + 'px';
     tip.style.setProperty('--arrow-x', (center - left) + 'px');
     tip.classList.add('show');
   });
-
+ 
   track.addEventListener('mouseleave', () => tip.classList.remove('show'));
-
+ 
   track.addEventListener('click', (e) => {
     const seg = e.target.closest('.progress-seg');
     if (!seg) return;
-
+ 
     const clickedIndex = parseInt(seg.dataset.index, 10);
     if (isNaN(clickedIndex) || clickedIndex === currentIndex) return;
-
+ 
     saveIfChanged();
-
+ 
     currentIndex = clickedIndex;
     loadStudent(currentIndex);
   });
@@ -2193,7 +2312,7 @@ const GUIDE = {
     ]
   }
 };
-
+ 
 (function () {
   const card = document.getElementById('guideCard');
   const sw = document.getElementById('langSwitch');
@@ -2201,44 +2320,44 @@ const GUIDE = {
   const bodyEl = document.getElementById('guideBody');
   const prevBtn = document.getElementById('guidePrev');
   const nextBtn = document.getElementById('guideNext');
-
+ 
   let lang = 'en';
   try { lang = localStorage.getItem('markLedger_guideLang') || 'en'; } catch (e) {}
   if (!GUIDE[lang]) lang = 'en';
   let step = 0;
-
+ 
   function render() {
     const g = GUIDE[lang];
     const total = g.steps.length;
     const s = g.steps[step];
-
+ 
     card.lang = lang;
     sw.dataset.lang = lang;
     sw.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
     document.getElementById('guideTitle').textContent = g.title;
-
+ 
     dotsEl.innerHTML = g.steps.map((_, i) =>
       `<button type="button" class="guide-dot${i === step ? ' active' : i < step ? ' done' : ''}" data-step="${i}">${i + 1}</button>`
     ).join('');
-
+ 
     bodyEl.innerHTML =
       `<h4 class="guide-step-title">${s.title}</h4>` +
       `<ol class="guide-list">${s.points.map(p => `<li>${p}</li>`).join('')}</ol>`;
     bodyEl.style.animation = 'none';
     void bodyEl.offsetWidth;
     bodyEl.style.animation = '';
-
+ 
     prevBtn.textContent = g.prev;
     prevBtn.disabled = step === 0;
     nextBtn.textContent = step === total - 1 ? g.done : g.next;
     document.getElementById('guideCount').textContent = g.count(step + 1, total);
   }
-
+ 
   window.openGuide = function () {
     step = 0;
     render();
   };
-
+ 
   sw.addEventListener('click', e => {
     const b = e.target.closest('button[data-lang]');
     if (!b || b.dataset.lang === lang) return;
@@ -2246,7 +2365,7 @@ const GUIDE = {
     try { localStorage.setItem('markLedger_guideLang', lang); } catch (e) {}
     render();
   });
-
+ 
   dotsEl.addEventListener('click', e => {
     const d = e.target.closest('.guide-dot');
     if (!d) return;
@@ -2254,7 +2373,7 @@ const GUIDE = {
     render();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
-
+ 
   prevBtn.addEventListener('click', () => {
     if (step > 0) { step--; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
   });
@@ -2267,7 +2386,7 @@ const GUIDE = {
       switchTab('entry');
     }
   });
-
+ 
   document.addEventListener('keydown', e => {
     if (!document.getElementById('viewHelp').classList.contains('active')) return;
     if (e.key === 'ArrowRight' && step < GUIDE[lang].steps.length - 1) {
@@ -2279,12 +2398,12 @@ const GUIDE = {
       render();
     }
   });
-
+ 
   render();
 })();
 loadStudent(currentIndex);
 </script>
-
+ 
 <!-- MINIMAL FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
@@ -2293,3 +2412,5 @@ loadStudent(currentIndex);
 </footer>
 </body>
 </html>
+ 
+Claude finished the response
